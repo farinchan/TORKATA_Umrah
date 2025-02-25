@@ -1,0 +1,38 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+
+// color
+$lgrey:#fbfbfb;
+$grey:#f1f1f1;
+$white:#fff;
+$bgrey:#777;
+$black:#3f3f3f;
+$lightblue:#02c3ff;
+$fullblack:#000000;
+$themecolor:#162241;
+$themecolor1:#0791be;
+$themecolor2:#F56961;
+
+// font-styling
+$fontfamily-pop:'Poppins', sans-serif;
+$fontfamily-oxy:'Rubik', sans-serif;
+$fonticon: 'fontawesome';
+$fontbold:700;
+$fontmiddle:500;
+$fontnormal:400;
+$fontlight:300;
+$fontlineheight:1.5;
+$fontitalic:italic;
+$textupper:uppercase;
+$textcap:capitalize;
+
+
+$transition:all ease-in-out 0.5s;
+$size100: 100%;
+
+// border
+$borderall:1px solid $grey;
+$borderdashed:1px dashed $grey;
+
+$box-shadow:0 0 15px #cccccc37;

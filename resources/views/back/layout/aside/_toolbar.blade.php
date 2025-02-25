@@ -2,7 +2,7 @@
 <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
     <!--begin::Symbol-->
     <div class="symbol symbol-50px">
-        <img src="assets/media/avatars/300-1.jpg" alt="" />
+        <img src="{{ auth()?->user()?->getPhoto() }}" alt="" />
     </div>
     <!--end::Symbol-->
     <!--begin::Wrapper-->
@@ -12,10 +12,10 @@
             <!--begin::Info-->
             <div class="flex-grow-1 me-2">
                 <!--begin::Username-->
-                <a href="#" class="text-white text-hover-primary fs-6 fw-bold">Paul Melone</a>
+                <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{ auth()?->user()?->name }}</a>
                 <!--end::Username-->
                 <!--begin::Description-->
-                <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">Python Dev</span>
+                <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">{{ auth()?->user()?->roles?->pluck('name')->join(', ') }}</span>
                 <!--end::Description-->
                 <!--begin::Label-->
                 <div class="d-flex align-items-center text-success fs-9">
@@ -25,7 +25,7 @@
             </div>
             <!--end::Info-->
             <!--begin::User menu-->
-            <div class="me-n2">
+            {{-- <div class="me-n2">
                 <!--begin::Action-->
                 <a href="#" class="btn btn-icon btn-sm btn-active-color-primary mt-n2"
                     data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
@@ -34,7 +34,7 @@
                 </a>
                 @include('back/partials/menus/_user-account-menu')
                 <!--end::Action-->
-            </div>
+            </div> --}}
             <!--end::User menu-->
         </div>
         <!--end::Section-->

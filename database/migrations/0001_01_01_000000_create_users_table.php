@@ -13,12 +13,27 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('nik')->unique()->nullable();
+            $table->string('photo')->nullable();
             $table->string('name');
+            $table->string('birthplace')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->enum('gender', ['laki-laki', 'perempuan'])->nullable();
+            $table->string('address')->nullable();
+            $table->enum('religion', ['islam', 'kristen', 'katolik', 'hindu', 'budha', 'konghucu'])->nullable();
+            $table->string('occupation')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('file_ktp')->nullable();
+            $table->string('file_cv')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            //index
+            $table->index(['name', 'email']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
