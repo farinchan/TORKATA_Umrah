@@ -23,7 +23,6 @@ return new class extends Migration
             $table->enum('religion', ['islam', 'kristen', 'katolik', 'hindu', 'budha', 'konghucu'])->nullable();
             $table->string('occupation')->nullable();
             $table->string('phone')->nullable();
-            $table->string('whatsapp')->nullable();
             $table->string('file_ktp')->nullable();
             $table->string('file_cv')->nullable();
             $table->string('email')->unique();

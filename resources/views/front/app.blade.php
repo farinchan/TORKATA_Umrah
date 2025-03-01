@@ -89,7 +89,8 @@
                                 <div class="form-group mb-0 form-checkbox px-2">
                                     <span class="float-left">
 
-                                        <input type="checkbox" checked> Ingat saya
+                                        <input type="checkbox" name="remember"  value="1"
+                                        @if (old('remember') == 1) checked @endif> Ingat saya
                                     </span>
                                     <a href="#" class="float-right">Forgot Password?</a>
                                 </div>

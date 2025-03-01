@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -39,46 +38,68 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'nik' => 'nullable|unique:users,nik',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png',
-            'position' => 'nullable',
-            'about' => 'nullable',
-            'twitter' => 'nullable|url',
-            'instagram' => 'nullable|url',
-            'tiktok' => 'nullable|url',
-            'linkedin' => 'nullable|url',
+            'name' => 'required',
+            'birthplace' => 'nullable',
+            'birthdate' => 'nullable|date',
+            'gender' => 'nullable|in:laki-laki,perempuan',
+            'address' => 'nullable',
+            'religion' => 'nullable|in:islam,kristen,katolik,hindu,budha,konghucu',
+            'occupation' => 'nullable',
+            'phone' => 'nullable',
+            'file_ktp' => 'nullable|mimes:jpg,jpeg,png,pdf',
+            'file_cv' => 'nullable|mimes:jpg,jpeg,png,pdf',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
-            Alert::error('Error', $validator->errors()->all());
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', $validator->errors()->all());
         }
 
         $user = new User();
+        $user->nik = $request->nik;
         $user->name = $request->name;
-        $user->position = $request->position;
-        $user->about = $request->about;
-        $user->twitter = $request->twitter;
-        $user->instagram = $request->instagram;
-        $user->tiktok = $request->tiktok;
-        $user->linkedin = $request->linkedin;
+        $user->birthplace = $request->birthplace;
+        $user->birthdate = $request->birthdate;
+        $user->gender = $request->gender;
+        $user->address = $request->address;
+        $user->religion = $request->religion;
+        $user->occupation = $request->occupation;
+        $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        if ($request->hasFile('file_ktp')) {
+            $fileKtp = $request->file('file_ktp');
+            $fileKtpName = Str::slug($request->name) . "-ktp-" . time() . "." . $fileKtp->getClientOriginalExtension();
+            $fileKtpPath = $fileKtp->storeAs('uploads/user/ktp', $fileKtpName, 'public');
+            $user->file_ktp = $fileKtpPath;
+        }
+        if ($request->hasFile('file_cv')) {
+            $fileCv = $request->file('file_cv');
+            $fileCvName = Str::slug($request->name) . "-cv-" . time() . "." . $fileCv->getClientOriginalExtension();
+            $fileCvPath = $fileCv->storeAs('uploads/user/cv', $fileCvName, 'public');
+            $user->file_cv = $fileCvPath;
+        }
         if ($request->hasFile('photo')) {
             $photo = $request->file('photo');
             $photoName = Str::slug($request->name) . "-" . time() . "." . $photo->getClientOriginalExtension();
-            $photoPath = $photo->storeAs('uploads/user', $photoName, 'public');
+            $photoPath = $photo->storeAs('uploads/user/photo', $photoName, 'public');
             $user->photo = $photoPath;
         }
         $user->save();
 
         if ($request->role_admin) {
-            $user->assignRole('admin');
+            $user->assignRole('super-admin');
+        }
+        if ($request->role_kantor) {
+            $user->assignRole('admin-kantor');
+        }
+        if ($request->role_agen) {
+            $user->assignRole('agen');
         }
 
-        Alert::success('Success', __('create_data'));
         return redirect()->route('back.user.index')->with('success', 'Data pengguna berhasil ditambahkan');
     }
 
@@ -97,49 +118,82 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'nik' => 'nullable|unique:users,nik,' . $id,
             'photo' => 'nullable|image|mimes:jpg,jpeg,png',
-            'position' => 'nullable',
-            'about' => 'nullable',
-            'twitter' => 'nullable|url',
-            'instagram' => 'nullable|url',
-            'tiktok' => 'nullable|url',
-            'linkedin' => 'nullable|url',
+            'name' => 'required',
+            'birthplace' => 'nullable',
+            'birthdate' => 'nullable|date',
+            'gender' => 'nullable|in:laki-laki,perempuan',
+            'address' => 'nullable',
+            'religion' => 'nullable|in:islam,kristen,katolik,hindu,budha,konghucu',
+            'occupation' => 'nullable',
+            'phone' => 'nullable',
+            'file_ktp' => 'nullable|mimes:jpg,jpeg,png,pdf',
+            'file_cv' => 'nullable|mimes:jpg,jpeg,png,pdf',
             'email' => 'required|email|unique:users,email,' . $id,
         ]);
 
         if ($validator->fails()) {
-            Alert::error('Error', $validator->errors()->all());
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', $validator->errors()->all());
         }
 
         $user = User::find($id);
+        $user->nik = $request->nik;
         $user->name = $request->name;
-        $user->position = $request->position;
-        $user->about = $request->about;
-        $user->twitter = $request->twitter;
-        $user->instagram = $request->instagram;
-        $user->tiktok = $request->tiktok;
-        $user->linkedin = $request->linkedin;
+        $user->birthplace = $request->birthplace;
+        $user->birthdate = $request->birthdate;
+        $user->gender = $request->gender;
+        $user->address = $request->address;
+        $user->religion = $request->religion;
+        $user->occupation = $request->occupation;
+        $user->phone = $request->phone;
         $user->email = $request->email;
-        if ($request->password) {
-            $user->password = bcrypt($request->password);
+
+        if ($request->hasFile('file_ktp')) {
+            if ($user->file_ktp) {
+                Storage::delete('public/' . $user->file_ktp);
+            }
+            $fileKtp = $request->file('file_ktp');
+            $fileKtpName = Str::slug($request->name) . "-ktp-" . time() . "." . $fileKtp->getClientOriginalExtension();
+            $fileKtpPath = $fileKtp->storeAs('uploads/user/ktp', $fileKtpName, 'public');
+            $user->file_ktp = $fileKtpPath;
+        }
+        if ($request->hasFile('file_cv')) {
+            if ($user->file_cv) {
+                Storage::delete('public/' . $user->file_cv);
+            }
+            $fileCv = $request->file('file_cv');
+            $fileCvName = Str::slug($request->name) . "-cv-" . time() . "." . $fileCv->getClientOriginalExtension();
+            $fileCvPath = $fileCv->storeAs('uploads/user/cv', $fileCvName, 'public');
+            $user->file_cv = $fileCvPath;
         }
         if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::delete('public/' . $user->photo);
+            }
             $photo = $request->file('photo');
             $photoName = Str::slug($request->name) . "-" . time() . "." . $photo->getClientOriginalExtension();
-            $photoPath = $photo->storeAs('uploads/user', $photoName, 'public');
+            $photoPath = $photo->storeAs('uploads/user/photo', $photoName, 'public');
             $user->photo = $photoPath;
         }
         $user->save();
 
         if ($request->role_admin) {
-            $user->assignRole('admin');
+            $user->assignRole('super-admin');
         } else {
-            $user->removeRole('admin');
+            $user->removeRole('super-admin');
+        }
+        if ($request->role_kantor) {
+            $user->assignRole('admin-kantor');
+        } else {
+            $user->removeRole('admin-kantor');
+        }
+        if ($request->role_agen) {
+            $user->assignRole('agen');
+        } else {
+            $user->removeRole('agen');
         }
 
-        Alert::success('Success', __('update_data'));
         return redirect()->route('back.user.index')->with('success', 'Data pengguna berhasil diubah');
     }
 
@@ -149,9 +203,14 @@ class UserController extends Controller
         if ($user->photo) {
             Storage::delete('public/' . $user->photo);
         }
+        if ($user->file_ktp) {
+            Storage::delete('public/' . $user->file_ktp);
+        }
+        if ($user->file_cv) {
+            Storage::delete('public/' . $user->file_cv);
+        }
         $user->delete();
 
-        Alert::success('Success', __('delete_data'));
         return redirect()->route('back.user.index')->with('success', 'Data pengguna berhasil dihapus');
     }
 }

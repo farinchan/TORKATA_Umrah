@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('umrah_schedules', function (Blueprint $table) {
+        Schema::create('umrah_package_itineraries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('umrah_package_id')->constrained('umrah_packages')->onDelete('cascade');
+            $table->string('day')->nullable();
+            $table->mediumText('description')->nullable();
             $table->timestamps();
+
+            $table->index(['umrah_package_id', 'day']);
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('umrah_schedules');
+        Schema::dropIfExists('umrah_package_itineraries');
     }
 };

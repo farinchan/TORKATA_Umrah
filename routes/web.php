@@ -8,6 +8,7 @@ use App\Http\Controllers\Back\NewsController as BackNewsController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
@@ -50,9 +51,39 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::put('/status', [App\Http\Controllers\Back\TestimonialController::class, 'changeStatus'])->name('status');
     });
 
+    Route::prefix('umrah')->name('umrah.')->group(function () {
+
+        Route::prefix('package')->name('package.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageIIndex'])->name('index');
+            Route::get('/create', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageCreate'])->name('create');
+            Route::post('/create', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageStore'])->name('store');
+            Route::get('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageEdit'])->name('edit');
+            Route::put('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageUpdate'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageDestroy'])->name('destroy');
+        });
+
+        Route::prefix('schedule')->name('schedule.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleIndex'])->name('index');
+            Route::post('/create', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleStore'])->name('store');
+            Route::get('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleEdit'])->name('edit');
+            Route::put('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleUpdate'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleDestroy'])->name('destroy');
+        });
+
+    });
+
     Route::prefix('message')->name('message.')->group(function () {
         Route::get('/', [App\Http\Controllers\Back\MessageController::class, 'index'])->name('index');
         Route::delete('/{id}', [App\Http\Controllers\Back\MessageController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Back\UserController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\Back\UserController::class, 'create'])->name('create');
+        Route::post('/create', [App\Http\Controllers\Back\UserController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [App\Http\Controllers\Back\UserController::class, 'edit'])->name('edit');
+        Route::put('/{id}/edit', [App\Http\Controllers\Back\UserController::class, 'update'])->name('update');
+        Route::delete('/{id}/delete', [App\Http\Controllers\Back\UserController::class, 'delete'])->name('delete');
     });
 
     Route::prefix('setting')->name('setting.')->group(function () {

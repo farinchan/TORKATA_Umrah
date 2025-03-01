@@ -14,11 +14,13 @@ class LoginController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string',
+            'remember' => 'boolean'
         ], [
             'email.required' => 'Email Harus Diisi',
             'email.email' => 'Email Tidak Valid',
             'password.required' => 'Password Harus Diisi',
-            'password.string' => 'Password Harus Berupa String'
+            'password.string' => 'Password Harus Berupa String',
+            'remember.boolean' => 'Remember Me Harus Boolean'
         ]);
 
         if ($validator->fails()) {
@@ -27,10 +29,16 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->remember?? false)) {
             return redirect()->route('back.dashboard');
         }
 
         return back()->with('error', 'Email atau Password Salah');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('home');
     }
 }

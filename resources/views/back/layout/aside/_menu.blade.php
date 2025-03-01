@@ -129,12 +129,12 @@
 
         <div class="menu-item pt-5">
             <div class="menu-content">
-                <span class="menu-heading fw-bold text-uppercase fs-7">Umrah</span>
+                <span class="menu-heading fw-bold text-uppercase fs-7">Paket & Jadwal</span>
             </div>
         </div>
 
 
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (request()->routeIs('back.umrah.*')) here show @endif">
             <span class="menu-link">
                 <span class="menu-icon">
                     <i class="ki-duotone ki-address-book fs-2">
@@ -143,27 +143,55 @@
                         <span class="path3"></span>
                     </i>
                 </span>
-                <span class="menu-title">User Profile</span>
+                <span class="menu-title">Umrah</span>
                 <span class="menu-arrow"></span>
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link" href="?page=pages/user-profile/overview">
+                    <a class="menu-link @if (request()->routeIs('back.umrah.package.index')) active @endif"
+                        href="{{ route("back.umrah.package.index") }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
-                        <span class="menu-title">Overview</span>
+                        <span class="menu-title">Paket</span>
                     </a>
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="?page=pages/user-profile/projects">
+                    <a class="menu-link @if (request()->routeIs('back.umrah.schedule.index')) active @endif"
+                        href="{{ route("back.umrah.schedule.index") }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
-                        <span class="menu-title">Projects</span>
+                        <span class="menu-title">Jadwal</span>
                     </a>
                 </div>
+            </div>
+        </div>
+
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
+            <span class="menu-link">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-address-book fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Tour</span>
+                <span class="menu-arrow"></span>
+            </span>
+            <div class="menu-sub menu-sub-accordion">
+                <div class="menu-item">
+                    <a class="menu-link "
+                        href="#">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">Coming Soon</span>
+                    </a>
+                </div>
+
             </div>
         </div>
 
@@ -171,6 +199,8 @@
             <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">Administrator</span>
             </div>
         </div>
+
+
 
         <div class="menu-item">
             <a class="menu-link @if (request()->routeIs('back.message.index')) active @endif"
@@ -182,6 +212,21 @@
                     </i>
                 </span>
                 <span class="menu-title">Inbox</span>
+            </a>
+        </div>
+
+        <div class= "menu-item">
+            <a class="menu-link @if (request()->routeIs('back.user.*')) active @endif"
+                href="{{ route('back.user.index') }}">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-profile-user fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                        <span class="path4"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Staff & Agen</span>
             </a>
         </div>
 
@@ -218,28 +263,6 @@
             </div>
         </div>
 
-        <div class="menu-item">
-            <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/base/utilities"
-                target="_blank">
-                <span class="menu-icon">
-                    <i class="ki-duotone ki-rocket fs-2">
-                        <span class="path1"></span>
-                        <span class="path2"></span>
-                    </i>
-                </span>
-                <span class="menu-title">Components</span>
-            </a>
-        </div>
-
-        <div class="menu-item">
-            <a class="menu-link" href="?page=layout-builder">
-                <span class="menu-icon"><i class="ki-duotone ki-abstract-13 fs-2">
-                        <span class="path1"></span>
-                        <span class="path2"></span></i>
-                </span>
-                <span class="menu-title">Layout Builder</span>
-            </a>
-        </div>
 
     </div>
 
