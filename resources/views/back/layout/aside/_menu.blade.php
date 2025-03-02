@@ -196,6 +196,25 @@
         </div>
 
         <div class="menu-item pt-5">
+            <div class="menu-content">
+                <span class="menu-heading fw-bold text-uppercase fs-7">Booking</span>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <a class="menu-link @if (request()->routeIs('back.testimonial.index')) active @endif"
+                href="{{ route('back.testimonial.index') }}">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-like-tag fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Umrah</span>
+            </a>
+        </div>
+
+        <div class="menu-item pt-5">
             <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">Administrator</span>
             </div>
         </div>
@@ -253,7 +272,8 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link">
+                    <a class="menu-link @if (request()->routeIs('back.setting.banner')) active @endif"
+                        href="{{ route('back.setting.banner') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>

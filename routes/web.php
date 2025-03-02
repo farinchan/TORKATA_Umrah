@@ -69,7 +69,6 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::put('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleUpdate'])->name('update');
             Route::delete('/delete/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleDestroy'])->name('destroy');
         });
-
     });
 
     Route::prefix('message')->name('message.')->group(function () {
@@ -90,6 +89,8 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::get('/website', [App\Http\Controllers\back\SettingController::class, 'website'])->name('website');
         Route::put('/website', [App\Http\Controllers\back\SettingController::class, 'websiteUpdate'])->name('website.update');
         Route::put('/website/info', [App\Http\Controllers\back\SettingController::class, 'informationUpdate'])->name('website.info');
-    });
 
+        Route::get('/banner', [App\Http\Controllers\back\SettingController::class, 'banner'])->name('banner');
+        Route::put('/banner/{id}/update', [App\Http\Controllers\back\SettingController::class, 'bannerUpdate'])->name('banner-update');
+    });
 });

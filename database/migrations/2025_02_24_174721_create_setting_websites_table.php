@@ -23,10 +23,7 @@ return new class extends Migration
             $table->string('longitude')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('whatsapp')->nullable();
-            $table->string('telegram')->nullable();
+            $table->string('tiktok')->nullable();
             $table->string('linkedin')->nullable();
             $table->text('about')->nullable();
             $table->text('terms_conditions')->nullable();
