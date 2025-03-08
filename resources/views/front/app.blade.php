@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
 
+@php
+    $setting_web = \App\Models\SettingWebsite::first()?? null;
+@endphp
+
 <head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>TORKATA - Umrah & Hajj Travel Agency</title>
+    <title>
+        {{ $setting_web->name }} | @isset($title)
+            {{ $title }}
+        @endisset
+    </title>
+
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ Storage::url($setting_web->favicon) }}">
+    @yield('seo')
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('front/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <!--Custom CSS-->
@@ -28,9 +38,9 @@
 <body>
 
     <!-- Preloader -->
-    <div id="preloader">
+    {{-- <div id="preloader">
         <div id="status"></div>
-    </div>
+    </div> --}}
     <!-- Preloader Ends -->
 
     @include('front.layouts.header')
@@ -139,6 +149,8 @@
             });
         </script>
     @endif
+
+    @yield('scripts')
 </body>
 
 </html>

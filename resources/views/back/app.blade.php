@@ -110,6 +110,25 @@
     <script src="{{ asset("back/js/custom/widgets.js")}}"></script>
     {{-- <script src="{{ asset("back/js/custom/apps/chat/chat.js")}}"></script>
     <script src="{{ asset("back/js/custom/utilities/modals/users-search.js")}}"></script> --}}
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error ') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success ') }}',
+            });
+        </script>
+    @endif
 
     @yield('scripts')
     <!--end::Custom Javascript-->
