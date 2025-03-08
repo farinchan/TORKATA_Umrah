@@ -15,6 +15,9 @@ Route::prefix('umrah')->name('umrah.')->group(function () {
     Route::get('/{slug}', [App\Http\Controllers\Front\UmrahController::class, 'show'])->name('show');
 });
 
+Route::prefix('tour')->name('tour.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\TourController::class, 'index'])->name('index');
+});
 
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BackDashboardController::class, 'index'])->name('dashboard');
