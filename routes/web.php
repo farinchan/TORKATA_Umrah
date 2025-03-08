@@ -10,6 +10,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::prefix('umrah')->name('umrah.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\UmrahController::class, 'index'])->name('index');
+    Route::get('/{slug}', [App\Http\Controllers\Front\UmrahController::class, 'show'])->name('show');
+});
+
 
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BackDashboardController::class, 'index'])->name('dashboard');

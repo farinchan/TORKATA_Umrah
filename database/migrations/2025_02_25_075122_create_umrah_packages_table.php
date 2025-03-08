@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('banner')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->integer('price_start')->nullable();
             $table->mediumText('description')->nullable();
             $table->integer('days');
             $table->mediumText('facilities')->nullable();

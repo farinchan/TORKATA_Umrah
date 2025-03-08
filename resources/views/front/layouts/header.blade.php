@@ -38,7 +38,7 @@
                                     href="{{ route('home') }}">Home</a></li>
 
 
-                            <li><a href="#">Umrah</a></li>
+                            <li><a href="{{ route("umrah.index") }}">Umrah</a></li>
                             <li><a href="#">Tour</a></li>
                             <li class="submenu dropdown">
                                 <a href="$" class="dropdown-toggle" data-toggle="dropdown"
