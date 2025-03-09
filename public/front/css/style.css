@@ -571,8 +571,8 @@ iframe {
       .breadcrumb-main .breadcrumb-outer .breadcrumb-content h2, .breadcrumb-main .breadcrumb-outer .bread-content h2 {
         color: #fff;
         text-transform: uppercase;
-        line-height: 0.7;
-        font-size: 48px; }
+        /* line-height: 0.7; */
+        font-size: 28px; }
       .breadcrumb-main .breadcrumb-outer .breadcrumb-content nav, .breadcrumb-main .breadcrumb-outer .bread-content nav {
         display: inline-block;
         position: absolute;

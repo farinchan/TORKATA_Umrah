@@ -19,6 +19,14 @@ Route::prefix('tour')->name('tour.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\TourController::class, 'index'])->name('index');
 });
 
+Route::prefix('news')->name('news.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\NewsController::class, 'index'])->name('index');
+    Route::get('/{slug}', [App\Http\Controllers\Front\NewsController::class, 'show'])->name('show');
+    Route::post('/{slug}', [App\Http\Controllers\Front\NewsController::class, 'comment'])->name('comment');
+
+    Route::get('/category/{slug}', [App\Http\Controllers\Front\NewsController::class, 'category'])->name('category');
+});
+
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BackDashboardController::class, 'index'])->name('dashboard');
 

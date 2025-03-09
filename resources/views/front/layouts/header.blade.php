@@ -1,3 +1,6 @@
+@php
+    $category_news = \App\Models\NewsCategory::all();
+@endphp
 <!-- header starts -->
 <header class="main_header_area">
     <div class="header-content bg-navy">
@@ -41,13 +44,13 @@
                             <li><a href="{{ route("umrah.index") }}">Umrah</a></li>
                             <li><a href="{{ route("tour.index") }}">Tour</a></li>
                             <li class="submenu dropdown">
-                                <a href="$" class="dropdown-toggle" data-toggle="dropdown"
+                                <a href="{{ route("news.index") }}" class="dropdown-toggle" data-toggle="dropdown"
                                     role="button" aria-haspopup="true" aria-expanded="false">Berita
-                                    <i
-                                        class="icon-arrow-down" aria-hidden="true"></i></a>
+                                    <i class="icon-arrow-down" aria-hidden="true"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">category 1</a></li>
-                                    <li><a href="#">category 1</a></li>
+                                    @foreach ($category_news as $item)
+                                        <li><a href="{{ route('news.category', $item->slug) }}">{{ $item->name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li><a href="#">Agen Kami</a></li>

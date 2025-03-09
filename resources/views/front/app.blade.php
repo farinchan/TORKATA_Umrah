@@ -126,7 +126,7 @@
     <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/js/plugin.js') }}"></script>
     <script src="{{ asset('front/js/main.js') }}"></script>
-    <script src="{{ asset('front/js/custom-swiper3.js') }}"></script>
+    <script src="{{ asset('front/js/custom-swiper2.js') }}"></script>
     <script src="{{ asset('front/js/custom-nav.js') }}"></script>
     {{-- <script src="{{ asset('front/js/custom-date.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
