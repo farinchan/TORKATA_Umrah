@@ -30,7 +30,7 @@
                 <div class="navbar-flex d-flex align-items-center justify-content-between w-100 pb-2 pt-2">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="{{ route("home") }}">
                             <img src="{{ Storage::url($setting_web->logo) }}" alt="image" style="width: 250px;">
                         </a>
                     </div>
@@ -53,7 +53,7 @@
                                     @endforeach
                                 </ul>
                             </li>
-                            <li><a href="#">Agen Kami</a></li>
+                            <li><a href="{{ route("agent.index") }}">Agen Kami</a></li>
                             {{-- <li><a href="#">Tentang Kami</a></li> --}}
                             <li><a href="{{ route("contact.index") }}">kontak</a></li>
                             <li><a href="#">Cek Pembayaran</a></li>

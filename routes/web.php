@@ -27,6 +27,11 @@ Route::prefix('news')->name('news.')->group(function () {
     Route::get('/category/{slug}', [App\Http\Controllers\Front\NewsController::class, 'category'])->name('category');
 });
 
+Route::prefix('agent')->name('agent.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\AgentController::class, 'index'])->name('index');
+    Route::get('/{id}', [App\Http\Controllers\Front\AgentController::class, 'show'])->name('show');
+});
+
 Route::prefix('contact')->name('contact.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\ContactController::class, 'index'])->name('index');
     Route::post('/', [App\Http\Controllers\Front\ContactController::class, 'store'])->name('store');
