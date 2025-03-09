@@ -73,7 +73,7 @@
                                 <td class="text-end pe-0">
                                   <ul style="list-style-type: none; padding: 0;">
                                     <li>
-                                      <span class="fw-bold">Update Terakhir:</span>
+                                      <span class="fw-bold">Update:</span>
                                       <span>{{ $umrah_package->updated_at->format('d M Y H:i') }}</span>
                                     </li>
                                     <li>

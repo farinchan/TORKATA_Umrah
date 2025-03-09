@@ -6,7 +6,7 @@
     <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
         id="#kt_aside_menu" data-kt-menu="true">
 
-        <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (request()->routeIs('back.dashboard.*')) here show @endif">
             <span class="menu-link">
                 <span class="menu-icon">
                     <i class="ki-duotone ki-element-11 fs-2">
@@ -20,7 +20,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link active" href="?page=index">
+                    <a class="menu-link @if (request()->routeIs('back.dashboard.index')) active @endif" href="{{ route('back.dashboard.index') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>

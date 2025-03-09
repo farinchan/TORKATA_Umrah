@@ -18,7 +18,7 @@ class UmrahController extends Controller
             'breadcrumbs' => [
                 [
                     'name' => 'Dashboard',
-                    'link' => route('back.dashboard')
+                    'link' => route('back.dashboard.index')
                 ],
                 [
                     'name' => 'Paket Umrah',
@@ -39,7 +39,7 @@ class UmrahController extends Controller
             'breadcrumbs' => [
                 [
                     'name' => 'Dashboard',
-                    'link' => route('back.dashboard')
+                    'link' => route('back.dashboard.index')
                 ],
                 [
                     'name' => 'Paket Umrah',
@@ -155,7 +155,7 @@ class UmrahController extends Controller
             'breadcrumbs' => [
                 [
                     'name' => 'Dashboard',
-                    'link' => route('back.dashboard')
+                    'link' => route('back.dashboard.index')
                 ],
                 [
                     'name' => 'Paket Umrah',

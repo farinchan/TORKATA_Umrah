@@ -19,7 +19,7 @@ class SettingController extends Controller
             'breadcrumbs' => [
                 [
                     'name' => 'Dashboard',
-                    'link' => route('back.dashboard')
+                    'link' => route('back.dashboard.index')
                 ],
                 [
                     'name' => 'Setting',
@@ -110,7 +110,7 @@ class SettingController extends Controller
             'breadcrumbs' => [
                 [
                     'name' => 'Dashboard',
-                    'link' => route('back.dashboard')
+                    'link' => route('back.dashboard.index')
                 ],
                 [
                     'name' => 'Setting',

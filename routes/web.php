@@ -38,7 +38,9 @@ Route::prefix('contact')->name('contact.')->group(function () {
 });
 
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [BackDashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', [BackDashboardController::class, 'index'])->name('index');
+    });
 
     Route::prefix('news')->name('news.')->group(function () {
         Route::get('/category', [BackNewsController::class, 'category'])->name('category');
