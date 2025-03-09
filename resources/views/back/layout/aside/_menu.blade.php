@@ -202,8 +202,8 @@
         </div>
 
         <div class="menu-item">
-            <a class="menu-link @if (request()->routeIs('back.testimonial.index')) active @endif"
-                href="{{ route('back.testimonial.index') }}">
+            <a class="menu-link @if (request()->routeIs('back.booking.umrah.index')) active @endif"
+                href="{{ route('back.booking.umrah.index') }}">
                 <span class="menu-icon">
                     <i class="ki-duotone ki-like-tag fs-2">
                         <span class="path1"></span>

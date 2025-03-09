@@ -99,6 +99,12 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         });
     });
 
+    Route::prefix("booking")->name("booking.")->group(function () {
+        Route::prefix("umrah")->name("umrah.")->group(function () {
+            Route::get("/", [App\Http\Controllers\Back\BookingController::class, "umrahIndex"])->name("index");
+        });
+    });
+
     Route::prefix('message')->name('message.')->group(function () {
         Route::get('/', [App\Http\Controllers\Back\MessageController::class, 'index'])->name('index');
         Route::delete('/{id}', [App\Http\Controllers\Back\MessageController::class, 'destroy'])->name('destroy');
