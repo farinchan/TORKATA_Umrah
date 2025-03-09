@@ -115,7 +115,7 @@
                             <h2 class="white">Umrah <br> Ke tanah Suci</h2>
                             <p class="white mb-5">Buat perjalanan umrah anda lebih mudah dan nyaman dengan kami sebagai
                                 agen umrah terpercaya.</p>
-                                <a href="#" class="nir-btn">Lihat Paket <i class="fa fa-arrow-right"></i></a>
+                            <a href="#" class="nir-btn">Lihat Paket <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 p-1">
@@ -205,37 +205,37 @@
             <div class="row attract-slider">
                 <div class="col">
                     <div class="client-logo item">
-                    <a href="#">
-                        <img src="{{ asset("ext_images/link/1.png") }}" alt="" style="width: 60%;"/>
-                    </a>
+                        <a href="#">
+                            <img src="{{ asset('ext_images/link/1.png') }}" alt="" style="width: 60%;" />
+                        </a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="client-logo item">
-                    <a href="#">
-                        <img src="{{ asset("ext_images/link/2.png") }}" alt="" style="width: 60%;"/>
-                    </a>
+                        <a href="#">
+                            <img src="{{ asset('ext_images/link/2.png') }}" alt="" style="width: 60%;" />
+                        </a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="client-logo item">
-                    <a href="#">
-                        <img src="{{ asset("ext_images/link/3.png") }}" alt="" style="width: 60%;"/>
-                    </a>
+                        <a href="#">
+                            <img src="{{ asset('ext_images/link/3.png') }}" alt="" style="width: 60%;" />
+                        </a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="client-logo item">
-                    <a href="#">
-                        <img src="{{ asset("ext_images/link/4.png") }}" alt="" style="width: 60%;"/>
-                    </a>
+                        <a href="#">
+                            <img src="{{ asset('ext_images/link/4.png') }}" alt="" style="width: 60%;" />
+                        </a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="client-logo item">
-                    <a href="#">
-                        <img src="{{ asset("ext_images/link/5.png") }}" alt="" style="width: 60%;"/>
-                    </a>
+                        <a href="#">
+                            <img src="{{ asset('ext_images/link/5.png') }}" alt="" style="width: 60%;" />
+                        </a>
                     </div>
                 </div>
 
@@ -244,58 +244,58 @@
     </div>
     <!-- link Ends -->
 
-      <!-- Trending Starts -->
-      <section class="trending destination-b pb-6 pt-7">
+    <!-- Trending Starts -->
+    <section class="trending destination-b pb-6 pt-7">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
                 <h2 class="m-0">Paket <span>Ibadah Umrah</span></h2>
                 <p class="mb-0">
-                    Kami menawarkan berbagai paket umrah yang menarik. Dapatkan pengalaman ibada umrah yang khusuk dan nyaman bersama kami.
+                    Kami menawarkan berbagai paket umrah yang menarik. Dapatkan pengalaman ibada umrah yang khusuk dan
+                    nyaman bersama kami.
                 </p>
             </div>
             <div class="trend-box">
                 <div class="row team-slider">
                     @foreach ($umrah_packages as $umrah)
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="trend-item">
+                                {{-- <div class="ribbon ribbon-top-left"><span>25% OFF</span></div> --}}
+                                <div class="trend-image">
+                                    <img src="{{ $umrah->getBanner() }}" alt="image">
 
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="trend-item">
-                            {{-- <div class="ribbon ribbon-top-left"><span>25% OFF</span></div> --}}
-                            <div class="trend-image">
-                                <img src="{{ $umrah->getBanner() }}" alt="image">
-
-                            </div>
-                            <div class="trend-content-main">
-                                <div class="trend-content">
-                                    {{-- <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Thailand</h6> --}}
-                                    <h4><a href="{{ route('umrah.show', $umrah->slug) }}">
-                                        {{ $umrah->name }}
-                                        </a></h4>
+                                </div>
+                                <div class="trend-content-main">
+                                    <div class="trend-content">
+                                        {{-- <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Thailand</h6> --}}
+                                        <h4><a href="{{ route('umrah.show', $umrah->slug) }}">
+                                                {{ $umrah->name }}
+                                            </a></h4>
                                         <div class="rating-main d-flex align-items-center">
-                                        <div class="rating">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
+                                            <div class="rating">
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="trend-last-main">
-                                    <p class="mb-0 trend-para">
-                                        {{ Str::limit(strip_tags($umrah->description), 180) }}
-                                    </p>
-                                    <div class="trend-last d-flex align-items-center justify-content-between bg-navy">
-                                        <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i>
-                                            {{ $umrah->days }} Hari
+                                    <div class="trend-last-main">
+                                        <p class="mb-0 trend-para">
+                                            {{ Str::limit(strip_tags($umrah->description), 180) }}
                                         </p>
-                                        <div class="trend-price">
-                                            <p class="price white mb-0">Harga Mulai <span>@money($umrah->price_start)</span></p>
+                                        <div class="trend-last d-flex align-items-center justify-content-between bg-navy">
+                                            <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                {{ $umrah->days }} Hari
+                                            </p>
+                                            <div class="trend-price">
+                                                <p class="price white mb-0">Harga Mulai <span>@money($umrah->price_start)</span></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                     @if ($umrah_packages->count() < 3)
                         @for ($i = 0; $i < 3 - $umrah_packages->count(); $i++)
@@ -309,8 +309,8 @@
     </section>
     <!-- Trending Ends -->
 
-       <!-- our teams starts -->
-       <section class="our-team pb-4">
+    <!-- our teams starts -->
+    <section class="our-team pb-4">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
                 <h2 class="m-0"><span> Agen & Pemandu</span> Resmi Kami</h2>
@@ -321,76 +321,22 @@
             </div>
             <div class="team-main">
                 <div class="row shop-slider">
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="{{ asset("front/images/team/img1.jpg") }}" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Salmon Thuir</h4>
-                                <p class="mb-0">ID. Cheif Officer</p>
+
+                    @foreach ($agents as $agent)
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                            <div class="team-list">
+                                <div class="team-image">
+                                    <img src="{{ $agent->getPhoto() }}" alt="team">
+                                </div>
+                                <div class="team-content1 text-center">
+                                    <h4 class="mb-0 pink">{{ $agent->name }}</h4>
+                                    <p class="mb-0">ID. {{ $agent->id }}-{{ $agent->created_at->format('mY') }}</p>
+                                </div>
 
                             </div>
-
                         </div>
-                    </div>
+                    @endforeach
 
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="{{ asset("front/images/team/img2.jpg") }}" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Horke Pels</h4>
-                                <p class="mb-0">Head Chef</p>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="{{ asset("front/images/team/img4.jpg") }}" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Solden kalos</h4>
-                                <p class="mb-0">Supervisor</p>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="{{ asset("front/images/team/img3.jpg") }}" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Nelson Bam</h4>
-                                <p class="mb-0">Quality Assurance</p>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="{{ asset("front/images/team/img5.jpg") }}" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Cacics Coold</h4>
-                                <p class="mb-0">Asst. Chef</p>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -700,60 +646,26 @@
                 </p>
             </div>
             <div class="row review-slider">
-                <div class="col-sm-4 item">
-                    <div class="testimonial-item1 text-center">
-                        <div class="details">
-                            <p class="m-0">Lorem Ipsum is simply dummy text of the printing andypesetting industry.
-                                Lorem ipsum a simple Lorem Ipsum has been the industry's standard dummy hic et quidem.
-                                Dignissimos maxime velit unde inventore quasi vero dolorem.</p>
-                        </div>
-                        <div class="author-info mt-2">
-                            <a href="#"><img src="{{ asset('front/images/testimonial/img1.jpg') }}"
-                                    alt=""></a>
-                            <div class="author-title">
-                                <h4 class="m-0 pink">Jared Erondu</h4>
-                                <span>Supervisor</span>
+                @foreach ($testimonials as $testimonial)
+                    <div class="col-sm-4 item">
+                        <div class="testimonial-item1 text-center">
+                            <div class="details">
+                                <p class="m-0">
+                                    {{ $testimonial->content }}
+                                </p>
                             </div>
-                        </div>
-                        <i class="fa fa-quote-left mb-2"></i>
-                    </div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div class="testimonial-item1 text-center">
-                        <div class="details">
-                            <p class="m-0">Lorem Ipsum is simply dummy text of the printing andypesetting industry.
-                                Lorem ipsum a simple Lorem Ipsum has been the industry's standard dummy hic et quidem.
-                                Dignissimos maxime velit unde inventore quasi vero dolorem.</p>
-                        </div>
-                        <div class="author-info mt-2">
-                            <a href="#"><img src="{{ asset('front/images/testimonial/img2.jpg') }}"
-                                    alt=""></a>
-                            <div class="author-title">
-                                <h4 class="m-0 pink">Cadic Vegeta</h4>
-                                <span>Sr. Chef</span>
+                            <div class="author-info mt-2">
+                                <a href="#"><img src="{{ $testimonial->getAvatar() }}"
+                                        alt=""></a>
+                                <div class="author-title">
+                                    <h4 class="m-0 pink">{{ $testimonial->name }}</h4>
+                                    <span>{{ $testimonial->position }} at {{ $testimonial->company }}</span>
+                                </div>
                             </div>
+                            <i class="fa fa-quote-left mb-2"></i>
                         </div>
-                        <i class="fa fa-quote-left mb-2"></i>
                     </div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div class="testimonial-item1 text-center">
-                        <div class="details">
-                            <p class="m-0">Lorem Ipsum is simply dummy text of the printing andypesetting industry.
-                                Lorem ipsum a simple Lorem Ipsum has been the industry's standard dummy hic et quidem.
-                                Dignissimos maxime velit unde inventore quasi vero dolorem.</p>
-                        </div>
-                        <div class="author-info mt-2">
-                            <a href="#"><img src="{{ asset('front/images/testimonial/img3.jpg') }}"
-                                    alt=""></a>
-                            <div class="author-title">
-                                <h4 class="m-0 pink">Jonathan Beri</h4>
-                                <span>Manager</span>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-left mb-2"></i>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -765,7 +677,8 @@
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
                 <h2 class="m-0">Beberapa <span>Tips & artikel</span> Terbaru</h2>
                 <p class="mb-0 ">
-                    Perjalanan telah membantu kita memahami makna hidup dan telah membantu kita menjadi orang yang lebih baik. Setiap kali kita bepergian, kita melihat dunia dengan mata baru.
+                    Perjalanan telah membantu kita memahami makna hidup dan telah membantu kita menjadi orang yang lebih
+                    baik. Setiap kali kita bepergian, kita melihat dunia dengan mata baru.
                 </p>
             </div>
             <div class="news-outer">
@@ -777,18 +690,19 @@
                     <div class="col-lg-5 col-md-12 col-xs-12 mb-4">
                         <div class="news-item overflow-hidden">
                             <div class="news-image">
-                                <img src="{{ $firstNews->getThumbnail(); }}" alt="image">
+                                <img src="{{ $firstNews->getThumbnail() }}" alt="image">
                             </div>
                             <div class="news-list mt-2 border-b pb-2 mb-2">
                                 <ul>
                                     <li><a href="single-right.html" class="pr-3"><i
-                                                class="fa fa-calendar pink pr-1"></i> {{ $firstNews->created_at->format('d M Y') }} </a></li>
+                                                class="fa fa-calendar pink pr-1"></i>
+                                            {{ $firstNews->created_at->format('d M Y') }} </a></li>
                                     <li><a href="single-right.html" class="pr-3"><i
                                                 class="fa fa-comment pink pr-1"></i> {{ $firstNews->comments->count() }}
-                                            </a></li>
+                                        </a></li>
                                     <li><a href="single-right.html" class=""><i class="fa fa-tag pink pr-1"></i>
-                                        {{ $firstNews->category->name }}
-                                    </a></li>
+                                            {{ $firstNews->category->name }}
+                                        </a></li>
                                 </ul>
                             </div>
                             <div class="news-content mt-2">
@@ -800,7 +714,7 @@
                                 </p>
 
                                 <div class="author-img">
-                                    <img src="{{ $firstNews->user->getPhoto(); }}" alt="Demo Image">
+                                    <img src="{{ $firstNews->user->getPhoto() }}" alt="Demo Image">
                                     <span>By - {{ $firstNews->user->name }}</span>
                                 </div>
                             </div>
@@ -809,30 +723,31 @@
                     <div class="col-lg-7 col-md-12 col-xs-12 mb-4">
                         <div class="row">
                             @foreach ($remainingNews as $news)
-                            <div class="col-lg-6 col-md-6 col-xs-12 mb-4">
-                                <div class="news-item overflow-hidden">
-                                    <div class="news-image">
-                                        <img src="{{ $news->getThumbnail(); }}" alt="image">
-                                    </div>
-                                    <div class="news-list mt-2 border-b pb-2 mb-2">
-                                        <ul>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-calendar pink pr-1"></i>{{ $news->created_at->format('d M Y') }} </a></li>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-comment pink pr-1"></i>{{ $news->comments->count() }}
-                                                        </a></li>
-                                            <li><a href="single-right.html" class=""><i
-                                                        class="fa fa-tag pink pr-1"></i> {{ $news->category->name }}
+                                <div class="col-lg-6 col-md-6 col-xs-12 mb-4">
+                                    <div class="news-item overflow-hidden">
+                                        <div class="news-image">
+                                            <img src="{{ $news->getThumbnail() }}" alt="image">
+                                        </div>
+                                        <div class="news-list mt-2 border-b pb-2 mb-2">
+                                            <ul>
+                                                <li><a href="single-right.html" class="pr-3"><i
+                                                            class="fa fa-calendar pink pr-1"></i>{{ $news->created_at->format('d M Y') }}
                                                     </a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="news-content mt-2">
-                                        <h4 class="bordernone mb-0"><a href="{{ route('news.show', $news->slug) }}">
-                                                {{ $news->title }}
-                                            </a></h4>
+                                                <li><a href="single-right.html" class="pr-3"><i
+                                                            class="fa fa-comment pink pr-1"></i>{{ $news->comments->count() }}
+                                                    </a></li>
+                                                <li><a href="single-right.html" class=""><i
+                                                            class="fa fa-tag pink pr-1"></i> {{ $news->category->name }}
+                                                    </a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="news-content mt-2">
+                                            <h4 class="bordernone mb-0"><a href="{{ route('news.show', $news->slug) }}">
+                                                    {{ $news->title }}
+                                                </a></h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>

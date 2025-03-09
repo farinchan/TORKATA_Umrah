@@ -7,6 +7,7 @@ use App\Models\NewsCategory;
 use App\Models\NewsComment;
 use App\Models\SettingBanner;
 use App\Models\SettingWebsite;
+use App\Models\Testimonial;
 use App\Models\UmrahPackage;
 use App\Models\UmrahPackageItinerary;
 use App\Models\User;
@@ -33,10 +34,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ])->assignRole('super-admin');
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory(10)->create()->each(function ($user) {
+            $user->assignRole('agen');
+        });
 
         SettingWebsite::create([
             'name' => 'Torkata Umrah, Tour & Travel',
@@ -237,6 +237,31 @@ class DatabaseSeeder extends Seeder
             'description' => '<p>Setelah sarapan pagi, jamaah akan melaksanakan ibadah umrah di Masjidil Haram. Setelah itu, jamaah akan kembali ke hotel untuk beristirahat dan makan siang. Di sore hari, jamaah akan melaksanakan ziarah ke Jabal Nur, Jabal Rahmah, dan tempat-tempat bersejarah lainnya.</p>',
         ]);
 
+
+        Testimonial::create([
+            'name' => 'Dr.eng. Fajri Rinaldi Chan, S.Pd., M.Kom',
+            'position' => 'Software Engineer',
+            'company' => 'Gariskode',
+            'content' => 'Torkata Umrah adalah agen perjalanan terpercaya yang menyediakan layanan umrah dan paket wisata halal ke berbagai destinasi. Dengan komitmen tinggi terhadap kenyamanan dan kepuasan pelanggan, Torkata Umrah menawarkan perjalanan yang aman, nyaman, dan berkes
+            an, didukung oleh tim profesional yang berpengalaman.',
+            'status' => true,
+        ]);
+
+        Testimonial::create([
+            'name' => 'Fulan bin Fulan',
+            'position' => 'Pengusaha',
+            'company' => 'PT. Fulan Jaya',
+            'content' => 'Saya sangat puas dengan pelayanan yang diberikan oleh Torkata Umrah. Mereka sangat profesional, ramah, dan selalu siap membantu. Perjalanan umrah saya menjadi lebih berkesan dan nyaman berkat Torkata Umrah. Terima kasih Torkata Umrah!',
+            'status' => true,
+        ]);
+
+        Testimonial::create([
+            'name' => 'Fulanah binti Fulan',
+            'position' => 'Dosen',
+            'company' => 'Universitas Indonesia',
+            'content' => 'Satu kata untuk Torkata Umrah, luar biasa! Saya sangat puas dengan pelayanan yang diberikan oleh Torkata Umrah. Mereka sangat profesional, ramah, dan selalu siap membantu. Perjalanan umrah saya menjadi lebih berkesan dan nyaman berkat Torkata Umrah. Terima kasih Torkata Umrah!',
+            'status' => true,
+        ]);
 
     }
 }
