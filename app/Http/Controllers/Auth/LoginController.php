@@ -30,7 +30,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->remember?? false)) {
-            return redirect()->route('back.dashboard');
+            return redirect()->route('back.dashboard.index');
         }
 
         return back()->with('error', 'Email atau Password Salah');

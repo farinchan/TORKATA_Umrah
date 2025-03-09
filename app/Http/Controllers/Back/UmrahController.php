@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Models\UmrahPackage;
 use App\Models\UmrahPackageItinerary;
+use App\Models\UmrahSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -25,7 +26,7 @@ class UmrahController extends Controller
                     'link' => route('back.umrah.package.index')
                 ]
 
-                ],
+            ],
             'list_umrah_package' => UmrahPackage::all()
         ];
 
@@ -258,5 +259,152 @@ class UmrahController extends Controller
         $umrah_package->delete();
 
         return redirect()->route('back.umrah.package.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function umrahScheduleIndex()
+    {
+        $data = [
+            'title' => 'Jadwal Umrah',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Jadwal Umrah',
+                    'link' => route('back.umrah.schedule.index')
+                ]
+
+            ],
+            'list_umrah_package' => UmrahPackage::where('status', 'enabled')->get(),
+            'list_umrah_schedule' => UmrahSchedule::with('umrahPackage')->latest()->get()
+        ];
+
+        return view('back.pages.umrah.schedule.index', $data);
+    }
+
+    public function umrahSchedulestore(Request $request)
+    {
+        $validator =  Validator::make($request->all(), [
+            'umrah_package_id' => 'required',
+            'name' => 'required',
+            'quad_quota' => 'nullable',
+            'quad_price' => 'nullable',
+            'triple_quota' => 'nullable',
+            'triple_price' => 'nullable',
+            'double_quota' => 'nullable',
+            'double_price' => 'nullable',
+            'departure' => 'nullable',
+            'hotel_makka' => 'nullable',
+            'hotel_madinah' => 'nullable',
+            'airline' => 'nullable',
+        ], [
+            'umrah_package_id.required' => 'Paket Umrah harus diisi',
+            'name.required' => 'Nama harus diisi',
+            'status.required' => 'Status harus diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data gagal disimpan');
+        }
+
+        $umrah_schedule = new UmrahSchedule();
+        $umrah_schedule->umrah_package_id = $request->umrah_package_id;
+        $umrah_schedule->name = $request->name;
+        $umrah_schedule->quad_quota = $request->quad_quota;
+        $umrah_schedule->quad_price = $request->quad_price;
+        $umrah_schedule->triple_quota = $request->triple_quota;
+        $umrah_schedule->triple_price = $request->triple_price;
+        $umrah_schedule->double_quota = $request->double_quota;
+        $umrah_schedule->double_price = $request->double_price;
+        $umrah_schedule->departure = $request->departure;
+        $umrah_schedule->hotel_makka = $request->hotel_makka;
+        $umrah_schedule->hotel_madinah = $request->hotel_madinah;
+        $umrah_schedule->airline = $request->airline;
+        $umrah_schedule->status = 'aktif';
+
+        $umrah_schedule->save();
+
+        return redirect()->route('back.umrah.schedule.index')->with('success', 'Data berhasil disimpan');
+    }
+
+    public function umrahScheduleSetting($id)
+    {
+        $schedule = UmrahSchedule::with('umrahPackage')->findOrFail($id);
+        $data = [
+            'title' => $schedule->name,
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Jadwal Umrah',
+                    'link' => route('back.umrah.schedule.index')
+                ],
+                [
+                    'name' => 'Setting',
+                    'link' => route('back.umrah.schedule.setting', $id)
+                ]
+            ],
+            'list_umrah_package' => UmrahPackage::where('status', 'enabled')->get(),
+            'schedule' => $schedule
+        ];
+
+        return view('back.pages.umrah.schedule.detail-setting', $data);
+    }
+
+    public function umrahScheduleUpdate(Request $request, $id)
+    {
+        $validator =  Validator::make($request->all(), [
+            'umrah_package_id' => 'required',
+            'name' => 'required',
+            'quad_quota' => 'nullable',
+            'quad_price' => 'nullable',
+            'triple_quota' => 'nullable',
+            'triple_price' => 'nullable',
+            'double_quota' => 'nullable',
+            'double_price' => 'nullable',
+            'departure' => 'nullable',
+            'hotel_makka' => 'nullable',
+            'hotel_madinah' => 'nullable',
+            'airline' => 'nullable',
+            'status' => 'required',
+        ], [
+            'umrah_package_id.required' => 'Paket Umrah harus diisi',
+            'name.required' => 'Nama harus diisi',
+            'status.required' => 'Status harus diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data gagal disimpan');
+        }
+
+        $umrah_schedule = UmrahSchedule::findOrFail($id);
+        $umrah_schedule->umrah_package_id = $request->umrah_package_id;
+        $umrah_schedule->name = $request->name;
+        $umrah_schedule->quad_quota = $request->quad_quota;
+        $umrah_schedule->quad_price = $request->quad_price;
+        $umrah_schedule->triple_quota = $request->triple_quota;
+        $umrah_schedule->triple_price = $request->triple_price;
+        $umrah_schedule->double_quota = $request->double_quota;
+        $umrah_schedule->double_price = $request->double_price;
+        $umrah_schedule->departure = $request->departure;
+        $umrah_schedule->hotel_makka = $request->hotel_makka;
+        $umrah_schedule->hotel_madinah = $request->hotel_madinah;
+        $umrah_schedule->airline = $request->airline;
+        $umrah_schedule->status = $request->status;
+
+        $umrah_schedule->save();
+
+        return redirect()->route('back.umrah.schedule.setting', $id)->with('success', 'Data berhasil disimpan');
+    }
+
+    public function umrahScheduleDestroy($id)
+    {
+        $umrah_schedule = UmrahSchedule::findOrFail($id);
+        $umrah_schedule->delete();
+
+        return redirect()->route('back.umrah.schedule.index')->with('success', 'Data berhasil dihapus');
     }
 }

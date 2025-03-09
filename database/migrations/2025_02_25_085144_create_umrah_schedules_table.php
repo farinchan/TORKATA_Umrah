@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('umrah_package_id')->constrained('umrah_packages')->onDelete('cascade');
             $table->string('name');
+            $table->string('quad_quota')->nullable();
             $table->string('quad_price')->nullable();
             $table->string('triple_quota')->nullable();
             $table->string('triple_price')->nullable();
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->string('hotel_makka')->nullable();
             $table->string('hotel_madinah')->nullable();
             $table->string('airline')->nullable();
-            $table->enum('status', ['aktif', 'finished'])->default('aktif');
+            $table->enum('status', ['aktif', 'berakhir'])->default('aktif');
             $table->timestamps();
 
             $table->index(['umrah_package_id', 'departure']);
