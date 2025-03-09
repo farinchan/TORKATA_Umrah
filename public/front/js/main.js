@@ -17,7 +17,7 @@
       $("#preloader").delay(200).fadeOut("slow");
       $("body").delay(200).css({ "overflow": "visible" });
 
-      
+
       /* Init Wow Js */
       new WOW().init();
 
@@ -181,13 +181,13 @@
              settings: {
                  slidesToShow: 3
              }
-         }, 
+         },
          {
              breakpoint: 600,
              settings: {
                  slidesToShow: 2
             }
-         }, 
+         },
          {
              breakpoint: 500,
              settings: {
@@ -338,27 +338,27 @@
      });
 
 
-     $("#contactform").validate({      
-      submitHandler: function() {
-        
-        $.ajax({
-          url : 'mail/contact.php',
-          type : 'POST',
-          data : {
-            fname : $('input[name="first_name"]').val(),
-            lname : $('input[name="last_name"]').val(),
-            email : $('input[name="email"]').val(),
-            phone : $('input[name="phone"]').val(),
-            comments : $('textarea[name="comments"]').val(),
-          },
-          success : function( result ){
-            $('#contactform-error-msg').html( result );
-            $("#contactform")[0].reset();
-          }     
-        });
+    //  $("#contactform").validate({
+    //   submitHandler: function() {
 
-      }
-    });
+    //     $.ajax({
+    //       url : 'mail/contact.php',
+    //       type : 'POST',
+    //       data : {
+    //         fname : $('input[name="first_name"]').val(),
+    //         lname : $('input[name="last_name"]').val(),
+    //         email : $('input[name="email"]').val(),
+    //         phone : $('input[name="phone"]').val(),
+    //         comments : $('textarea[name="comments"]').val(),
+    //       },
+    //       success : function( result ){
+    //         $('#contactform-error-msg').html( result );
+    //         $("#contactform")[0].reset();
+    //       }
+    //     });
+
+    //   }
+    // });
 
      // burgermenu
 
@@ -378,7 +378,7 @@
     });
 
 
-    // bubbles ----------------- 
+    // bubbles -----------------
     var bArray = [];
     var sArray = [2, 4, 6, 8];
     for (var i = 0; i < $('.bubbles').width(); i++) {
@@ -412,7 +412,7 @@
 
     /*--------------------------------------------
     Wicked Picker
-    --------------------------------------------*/  
+    --------------------------------------------*/
 
     $('.set-time').wickedpicker();
     $('.selector').wickedpicker({
@@ -434,7 +434,7 @@
       title: 'Timepicker'
 
     });
-    
+
      /*-----------------------------------------------------------------------------------*/
     /*  COUNTDOWN
     /*-----------------------------------------------------------------------------------*/
@@ -453,7 +453,7 @@
     /*-----------------------------------------------------------------------------------*/
     /*  MASONRY
     /*-----------------------------------------------------------------------------------*/
-    
+
      $('.blog-main').masonry({
          // options
          itemSelector: '.mansonry-item',

@@ -55,7 +55,7 @@
                             </li>
                             <li><a href="#">Agen Kami</a></li>
                             {{-- <li><a href="#">Tentang Kami</a></li> --}}
-                            <li><a href="#">kontak</a></li>
+                            <li><a href="{{ route("contact.index") }}">kontak</a></li>
                             <li><a href="#">Cek Pembayaran</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->

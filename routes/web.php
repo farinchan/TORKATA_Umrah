@@ -27,6 +27,11 @@ Route::prefix('news')->name('news.')->group(function () {
     Route::get('/category/{slug}', [App\Http\Controllers\Front\NewsController::class, 'category'])->name('category');
 });
 
+Route::prefix('contact')->name('contact.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\ContactController::class, 'index'])->name('index');
+    Route::post('/', [App\Http\Controllers\Front\ContactController::class, 'store'])->name('store');
+});
+
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BackDashboardController::class, 'index'])->name('dashboard');
 
