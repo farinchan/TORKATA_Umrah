@@ -5,6 +5,8 @@
 @endsection
 
 @section('content')
+@include('front.partials.breadcrumb')
+
     <!-- error section starts -->
     <section class="error overflow-hidden">
         <div class="container">

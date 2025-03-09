@@ -54,7 +54,7 @@
                                 </ul>
                             </li>
                             <li><a href="#">Agen Kami</a></li>
-                            <li><a href="#">Tentang Kami</a></li>
+                            {{-- <li><a href="#">Tentang Kami</a></li> --}}
                             <li><a href="#">kontak</a></li>
                             <li><a href="#">Cek Pembayaran</a></li>
                         </ul>

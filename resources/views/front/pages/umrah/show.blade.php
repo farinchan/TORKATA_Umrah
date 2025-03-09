@@ -1,11 +1,13 @@
 @extends('front.app')
 
 @section('styles')
-<style>
-</style>
+    <style>
+    </style>
 @endsection
 
 @section('content')
+    @include('front.partials.breadcrumb')
+
     <!-- blog starts -->
     <section class="blog trending destination-b">
         <div class="container">
@@ -32,7 +34,7 @@
                             </div>
 
                             <div class="description-inner mb-2">
-                                <img src="{{ $umrah->getBanner() }}" alt="image" >
+                                <img src="{{ $umrah->getBanner() }}" alt="image">
                             </div>
 
                             <div class="description-inner mb-2">
@@ -46,7 +48,8 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td><i class="fa fa-clock-o pink mr-1" aria-hidden="true"></i> {{ $umrah->days }} Hari</td>
+                                            <td><i class="fa fa-clock-o pink mr-1" aria-hidden="true"></i>
+                                                {{ $umrah->days }} Hari</td>
                                             {{-- <td><i class="fa fa-calendar pink mr-1" aria-hidden="true"></i> Jan 18 - Dec 21</td>
                                             <td><i class="fa fa-group pink mr-1" aria-hidden="true"></i> Max People : 26</td> --}}
                                         </tr>
@@ -101,42 +104,42 @@
                                     <div class="thumbnail-images">
                                         <div class="slider-store">
                                             <div>
-                                               <img src="{{ asset("front/images/slider/1.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/1.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/2.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/3.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/3.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/7.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/7.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/8.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/8.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/2.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
                                             </div>
                                         </div>
                                         <div class="slider-thumbs">
                                             <div>
-                                               <img src="{{ asset("front/images/slider/1.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/1.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/2.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/3.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/3.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/7.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/7.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/8.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/8.jpg') }}" alt="1">
                                             </div>
                                             <div>
-                                                <img src="{{ asset("front/images/slider/2.jpg") }}" alt="1">
+                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +160,6 @@
                                         </div><!-- /.inner -->
                                     </div>
                                 </div>
-
                             @endforeach
                         </div>
 
@@ -165,23 +167,26 @@
                             <h4>Map</h4>
                             <div class="map">
                                 <div style="width: 100%">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3714.1333489503577!2d39.82248211232081!3d21.424002980244104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c204b74d3fb493%3A0x55d1f94f8e094785!2sMasjidil%20Haram!5e0!3m2!1sid!2sid!4v1741451281597!5m2!1sid!2sid"  height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3714.1333489503577!2d39.82248211232081!3d21.424002980244104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c204b74d3fb493%3A0x55d1f94f8e094785!2sMasjidil%20Haram!5e0!3m2!1sid!2sid!4v1741451281597!5m2!1sid!2sid"
+                                        height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 </div>
                             </div>
                         </div>
 
                         <div class="accrodion-grp faq-accrodion mb-4" id="jadwal" data-grp-name="faq-accrodion">
                             <h4>Jadwal</h4>
-                                <div class="accrodion active">
-                                    <div class="accrodion-title">
-                                        <h5 class="mb-0"><span>Ramadhan 2025</span></h5>
-                                    </div>
-                                    <div class="accrodion-content" style="display: block;">
-                                        <div class="inner">
-                                            <p>{{ $itinerary->description }}</p>
-                                        </div><!-- /.inner -->
-                                    </div>
+                            <div class="accrodion active">
+                                <div class="accrodion-title">
+                                    <h5 class="mb-0"><span>Ramadhan 2025</span></h5>
                                 </div>
+                                <div class="accrodion-content" style="display: block;">
+                                    <div class="inner">
+                                        <p>{{ $itinerary->description }}</p>
+                                    </div><!-- /.inner -->
+                                </div>
+                            </div>
 
                         </div>
 
@@ -370,11 +375,14 @@
                             @endphp
                             <div class="sidebar-contact text-center bg-navy">
                                 {{-- <i class=" fa fa-phone-alt pink"></i> --}}
-                                <a href="https://wa.me/{{ $phone }}?text=Halo%20saya%20ingin%20bertanya%20tentang%20paket%20umrah%20{{ $umrah->name }}" target="_blank">
-                                    <img src="{{ asset("ext_images/icon/whatsapp.svg") }}" alt="" style="width: 80px;" class="mb-2">
+                                <a href="https://wa.me/{{ $phone }}?text=Halo%20saya%20ingin%20bertanya%20tentang%20paket%20umrah%20{{ $umrah->name }}"
+                                    target="_blank">
+                                    <img src="{{ asset('ext_images/icon/whatsapp.svg') }}" alt=""
+                                        style="width: 80px;" class="mb-2">
                                 </a>
                                 <h3 class="white"><span>Pesan Melalui</span> phone/Whatsapp</h3>
-                                <a href="tel:{{ $setting_web->phone??"" }}" class="phone white">{{ $setting_web->phone??"+" }}</a>
+                                <a href="tel:{{ $setting_web->phone ?? '' }}"
+                                    class="phone white">{{ $setting_web->phone ?? '+' }}</a>
                                 <small class="white d-block mt-2">*Setiap Waktu</small>
                             </div>
                         </div>
@@ -388,8 +396,6 @@
 @endsection
 
 @section('scripts')
-
-     <script src="{{ asset("front/js/custom-accordian.js") }}"></script>
-     <script src="{{ asset("front/js/custom-navscroll.js") }}"></script>
-
+    <script src="{{ asset('front/js/custom-accordian.js') }}"></script>
+    <script src="{{ asset('front/js/custom-navscroll.js') }}"></script>
 @endsection

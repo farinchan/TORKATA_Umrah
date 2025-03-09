@@ -104,6 +104,8 @@
 @endsection
 
 @section('content')
+@include('front.partials.breadcrumb')
+
     <!-- blog starts -->
     <section class="blog trending destination-b">
         <div class="container">
