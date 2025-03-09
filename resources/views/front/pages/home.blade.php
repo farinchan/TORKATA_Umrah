@@ -3,8 +3,6 @@
 @section('content')
     @include('front.partials.banner')
 
-
-
     <!-- about-us starts -->
     <section class="about-us bg-grey pb-6">
         <div class="container">
@@ -106,10 +104,6 @@
         </div>
     </section>
     <!-- about-us ends -->
-
-
-
-
 
     <!-- top destination starts -->
     <section class="top-destination overflow-hidden pb-9">
@@ -254,26 +248,29 @@
       <section class="trending destination-b pb-6 pt-7">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
-                <h2 class="m-0">Perfect <span>Deals & Discounts</span></h2>
-                <p class="mb-0">Travel has helped us to understand the meaning of life and it has helped us become better
-                    people. Each time we travel, we see the world with new eyes.</p>
+                <h2 class="m-0">Paket <span>Ibadah Umrah</span></h2>
+                <p class="mb-0">
+                    Kami menawarkan berbagai paket umrah yang menarik. Dapatkan pengalaman ibada umrah yang khusuk dan nyaman bersama kami.
+                </p>
             </div>
             <div class="trend-box">
                 <div class="row team-slider">
+                    @foreach ($umrah_packages as $umrah)
+
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="trend-item">
-                            <div class="ribbon ribbon-top-left"><span>25% OFF</span></div>
+                            {{-- <div class="ribbon ribbon-top-left"><span>25% OFF</span></div> --}}
                             <div class="trend-image">
-                                <img src="{{ asset('front/images/trending/trending1.jpg') }}" alt="image">
-                                <div class="trend-tags">
-                                    <a href="#"><i class="flaticon-like"></i></a>
-                                </div>
+                                <img src="{{ $umrah->getBanner() }}" alt="image">
+
                             </div>
                             <div class="trend-content-main">
                                 <div class="trend-content">
-                                    <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Thailand</h6>
-                                    <h4><a href="#">Stonehenge, Windsor Castle, and Bath from London</a></h4>
-                                    <div class="rating-main d-flex align-items-center">
+                                    {{-- <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Thailand</h6> --}}
+                                    <h4><a href="{{ route('umrah.show', $umrah->slug) }}">
+                                        {{ $umrah->name }}
+                                        </a></h4>
+                                        <div class="rating-main d-flex align-items-center">
                                         <div class="rating">
                                             <span class="fa fa-star checked"></span>
                                             <span class="fa fa-star checked"></span>
@@ -281,142 +278,124 @@
                                             <span class="fa fa-star checked"></span>
                                             <span class="fa fa-star checked"></span>
                                         </div>
-                                        <span class="ml-2">38 Reviews</span>
                                     </div>
                                 </div>
                                 <div class="trend-last-main">
-                                    <p class="mb-0 trend-para">A wonderful little cottage right on the seashore - perfect
-                                        for exploring.</p>
+                                    <p class="mb-0 trend-para">
+                                        {{ Str::limit(strip_tags($umrah->description), 180) }}
+                                    </p>
                                     <div class="trend-last d-flex align-items-center justify-content-between bg-navy">
-                                        <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i> 3 days & 2
-                                            night</p>
+                                        <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            {{ $umrah->days }} Hari
+                                        </p>
                                         <div class="trend-price">
-                                            <p class="price white mb-0">From <span>$350.00</span></p>
+                                            <p class="price white mb-0">Harga Mulai <span>@money($umrah->price_start)</span></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="trend-item">
-                            <div class="ribbon ribbon-top-left"><span>30% OFF</span></div>
-                            <div class="trend-image">
-                                <img src="{{ asset('front/images/trending/trending2.jpg') }}" alt="image">
-                                <div class="trend-tags">
-                                    <a href="#"><i class="flaticon-like"></i></a>
-                                </div>
+                    @endforeach
+                    @if ($umrah_packages->count() < 3)
+                        @for ($i = 0; $i < 3 - $umrah_packages->count(); $i++)
+                            <div class="col-lg-4 col-md-6 mb-4">
                             </div>
-                            <div class="trend-content-main">
-                                <div class="trend-content">
-                                    <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Germany</h6>
-                                    <h4><a href="#">Here We Bosphorus and Black Sea Train from Istanbul</a></h4>
-                                    <div class="rating-main d-flex align-items-center">
-                                        <div class="rating">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                        </div>
-                                        <span class="ml-2">38 Reviews</span>
-                                    </div>
-                                </div>
-                                <div class="trend-last-main">
-                                    <p class="mb-0 trend-para">A wonderful little cottage right on the seashore - perfect
-                                        for exploring.</p>
-                                    <div class="trend-last d-flex align-items-center justify-content-between bg-navy">
-                                        <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i> 3 days & 2
-                                            night</p>
-                                        <div class="trend-price">
-                                            <p class="price white mb-0">From <span>$350.00</span></p>
-                                        </div>
-                                    </div>
-                                </div>
+                        @endfor
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Trending Ends -->
+
+       <!-- our teams starts -->
+       <section class="our-team pb-4">
+        <div class="container">
+            <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
+                <h2 class="m-0"><span> Agen & Pemandu</span> Resmi Kami</h2>
+                <p class="mb-0">
+                    Kami memiliki tim yang profesional dan berpengalaman dalam bidangnya masing-masing. Kami siap
+                    membantu anda dalam perjalanan umrah dan wisata anda.
+                </p>
+            </div>
+            <div class="team-main">
+                <div class="row shop-slider">
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="team-list">
+                            <div class="team-image">
+                                <img src="{{ asset("front/images/team/img1.jpg") }}" alt="team">
                             </div>
+                            <div class="team-content1 text-center">
+                               <h4 class="mb-0 pink">Salmon Thuir</h4>
+                                <p class="mb-0">ID. Cheif Officer</p>
+
+                            </div>
+
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="trend-item">
-                            <div class="ribbon ribbon-top-left"><span>20% OFF</span></div>
-                            <div class="trend-image">
-                                <img src="{{ asset('front/images/trending/trending3.jpg') }}" alt="image">
-                                <div class="trend-tags">
-                                    <a href="#"><i class="flaticon-like"></i></a>
-                                </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="team-list">
+                            <div class="team-image">
+                                <img src="{{ asset("front/images/team/img2.jpg") }}" alt="team">
                             </div>
-                            <div class="trend-content-main">
-                                <div class="trend-content">
-                                    <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Denmark</h6>
-                                    <h4><a href="#">NYC One World Observatory Skip-the-Line Ticket</a></h4>
-                                    <div class="rating-main d-flex align-items-center">
-                                        <div class="rating">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                        </div>
-                                        <span class="ml-2">38 Reviews</span>
-                                    </div>
-                                </div>
-                                <div class="trend-last-main">
-                                    <p class="mb-0 trend-para">A wonderful little cottage right on the seashore - perfect
-                                        for exploring.</p>
-                                    <div class="trend-last d-flex align-items-center justify-content-between bg-navy">
-                                        <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i> 3 days & 2
-                                            night</p>
-                                        <div class="trend-price">
-                                            <p class="price white mb-0">From <span>$350.00</span></p>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="team-content1 text-center">
+                               <h4 class="mb-0 pink">Horke Pels</h4>
+                                <p class="mb-0">Head Chef</p>
+
                             </div>
+
+
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="trend-item">
-                            <div class="ribbon ribbon-top-left"><span>40% OFF</span></div>
-                            <div class="trend-image">
-                                <img src="{{ asset('front/images/trending/trending4.jpg') }}" alt="image">
-                                <div class="trend-tags">
-                                    <a href="#"><i class="flaticon-like"></i></a>
-                                </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="team-list">
+                            <div class="team-image">
+                                <img src="{{ asset("front/images/team/img4.jpg") }}" alt="team">
                             </div>
-                            <div class="trend-content-main">
-                                <div class="trend-content">
-                                    <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Japan</h6>
-                                    <h4><a href="#">Stonehenge, Windsor Castle, and Bath from London</a></h4>
-                                    <div class="rating-main d-flex align-items-center">
-                                        <div class="rating">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                        </div>
-                                        <span class="ml-2">38 Reviews</span>
-                                    </div>
-                                </div>
-                                <div class="trend-last-main">
-                                    <p class="mb-0 trend-para">A wonderful little cottage right on the seashore - perfect
-                                        for exploring.</p>
-                                    <div class="trend-last d-flex align-items-center justify-content-between bg-navy">
-                                        <p class="mb-0 white"><i class="fa fa-clock-o" aria-hidden="true"></i> 3 days & 2
-                                            night</p>
-                                        <div class="trend-price">
-                                            <p class="price white mb-0">From <span>$350.00</span></p>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="team-content1 text-center">
+                               <h4 class="mb-0 pink">Solden kalos</h4>
+                                <p class="mb-0">Supervisor</p>
+
                             </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="team-list">
+                            <div class="team-image">
+                                <img src="{{ asset("front/images/team/img3.jpg") }}" alt="team">
+                            </div>
+                            <div class="team-content1 text-center">
+                               <h4 class="mb-0 pink">Nelson Bam</h4>
+                                <p class="mb-0">Quality Assurance</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="team-list">
+                            <div class="team-image">
+                                <img src="{{ asset("front/images/team/img5.jpg") }}" alt="team">
+                            </div>
+                            <div class="team-content1 text-center">
+                               <h4 class="mb-0 pink">Cacics Coold</h4>
+                                <p class="mb-0">Asst. Chef</p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Trending Ends -->
+    <!-- our teams Ends -->
 
     <!-- Call to action starts -->
     <section class="call-to-action call-to-action1 pb-6 pt-10"
@@ -656,93 +635,10 @@
     </section>
     <!-- top destination ends -->
 
-     <!-- our teams starts -->
-     <section class="our-team pb-4">
-        <div class="container">
-            <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
-                <h2 class="m-0">Our <span>Team & Guide</span></h2>
-                <p class="mb-0">Travel has helped us to understand the meaning of life and it has helped us become better people. Each time we travel, we see the world with new eyes.</p>
-            </div>
-            <div class="team-main">
-                <div class="row shop-slider">
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="images/team/img1.jpg" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Salmon Thuir</h4>
-                                <p class="mb-0">Cheif Officer</p>
 
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="images/team/img2.jpg" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Horke Pels</h4>
-                                <p class="mb-0">Head Chef</p>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="images/team/img4.jpg" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Solden kalos</h4>
-                                <p class="mb-0">Supervisor</p>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="images/team/img3.jpg" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Nelson Bam</h4>
-                                <p class="mb-0">Quality Assurance</p>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="team-list">
-                            <div class="team-image">
-                                <img src="images/team/img5.jpg" alt="team">
-                            </div>
-                            <div class="team-content1 text-center">
-                               <h4 class="mb-0 pink">Cacics Coold</h4>
-                                <p class="mb-0">Asst. Chef</p>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- our teams Ends -->
 
     <!-- Counter -->
-    <section class="counter-main pb-6 pt-10" style="background-image: url({{ asset('front/images/bg/bg4.jpg') }})">
+    {{-- <section class="counter-main pb-6 pt-10" style="background-image: url({{ asset('front/images/bg/bg4.jpg') }})">
         <div class="container">
             <div class="counter text-center">
                 <div class="row">
@@ -782,25 +678,26 @@
             </div>
         </div>
         <div class="overlay"></div>
-    </section>
+    </section> --}}
     <!-- End Counter -->
 
     <!-- cta-horizon starts -->
-    <div class="cta-horizon bg-navy pt-4 pb-4">
+    {{-- <div class="cta-horizon bg-navy pt-4 pb-4">
         <div class="container d-md-flex align-items-center justify-content-between">
             <h4 class="mb-0 white">It’s Time For a New Adventure! Don’t Wait Any Longer. Contact us!</h4>
             <a href="#" class="nir-btn">Fine More Destination</a>
         </div>
-    </div>
+    </div> --}}
     <!-- cta-horizon Ends -->
 
     <!-- testomonial start -->
     <section class="testimonial pb-6 pt-9">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
-                <h2 class="m-0">What <span>People Say About Us</span></h2>
-                <p class="mb-0">Travel has helped us to understand the meaning of life and it has helped us become
-                    better people. Each time we travel, we see the world with new eyes.</p>
+                <h2 class="m-0">Apa Yang <span>Orang Katakan Tentang Kami</span></h2>
+                <p class="mb-0">
+                    para pelanggan kami yang puas dengan layanan kami. Kami berusaha memberikan yang terbaik untuk anda.
+                </p>
             </div>
             <div class="row review-slider">
                 <div class="col-sm-4 item">
@@ -866,128 +763,77 @@
     <section class="news pb-2 bg-lgrey pt-9">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
-                <h2 class="m-0">Latest Some <span>Tips & Articles</span></h2>
-                <p class="mb-0 ">Travel has helped us to understand the meaning of life and it has helped us become
-                    better people. Each time we travel, we see the world with new eyes.</p>
+                <h2 class="m-0">Beberapa <span>Tips & artikel</span> Terbaru</h2>
+                <p class="mb-0 ">
+                    Perjalanan telah membantu kita memahami makna hidup dan telah membantu kita menjadi orang yang lebih baik. Setiap kali kita bepergian, kita melihat dunia dengan mata baru.
+                </p>
             </div>
             <div class="news-outer">
                 <div class="row">
+                    @php
+                        $firstNews = $news->first();
+                        $remainingNews = $news->slice(1);
+                    @endphp
                     <div class="col-lg-5 col-md-12 col-xs-12 mb-4">
                         <div class="news-item overflow-hidden">
                             <div class="news-image">
-                                <img src="{{ asset('front/images/blog/blog1.jpg') }}" alt="image">
+                                <img src="{{ $firstNews->getThumbnail(); }}" alt="image">
                             </div>
                             <div class="news-list mt-2 border-b pb-2 mb-2">
                                 <ul>
                                     <li><a href="single-right.html" class="pr-3"><i
-                                                class="fa fa-calendar pink pr-1"></i> 4th AUg 2020 </a></li>
+                                                class="fa fa-calendar pink pr-1"></i> {{ $firstNews->created_at->format('d M Y') }} </a></li>
                                     <li><a href="single-right.html" class="pr-3"><i
-                                                class="fa fa-comment pink pr-1"></i> 3</a></li>
+                                                class="fa fa-comment pink pr-1"></i> {{ $firstNews->comments->count() }}
+                                            </a></li>
                                     <li><a href="single-right.html" class=""><i class="fa fa-tag pink pr-1"></i>
-                                            Tour, Tourism, Travel</a></li>
+                                        {{ $firstNews->category->name }}
+                                    </a></li>
                                 </ul>
                             </div>
                             <div class="news-content mt-2">
-                                <h4 class="pb-2 mb-2 border-b"><a href="single-right.html">The real voyage does not
-                                        consist in seeking new landscapes</a></h4>
-                                <p class="mb-3">Excited him now natural saw passage offices you minuter. At by asked
-                                    being court hopes. Farther so friends am to detract. Forbade concern do private be.
-                                    Offending residence but men engrossed shy. <br><br>One of the programs is Save Our I
-                                    have personally in many of the programs mentioned on this site.</p>
+                                <h4 class="pb-2 mb-2 border-b"><a href="{{ route('news.show', $firstNews->slug) }}">
+                                        {{ $firstNews->title }}
+                                    </a></h4>
+                                <p class="mb-3">
+                                    {{ Str::limit(strip_tags($firstNews->content), 300) }}
+                                </p>
 
                                 <div class="author-img">
-                                    <img src="{{ asset('front/images/reviewer/1.jpg') }}" alt="Demo Image">
-                                    <span>By - Jack Well Fardez</span>
+                                    <img src="{{ $firstNews->user->getPhoto(); }}" alt="Demo Image">
+                                    <span>By - {{ $firstNews->user->name }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-12 col-xs-12 mb-4">
                         <div class="row">
+                            @foreach ($remainingNews as $news)
                             <div class="col-lg-6 col-md-6 col-xs-12 mb-4">
                                 <div class="news-item overflow-hidden">
                                     <div class="news-image">
-                                        <img src="{{ asset('front/images/blog/blog2.jpg') }}" alt="image">
+                                        <img src="{{ $news->getThumbnail(); }}" alt="image">
                                     </div>
                                     <div class="news-list mt-2 border-b pb-2 mb-2">
                                         <ul>
                                             <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-calendar pink pr-1"></i> 4th AUg 2020 </a></li>
+                                                        class="fa fa-calendar pink pr-1"></i>{{ $news->created_at->format('d M Y') }} </a></li>
                                             <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-comment pink pr-1"></i> 3</a></li>
+                                                        class="fa fa-comment pink pr-1"></i>{{ $news->comments->count() }}
+                                                        </a></li>
                                             <li><a href="single-right.html" class=""><i
-                                                        class="fa fa-tag pink pr-1"></i> Travel</a></li>
+                                                        class="fa fa-tag pink pr-1"></i> {{ $news->category->name }}
+                                                    </a></li>
                                         </ul>
                                     </div>
                                     <div class="news-content mt-2">
-                                        <h4 class="bordernone mb-0"><a href="single-right.html">Mountains is always
-                                                right destination.</a></h4>
+                                        <h4 class="bordernone mb-0"><a href="{{ route('news.show', $news->slug) }}">
+                                                {{ $news->title }}
+                                            </a></h4>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 mb-4">
-                                <div class="news-item overflow-hidden">
-                                    <div class="news-image">
-                                        <img src="{{ asset('front/images/blog/blog3.jpg') }}" alt="image">
-                                    </div>
-                                    <div class="news-list mt-2 border-b pb-2 mb-2">
-                                        <ul>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-calendar pink pr-1"></i> 4th AUg 2020 </a></li>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-comment pink pr-1"></i> 3</a></li>
-                                            <li><a href="single-right.html" class=""><i
-                                                        class="fa fa-tag pink pr-1"></i> Tourism</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="news-content mt-2">
-                                        <h4 class="bordernone mb-0"><a href="single-right.html">We have not all those
-                                                who wander are lost.</a></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 mb-4">
-                                <div class="news-item overflow-hidden">
-                                    <div class="news-image">
-                                        <img src="{{ asset('front/images/blog/blog4.jpg') }}" alt="image">
-                                    </div>
-                                    <div class="news-list mt-2 border-b pb-2 mb-2">
-                                        <ul>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-calendar pink pr-1"></i> 4th AUg 2020 </a></li>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-comment pink pr-1"></i> 3</a></li>
-                                            <li><a href="single-right.html" class=""><i
-                                                        class="fa fa-tag pink pr-1"></i> Tour</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="news-content mt-2">
-                                        <h4 class="bordernone mb-0"><a href="single-right.html">Here Our's Life is
-                                                either a daring adventure.</a></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 mb-4">
-                                <div class="news-item overflow-hidden">
-                                    <div class="news-image">
-                                        <img src="{{ asset('front/images/blog/blog5.jpg') }}" alt="image">
-                                    </div>
-                                    <div class="news-list mt-2 border-b pb-2 mb-2">
-                                        <ul>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-calendar pink pr-1"></i> 4th AUg 2020 </a></li>
-                                            <li><a href="single-right.html" class="pr-3"><i
-                                                        class="fa fa-comment pink pr-1"></i> 3</a></li>
-                                            <li><a href="single-right.html" class=""><i
-                                                        class="fa fa-tag pink pr-1"></i> Travel</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="news-content mt-2">
-                                        <h4 class="bordernone mb-0"><a href="single-right.html">Take only memories,
-                                                leave only footprints.</a></h4>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
