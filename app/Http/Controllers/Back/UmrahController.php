@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\UmrahJamaah;
 use App\Models\UmrahPackage;
 use App\Models\UmrahPackageItinerary;
 use App\Models\UmrahSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -277,9 +279,20 @@ class UmrahController extends Controller
 
             ],
             'list_umrah_package' => UmrahPackage::where('status', 'enabled')->get(),
-            'list_umrah_schedule' => UmrahSchedule::with('umrahPackage')->latest()->get()
+            'list_umrah_schedule' => UmrahSchedule::withCount([
+                'jamaah as quad_count' => function ($query) {
+                    $query->where('package_type', 'quad');
+                },
+                'jamaah as triple_count' => function ($query) {
+                    $query->where('package_type', 'triple');
+                },
+                'jamaah as double_count' => function ($query) {
+                    $query->where('package_type', 'double');
+                }
+            ])->latest()->get()
         ];
 
+        // return response()->json($data);
         return view('back.pages.umrah.schedule.index', $data);
     }
 
@@ -330,7 +343,17 @@ class UmrahController extends Controller
 
     public function umrahScheduleSetting($id)
     {
-        $schedule = UmrahSchedule::with('umrahPackage')->findOrFail($id);
+        $schedule = UmrahSchedule::with('umrahPackage')->withCount([
+            'jamaah as quad_count' => function ($query) {
+                $query->where('package_type', 'quad');
+            },
+            'jamaah as triple_count' => function ($query) {
+                $query->where('package_type', 'triple');
+            },
+            'jamaah as double_count' => function ($query) {
+                $query->where('package_type', 'double');
+            }
+        ])->findOrFail($id);
         $data = [
             'title' => $schedule->name,
             'breadcrumbs' => [
@@ -406,5 +429,182 @@ class UmrahController extends Controller
         $umrah_schedule->delete();
 
         return redirect()->route('back.umrah.schedule.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function umrahScheduleJamaah($id)
+    {
+        $schedule = UmrahSchedule::with('umrahPackage')->withCount([
+            'jamaah as quad_count' => function ($query) {
+                $query->where('package_type', 'quad');
+            },
+            'jamaah as triple_count' => function ($query) {
+                $query->where('package_type', 'triple');
+            },
+            'jamaah as double_count' => function ($query) {
+                $query->where('package_type', 'double');
+            }
+        ])->findOrFail($id);
+        $data = [
+            'title' => $schedule->name,
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Jadwal Umrah',
+                    'link' => route('back.umrah.schedule.index')
+                ],
+                [
+                    'name' => 'Jamaah',
+                    'link' => route('back.umrah.schedule.jamaah', $id)
+                ]
+            ],
+            'schedule' => $schedule,
+            'list_jamaah' => UmrahJamaah::where('umrah_schedule_id', $id)
+            ->withSum([ 'umrahJamaahPayments as total_payment' => function ($query) {
+                $query->where('status', 'approved');
+            }], 'amount')
+            ->get()
+        ];
+
+        // return response()->json($data);
+        return view('back.pages.umrah.schedule.detail-jamaah', $data);
+    }
+
+    public function umrahScheduleJamaahDetail($id, $code)
+    {
+        $schedule = UmrahSchedule::with('umrahPackage')->withCount([
+            'jamaah as quad_count' => function ($query) {
+                $query->where('package_type', 'quad');
+            },
+            'jamaah as triple_count' => function ($query) {
+                $query->where('package_type', 'triple');
+            },
+            'jamaah as double_count' => function ($query) {
+                $query->where('package_type', 'double');
+            }
+        ])->findOrFail($id);
+        $jamaah = UmrahJamaah::where('umrah_schedule_id', $id)->where('code', $code)->first();
+        $data = [
+            'title' => $schedule->name,
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Jadwal Umrah',
+                    'link' => route('back.umrah.schedule.index')
+                ],
+                [
+                    'name' => 'Jamaah',
+                    'link' => route('back.umrah.schedule.jamaah', $id)
+                ],
+                [
+                    'name' => 'Detail',
+                    'link' => route('back.umrah.schedule.jamaah.detail', [$id, $code])
+                ]
+            ],
+            'schedule' => $schedule,
+            'jamaah' => $jamaah,
+            'payments' => $jamaah->umrahJamaahPayments
+        ];
+
+        return view('back.pages.umrah.schedule.jamaah', $data);
+    }
+
+    public function umrahScheduleJamaahUpdate(Request $request, $id, $code)
+    {
+        $validator =  Validator::make($request->all(), [
+            'nik' => 'required',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg',
+            'name' => 'required|string',
+            'birthplace' => 'required|string',
+            'birthdate' => 'required|date',
+            'gender' => 'required|in:laki-laki,perempuan',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+            'file_ktp' => 'nullable|mimes:jpeg,png,jpg,pdf',
+            'file_kk' => 'nullable|mimes:jpeg,png,jpg,pdf',
+            'file_paspor' => 'nullable|mimes:jpeg,png,jpg,pdf',
+        ], [
+            'nik.required' => 'NIK wajib diisi',
+            'photo.required' => 'Foto wajib diisi',
+            'photo.image' => 'Foto harus berupa gambar',
+            'photo.mimes' => 'Foto harus berformat jpeg, png, jpg',
+            'name.required' => 'Nama wajib diisi',
+            'name.string' => 'Nama harus berupa huruf',
+            'birthplace.required' => 'Tempat lahir wajib diisi',
+            'birthplace.string' => 'Tempat lahir harus berupa huruf',
+            'birthdate.required' => 'Tanggal lahir wajib diisi',
+            'birthdate.date' => 'Tanggal lahir harus berupa tanggal',
+            'gender.required' => 'Jenis kelamin wajib diisi',
+            'gender.in' => 'Jenis kelamin harus berupa laki-laki atau perempuan',
+            'address.required' => 'Alamat wajib diisi',
+            'address.string' => 'Alamat harus berupa huruf',
+            'phone.required' => 'Nomor telepon wajib diisi',
+            'phone.string' => 'Nomor telepon harus berupa huruf',
+            'file_ktp.image' => 'File KTP harus berupa gambar',
+            'file_ktp.mimes' => 'File KTP harus berformat jpeg, png, jpg, pdf',
+            'file_kk.image' => 'File KK harus berupa gambar',
+            'file_kk.mimes' => 'File KK harus berformat jpeg, png, jpg, pdf',
+            'file_paspor.image' => 'File Paspor harus berupa gambar',
+            'file_paspor.mimes' => 'File Paspor harus berformat jpeg, png, jpg, pdf',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data tidak valid');
+        }
+
+        $umrah_schedule = UmrahSchedule::find($id);
+        $umrah_jamaah = UmrahJamaah::where('umrah_schedule_id', $id)->where('code', $code)->first();
+        $umrah_jamaah->nik = $request->nik;
+        $umrah_jamaah->name = $request->name;
+        $umrah_jamaah->birthplace = $request->birthplace;
+        $umrah_jamaah->birthdate = $request->birthdate;
+        $umrah_jamaah->gender = $request->gender;
+        $umrah_jamaah->address = $request->address;
+        $umrah_jamaah->phone = $request->phone;
+
+        if ($request->hasFile('photo')) {
+            if ($umrah_jamaah->photo) {
+                Storage::delete('public/' . $umrah_jamaah->photo);
+            }
+            $photo = $request->file('photo');
+            $photo_name = 'photo-' . $umrah_jamaah->nik . '-' . time() . '.' . $photo->getClientOriginalExtension();
+            $umrah_jamaah->photo = $photo->storeAs('umrah/jamaah', $photo_name, 'public');
+        }
+
+        if ($request->hasFile('file_ktp')) {
+            if ($umrah_jamaah->file_ktp) {
+                Storage::delete('public/' . $umrah_jamaah->file_ktp);
+            }
+            $file_ktp = $request->file('file_ktp');
+            $file_ktp_name = 'ktp-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_ktp->getClientOriginalExtension();
+            $umrah_jamaah->file_ktp = $file_ktp->storeAs('umrah/jamaah', $file_ktp_name, 'public');
+        }
+
+        if ($request->hasFile('file_kk')) {
+            if ($umrah_jamaah->file_kk) {
+                Storage::delete('public/' . $umrah_jamaah->file_kk);
+            }
+            $file_kk = $request->file('file_kk');
+            $file_kk_name = 'kk-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_kk->getClientOriginalExtension();
+            $umrah_jamaah->file_kk = $file_kk->storeAs('umrah/jamaah', $file_kk_name, 'public');
+        }
+
+        if ($request->hasFile('file_paspor')) {
+            if ($umrah_jamaah->file_paspor) {
+                Storage::delete('public/' . $umrah_jamaah->file_paspor);
+            }
+            $file_paspor = $request->file('file_paspor');
+            $file_paspor_name = 'paspor-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_paspor->getClientOriginalExtension();
+            $umrah_jamaah->file_paspor = $file_paspor->storeAs('umrah/jamaah', $file_paspor_name, 'public');
+        }
+
+        $umrah_jamaah->save();
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 }

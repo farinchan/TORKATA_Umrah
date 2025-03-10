@@ -93,9 +93,14 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::prefix('schedule')->name('schedule.')->group(function () {
             Route::get('/', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleIndex'])->name('index');
             Route::post('/create', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleStore'])->name('store');
+
             Route::get('/{id}/setting', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleSetting'])->name('setting');
             Route::put('/{id}/setting', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleUpdate'])->name('update');
             Route::delete('/delete/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleDestroy'])->name('destroy');
+
+            Route::get('/{id}/jamaah', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleJamaah'])->name('jamaah');
+            Route::get('/{id}/jamaah/{code}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleJamaahDetail'])->name('jamaah.detail');
+            Route::put('/{id}/jamaah/{code}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleJamaahUpdate'])->name('jamaah.update');
         });
     });
 

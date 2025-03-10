@@ -18,4 +18,9 @@ class UmrahSchedule extends Model
     {
         return $this->hasMany(UmrahJamaah::class);
     }
+
+    public function jamaah()
+    {
+        return $this->hasMany(UmrahJamaah::class);
+    }
 }

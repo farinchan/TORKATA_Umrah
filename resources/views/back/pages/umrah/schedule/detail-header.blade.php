@@ -66,8 +66,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                         </div>
                 </div>
                 <div class="d-flex flex-wrap justify-content-start">
@@ -75,24 +73,24 @@
 
                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <div class="fs-4 fw-bold" >
-                                    0/{{ $schedule->quad_quota }}
+                                <div class="fs-4 fw-bold @if ($schedule->quad_quota == $schedule->quota_count) text-danger @endif" >
+                                    {{ $schedule->quad_count }}/{{ $schedule->quad_quota }}
                                 </div>
                             </div>
                             <div class="fw-semibold fs-6 text-gray-500">Quad</div>
                         </div>
                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <div class="fs-4 fw-bold" >
-                                    0/{{ $schedule->triple_quota }}
+                                <div class="fs-4 fw-bold @if ($schedule->triple_quota == $schedule->quota_count) text-danger @endif" >
+                                    {{ $schedule->triple_count }}/{{ $schedule->triple_quota }}
                                 </div>
                             </div>
                             <div class="fw-semibold fs-6 text-gray-500">Triple</div>
                         </div>
                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <div class="fs-4 fw-bold" >
-                                    0/{{ $schedule->double_quota }}
+                                <div class="fs-4 fw-bold @if ($schedule->double_quota == $schedule->quota_count) text-danger @endif" >
+                                    {{ $schedule->double_count }}/{{ $schedule->double_quota }}
                                 </div>
                             </div>
                             <div class="fw-semibold fs-6 text-gray-500">Double</div>
@@ -105,8 +103,8 @@
         <div class="separator"></div>
         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
             <li class="nav-item">
-                <a class="nav-link text-active-primary py-5 me-6 @if (request()->routeIs('back.ppdb.exam.question')) active @endif"
-                    href="#">Jama'ah</a>
+                <a class="nav-link text-active-primary py-5 me-6 @if (request()->routeIs('back.umrah.schedule.jamaah')) active @endif"
+                    href="{{ route('back.umrah.schedule.jamaah', $schedule->id) }}">Jama'ah</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-active-primary py-5 me-6 @if (request()->routeIs('back.umrah.schedule.setting')) active @endif"

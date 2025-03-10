@@ -66,16 +66,16 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center pe-0">
-                                    0/{{ $umrah_schedule->quad_quota }} <br>
+                                <td class="text-center @if($umrah_schedule->quad_count == $umrah_schedule->quad_quota) text-danger @endif pe-0">
+                                    {{ $umrah_schedule->quad_count }}/{{ $umrah_schedule->quad_quota }} <br>
                                     Harga: @money($umrah_schedule->quad_price)
                                 </td>
-                                <td class="text-center pe-0">
-                                    0/{{ $umrah_schedule->triple_quota }}<br>
+                                <td class="text-center pe-0 @if($umrah_schedule->triple_count == $umrah_schedule->triple_quota) text-danger @endif">
+                                    {{ $umrah_schedule->triple_count }}/{{ $umrah_schedule->triple_quota }}<br>
                                     Harga: @money($umrah_schedule->triple_price)
                                 </td>
-                                <td class="text-center pe-0">
-                                    0/{{ $umrah_schedule->double_quota }}<br>
+                                <td class="text-center pe-0 @if($umrah_schedule->double_count == $umrah_schedule->double_quota) text-danger @endif">
+                                    {{ $umrah_schedule->double_count }}/{{ $umrah_schedule->double_quota }}<br>
                                     Harga: @money($umrah_schedule->double_price)
                                 </td>
                                 <td class="text-center">
