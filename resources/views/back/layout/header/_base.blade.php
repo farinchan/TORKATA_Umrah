@@ -3,8 +3,8 @@
     <!--begin::Brand-->
     <div class="header-brand">
         <!--begin::Logo-->
-        <a href="?page=index">
-            <img alt="Logo" src="{{ asset('back/media/logos/default-dark.svg') }}" class="h-25px h-lg-25px" />
+        <a href="#">
+            <img alt="Logo" src="{{ $setting_web->getLogo() }}" class="h-25px h-lg-25px" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside minimize-->

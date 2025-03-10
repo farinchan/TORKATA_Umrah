@@ -6,7 +6,8 @@
     <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
         id="#kt_aside_menu" data-kt-menu="true">
 
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (request()->routeIs('back.dashboard.*')) here show @endif">
+        <div data-kt-menu-trigger="click"
+            class="menu-item menu-accordion @if (request()->routeIs('back.dashboard.*')) here show @endif">
             <span class="menu-link">
                 <span class="menu-icon">
                     <i class="ki-duotone ki-element-11 fs-2">
@@ -20,7 +21,8 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link @if (request()->routeIs('back.dashboard.index')) active @endif" href="{{ route('back.dashboard.index') }}">
+                    <a class="menu-link @if (request()->routeIs('back.dashboard.index')) active @endif"
+                        href="{{ route('back.dashboard.index') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
@@ -134,7 +136,8 @@
         </div>
 
 
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (request()->routeIs('back.umrah.*')) here show @endif">
+        <div data-kt-menu-trigger="click"
+            class="menu-item menu-accordion @if (request()->routeIs('back.umrah.*')) here show @endif">
             <span class="menu-link">
                 <span class="menu-icon">
                     <i class="ki-duotone ki-address-book fs-2">
@@ -149,7 +152,7 @@
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
                     <a class="menu-link @if (request()->routeIs('back.umrah.package.index')) active @endif"
-                        href="{{ route("back.umrah.package.index") }}">
+                        href="{{ route('back.umrah.package.index') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
@@ -159,7 +162,7 @@
 
                 <div class="menu-item">
                     <a class="menu-link @if (request()->routeIs('back.umrah.schedule.index')) active @endif"
-                        href="{{ route("back.umrah.schedule.index") }}">
+                        href="{{ route('back.umrah.schedule.index') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
@@ -183,8 +186,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link "
-                        href="#">
+                    <a class="menu-link " href="#">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
@@ -211,6 +213,29 @@
                     </i>
                 </span>
                 <span class="menu-title">Umrah</span>
+            </a>
+        </div>
+
+        <div class="menu-item pt-5">
+            <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">Keuangan</span>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <a class="menu-link @if (request()->routeIs('back.payment.umrah.verification')) active @endif"
+                href="{{ route('back.payment.umrah.verification') }}">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-finance-calculator fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                        <span class="path4"></span>
+                        <span class="path5"></span>
+                        <span class="path6"></span>
+                        <span class="path7"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Verifikasi Pembayaran</span>
             </a>
         </div>
 

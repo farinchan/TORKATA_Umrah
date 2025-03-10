@@ -113,6 +113,11 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         });
     });
 
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/umrah', [App\Http\Controllers\Back\PaymentController::class, 'umrahPaymentVerification'])->name('umrah.verification');
+        Route::put('/umrah/{id}/verification', [App\Http\Controllers\Back\PaymentController::class, 'umrahPaymentVerificationUpdate'])->name('umrah.verification.update');
+    });
+
     Route::prefix('message')->name('message.')->group(function () {
         Route::get('/', [App\Http\Controllers\Back\MessageController::class, 'index'])->name('index');
         Route::delete('/{id}', [App\Http\Controllers\Back\MessageController::class, 'destroy'])->name('destroy');
