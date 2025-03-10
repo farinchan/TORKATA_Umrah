@@ -27,6 +27,9 @@ return new class extends Migration
             $table->string('linkedin')->nullable();
             $table->text('about')->nullable();
             $table->text('terms_conditions')->nullable();
+            $table->text('payment_bank')->nullable();
+            $table->text('payment_account_name')->nullable();
+            $table->text('payment_account_number')->nullable();
             $table->timestamps();
         });
     }

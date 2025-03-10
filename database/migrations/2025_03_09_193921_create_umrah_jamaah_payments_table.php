@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('umrah_jamaah_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('umrah_jamaah_id')->constrained('umrah_jamaahs')->onDelete('cascade');
-            $table->string('payment_method');
+            $table->enum('payment_method', ['transfer', 'cash', 'qr', 'credit_card']);
             $table->string('bank_name')->nullable();
             $table->string('account_number')->nullable();
             $table->string('account_name')->nullable();

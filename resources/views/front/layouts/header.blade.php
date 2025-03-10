@@ -68,7 +68,7 @@
 
                         @endguest
                         @auth
-                            <a href="{{ route('back.dashboard') }}"><i class="fa fa-user-circle"></i>
+                            <a href="{{ route('back.dashboard.index') }}"><i class="fa fa-user-circle"></i>
                                 {{ Auth::user()->name }}
                             </a>
                         @endauth

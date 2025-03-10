@@ -24,7 +24,7 @@ class UmrahController extends Controller
                     'link' => route('umrah.index')
                 ]
             ],
-            'umrahs' => UmrahPackage::all()
+            'umrahs' => UmrahPackage::where('status', 'enabled')->with(['images', 'schedules'])->get(),
         ];
 
         return view('front.pages.umrah.index', $data);
@@ -32,7 +32,7 @@ class UmrahController extends Controller
 
     public function show($slug)
     {
-        $umrah = UmrahPackage::where('slug', $slug)->with('itineraries', 'images')->firstOrFail();
+        $umrah = UmrahPackage::where('slug', $slug)->with('itineraries', 'images', 'schedules')->first();
 
         $data = [
             'title' => $umrah->name,

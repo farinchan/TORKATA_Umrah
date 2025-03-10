@@ -24,4 +24,9 @@ class UmrahJamaah extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getPhoto()
+    {
+        return $this->photo ? asset('storage/' . $this->photo) : "https://ui-avatars.com/api/?background=15365F&color=C3A356&size=128&name=" . $this->name;
+    }
 }

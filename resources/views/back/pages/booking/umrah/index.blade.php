@@ -63,7 +63,8 @@
                 </div>
             </div>
             <div class="card d-flex flex-row-fluid flex-center">
-                <form class="card-body py-20 w-100 mw-xl-700px px-9" novalidate="novalidate" id="kt_create_account_form">
+                <form class="card-body py-20 w-100 mw-xl-700px px-9" id="kt_create_account_form" method="POST" enctype="multipart/form-data"
+                    action="{{ route('back.booking.umrah.store') }}">
 
                     <div class="current" data-kt-stepper-element="content">
                         <div class="w-100">
@@ -74,6 +75,8 @@
                                 </div>
                             </div>
                             <div class="mb-5 fv-row">
+                                @csrf
+
                                 <div class="image-input image-input-empty" data-kt-image-input="true"
                                     style="background-image: url('{{ asset('back/media/avatars/blank.png') }}')">
                                     <div class="image-input-wrapper w-125px h-125px"></div>
@@ -127,8 +130,8 @@
                                     <div class="col-md-6">
                                         <label class="form-label required">Tempat Lahir</label>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            placeholder="Tempat Lahir" name="birthplace"
-                                            value="{{ old('birthplace') }}" required />
+                                            placeholder="Tempat Lahir" name="birthplace" value="{{ old('birthplace') }}"
+                                            required />
                                         @error('birthplace')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -136,8 +139,8 @@
                                     <div class="col-md-6">
                                         <label class="form-label required">Tanggal Lahir</label>
                                         <input type="date" class="form-control form-control-lg form-control-solid"
-                                            placeholder="Tanggal Lahir" name="birthdate"
-                                            value="{{ old('birthdate') }}" required />
+                                            placeholder="Tanggal Lahir" name="birthdate" value="{{ old('birthdate') }}"
+                                            required />
                                         @error('birthdate')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -151,14 +154,15 @@
                                     data-control="select2" data-placeholder="Pilih Jenis Kelamin" data-allow-clear="true"
                                     data-hide-search="true" required>
                                     <option></option>
-                                    <option value="laki-laki">Laki-laki</option>
-                                    <option value="perempuan">Perempuan</option>
+                                    <option value="laki-laki" {{ old('gender') == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                    <option value="perempuan" {{ old('gender') == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
                                 </select>
                             </div>
 
                             <div class="mb-5 fv-row">
                                 <label class="form-label required">Alamat</label>
-                                <textarea name="address" class="form-control form-control-lg form-control-solid" rows="3" placeholder="Alamat" required>{{ old('address') }}</textarea>
+                                <textarea name="address" class="form-control form-control-lg form-control-solid" rows="3" placeholder="Alamat"
+                                    required>{{ old('address') }}</textarea>
                                 @error('address')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -168,6 +172,7 @@
                                 <label class="form-label required">No. Telp / WA</label>
                                 <input type="text" class="form-control form-control-lg form-control-solid"
                                     placeholder="No. Telp / WA" name="phone" value="{{ old('phone') }}" required />
+                                    <small class="text-muted">Nomor telepon diawali dengan kode negara, contoh: ( <code>+62</code> ) </small>
                                 @error('phone')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -184,7 +189,7 @@
                             </div>
                             <div class="mb-5 fv-row">
                                 <label class="form-label">KTP</label>
-                                <input type="file" class="form-control form-control-lg form-control-solid"
+                                <input type="file" class="form-control form-control-lg form-control-solid" accept=".pdf, .jpg, .jpeg, .png"
                                     placeholder="KTP" name="file_ktp" value="{{ old('file_ktp') }}" />
                                 @error('file_ktp')
                                     <small class="text-danger">{{ $message }}</small>
@@ -193,7 +198,7 @@
 
                             <div class="mb-5 fv-row">
                                 <label class="form-label required">Kartu Keluarga</label>
-                                <input type="file" class="form-control form-control-lg form-control-solid"
+                                <input type="file" class="form-control form-control-lg form-control-solid" accept=".pdf, .jpg, .jpeg, .png"
                                     placeholder="Kartu Keluarga" name="file_kk" value="{{ old('file_kk') }}" required />
                                 @error('file_kk')
                                     <small class="text-danger">{{ $message }}</small>
@@ -202,7 +207,7 @@
 
                             <div class="mb-5 fv-row">
                                 <label class="form-label required">Paspor</label>
-                                <input type="file" class="form-control form-control-lg form-control-solid"
+                                <input type="file" class="form-control form-control-lg form-control-solid" accept=".pdf, .jpg, .jpeg, .png"
                                     placeholder="Paspor" name="file_paspor" value="{{ old('file_paspor') }}" required />
                                 @error('file_paspor')
                                     <small class="text-danger">{{ $message }}</small>
@@ -220,8 +225,8 @@
                             <div class="mb-5 fv-row">
                                 <label class="form-label required">Paket Umrah</label>
                                 <select name="umrah_id" class="form-select form-select-lg form-select-solid"
-                                    data-control="select2" data-placeholder="Pilih Paket Umrah" data-allow-clear="false"
-                                    data-hide-search="true" required>
+                                    id="umrah_select" data-control="select2" data-placeholder="Pilih Paket Umrah"
+                                    data-allow-clear="false" data-hide-search="true" required>
                                     <option></option>
                                     @foreach ($list_umrah_package as $umrah)
                                         <option value="{{ $umrah->id }}">{{ $umrah->name }}</option>
@@ -231,8 +236,8 @@
 
                             <div class="mb-5 fv-row">
                                 <label class="form-label required">Jadwal Umrah</label>
-                                <select name="schedule" class="form-select form-select-lg form-select-solid" disabled
-                                    required>
+                                <select name="umrah_schedule_id" class="form-select form-select-lg form-select-solid"
+                                    id="schedule_select" disabled required>
                                     <option disabled selected>Pilih Jadwal Umrah</option>
                                 </select>
                                 @error('schedule')
@@ -242,7 +247,8 @@
 
                             <div class="mb-5 fv-row">
                                 <label class="form-label required">Tipe Paket</label>
-                                <select name="package_type" class="form-select form-select-lg form-select-solid" disabled required>
+                                <select name="package_type" class="form-select form-select-lg form-select-solid"
+                                    id="package_type_select" disabled required>
                                     <option disabled selected>Pilih Tipe Paket</option>
                                 </select>
                                 @error('package_type')
@@ -269,8 +275,10 @@
                                         <div class="fw-semibold">
                                             <h4 class="text-gray-900 fw-bold">Pernyataan!</h4>
                                             <div class="fs-6 text-gray-700">
-                                                Dengan menekan tombol submit, anda sebagai agen telah memasukkan data jama'ah dengan benar dan tidak ada kesalahan. <br>
-                                                Jika data jama'ah terdapat kesalahan anda akan bertanggung jawab atas kesalahan tersebut.
+                                                Dengan menekan tombol submit, anda sebagai agen telah memasukkan data
+                                                jama'ah dengan benar dan tidak ada kesalahan. <br>
+                                                Jika data jama'ah terdapat kesalahan anda akan bertanggung jawab atas
+                                                kesalahan tersebut.
                                             </div>
                                         </div>
                                     </div>
@@ -285,7 +293,7 @@
                                 <i class="ki-outline ki-arrow-left fs-4 me-1"></i>Back</button>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-lg btn-primary me-3" data-kt-stepper-action="submit">
+                            <button type="submit" class="btn btn-lg btn-primary me-3" data-kt-stepper-action="submit">
                                 <span class="indicator-label">Submit
                                     <i class="ki-outline ki-arrow-right fs-3 ms-2 me-0"></i></span>
                                 <span class="indicator-progress">Please wait...
@@ -315,6 +323,131 @@
         // Handle previous step
         stepper.on("kt.stepper.previous", function(stepper) {
             stepper.goPrevious(); // go previous step
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#umrah_select').on('change', function() {
+                var umrah_id = $(this).val();
+                if (umrah_id) {
+                    $.ajax({
+                        url: "{{ route('api.booking.get-umrah-schedule') }}",
+                        type: "POST",
+                        data: {
+                            umrah_package_id: umrah_id,
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+                            $('#schedule_select').empty();
+                            $('#schedule_select').append(
+                                '<option disabled selected>Pilih Jadwal Umrah</option>'
+                            );
+                            $.each(data, function(key, value) {
+
+                                $('#schedule_select').append(
+                                    '<option value="' + value.id + '">' + value
+                                    .name + ' - ' + value.departure + '</option>'
+                                );
+                            });
+                            $('#schedule_select').prop('disabled', false);
+                        }
+                    });
+                } else {
+                    $('#schedule_select').empty();
+                    $('#schedule_select').append(
+                        '<option disabled selected>Pilih Jadwal Umrah</option>'
+                    );
+                    $('#schedule_select').prop('disabled', true);
+
+                    $('#package_type_select').empty();
+                    $('#package_type_select').append(
+                        '<option disabled selected>Pilih Tipe Paket</option>'
+                    );
+                    $('#package_type_select').prop('disabled', true);
+                }
+            });
+
+            $('#schedule_select').on('change', function() {
+                var schedule_id = $(this).val();
+                if (schedule_id) {
+                    $.ajax({
+                        url: "{{ route('api.booking.get-umrah-schedule-info') }}",
+                        type: "POST",
+                        data: {
+                            umrah_schedule_id: schedule_id
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+
+                            $('#package_type_select').empty();
+                            $('#package_type_select').append(
+                                '<option disabled selected>Pilih Tipe Paket</option>'
+                            );
+
+                            if (data.schedule.quad_price) {
+                                if (data.quad > data.schedule.quad_quota) {
+                                    $('#package_type_select').append(
+                                        '<option disabled>Quad - Kuota Habis</option>'
+                                    );
+                                } else {
+                                    $('#package_type_select').append(
+                                        '<option value="quad">Quad - Rp. ' + data.schedule.quad_price + ' - Kuota: ' + data.quad + '/' + data.schedule.quad_quota +
+                                        '</option>'
+                                    );
+                                }
+                            } else {
+                                $('#package_type_select').append(
+                                    '<option disabled>Quad - Tidak Tersedia</option>'
+                                );
+                            }
+
+                            if (data.schedule.triple_price) {
+                                if (data.triple > data.schedule.triple_quota) {
+                                    $('#package_type_select').append(
+                                        '<option disabled>Triple - Kuota Habis</option>'
+                                    );
+                                } else {
+                                    $('#package_type_select').append(
+                                        '<option value="triple">Triple - Rp. ' + data.schedule.triple_price + ' - Kuota: ' + data.triple + '/' + data.schedule.triple_quota +
+                                        '</option>'
+                                    );
+                                }
+                            } else {
+                                $('#package_type_select').append(
+                                    '<option disabled>Triple - Tidak Tersedia</option>'
+                                );
+                            }
+
+                            if (data.schedule.double_price) {
+                                if (data.double > data.schedule.double_quota) {
+                                    $('#package_type_select').append(
+                                        '<option disabled>Double - Kuota Habis</option>'
+                                    );
+                                } else {
+                                    $('#package_type_select').append(
+                                        '<option value="double">Double - Rp. ' + data.schedule.double_price + ' - Kuota: ' + data.double + '/' + data.schedule.double_quota +
+                                        '</option>'
+                                    );
+                                }
+                            } else {
+                                $('#package_type_select').append(
+                                    '<option disabled>Double - Tidak Tersedia</option>'
+                                );
+                            }
+                            $('#package_type_select').prop('disabled', false);
+                        }
+                    });
+                } else {
+                    $('#package_type_select').empty();
+                    $('#package_type_select').append(
+                        '<option disabled selected>Pilih Tipe Paket</option>'
+                    );
+                    $('#package_type_select').prop('disabled', true);
+                }
+            });
         });
     </script>
 @endsection

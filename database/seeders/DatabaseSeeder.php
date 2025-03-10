@@ -10,6 +10,7 @@ use App\Models\SettingWebsite;
 use App\Models\Testimonial;
 use App\Models\UmrahPackage;
 use App\Models\UmrahPackageItinerary;
+use App\Models\UmrahSchedule;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -88,9 +89,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         NewsCategory::create([
-            'name' => 'Berita Edukasi',
-            'slug' => 'berita-edukasi',
-            'description' => 'Kumpulan berita terbaru seputar pendidikan, informasi, dan tips edukasi terkini.',
+            'name' => 'Tips & Trik',
+            'slug' => 'tips-trik',
+            'description' => 'Kumpulan tips dan trik seputar perjalanan umrah, wisata, dan informasi bermanfaat lainnya untuk memudahkan perjalanan Anda.',
         ]);
 
         News::create([
@@ -236,6 +237,34 @@ class DatabaseSeeder extends Seeder
             'day' => 'Hari ke-4',
             'description' => '<p>Setelah sarapan pagi, jamaah akan melaksanakan ibadah umrah di Masjidil Haram. Setelah itu, jamaah akan kembali ke hotel untuk beristirahat dan makan siang. Di sore hari, jamaah akan melaksanakan ziarah ke Jabal Nur, Jabal Rahmah, dan tempat-tempat bersejarah lainnya.</p>',
         ]);
+
+        UmrahSchedule::create([
+            'umrah_package_id' => 1,
+            'name' => 'Keberangkatan Maret 2025 (Ramadhan)',
+            'quad_quota' => 8,
+            'quad_price' => 32000000,
+            'triple_quota' => 6,
+            'triple_price' => 34000000,
+            'double_quota' => 4,
+            'double_price' => 36000000,
+            'departure' => '2025-03-20',
+            'status' => 'aktif',
+        ]);
+
+        UmrahSchedule::create([
+            'umrah_package_id' => 1,
+            'name' => 'Keberangkatan April 2025',
+            'quad_quota' => 8,
+            'quad_price' => 32000000,
+            'triple_quota' => 6,
+            'triple_price' => 34000000,
+            'double_quota' => 4,
+            'double_price' => 36000000,
+            'departure' => '2025-04-20',
+            'status' => 'aktif',
+        ]);
+
+
 
 
         Testimonial::create([

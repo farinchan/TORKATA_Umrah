@@ -177,16 +177,62 @@
 
                         <div class="accrodion-grp faq-accrodion mb-4" id="jadwal" data-grp-name="faq-accrodion">
                             <h4>Jadwal</h4>
-                            <div class="accrodion active">
-                                <div class="accrodion-title">
-                                    <h5 class="mb-0"><span>Ramadhan 2025</span></h5>
+                            @forelse ($umrah->schedules as $schedule)
+                                <div class="accrodion active">
+                                    <div class="accrodion-title">
+                                        <h5 class="mb-0"><span>{{ $schedule->name }} -
+                                                {{ $schedule->departure?->format('d M Y') ?? '' }}
+                                            </span></h5>
+                                    </div>
+                                    <div class="accrodion-content" style="display: block;">
+                                        <div class="inner">
+
+                                            <div style="margin-bottom: 10px"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Keberangkatan
+                                                : {{ $schedule->departure?->format('d M Y') ?? '-' }}
+                                            </div>
+                                            <div style="margin-bottom: 10px"><i class="fa fa-plane" aria-hidden="true"></i> &nbsp; Maskapai :
+                                                {{ $schedule->airline ?? '-' }}
+                                            </div>
+                                            <div style="margin-bottom: 10px"><i class="fa fa-hotel" aria-hidden="true"></i> &nbsp; Hotel Mekkah :
+                                                {{ $schedule->hotel ?? '-' }}
+                                            </div>
+                                            <div style="margin-bottom: 10px"><i class="fa fa-hotel" aria-hidden="true"></i> &nbsp; Hotel Madinah :
+                                                {{ $schedule->hotel_madinah ?? '-' }}
+                                            </div>
+
+
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tipe Paket</th>
+                                                        <th>Harga</th>
+                                                        <th>Kuota</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Quad</td>
+                                                        <td>@money($schedule->quad_price)</td>
+                                                        <td>0/{{ $schedule->quad_quota }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Triple</td>
+                                                        <td>@money( $schedule->triple_price )</td>
+                                                        <td>0/{{ $schedule->triple_quota }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Double</td>
+                                                        <td>@money( $schedule->double_price )</td>
+                                                        <td>0/{{ $schedule->double_quota }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div><!-- /.inner -->
+                                    </div>
                                 </div>
-                                <div class="accrodion-content" style="display: block;">
-                                    <div class="inner">
-                                        <p>{{ $itinerary->description }}</p>
-                                    </div><!-- /.inner -->
-                                </div>
-                            </div>
+                            @empty
+                            @endforelse
+
 
                         </div>
 

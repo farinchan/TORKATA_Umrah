@@ -23,4 +23,9 @@ class UmrahPackage extends Model
     {
         return $this->hasMany(UmrahPackageImage::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(UmrahSchedule::class);
+    }
 }

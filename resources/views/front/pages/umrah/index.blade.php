@@ -166,21 +166,28 @@
                                                 <hr>
                                                 <div >
                                                     <ol>
+                                                        @forelse ($umrah->schedules as $schedule )
                                                         <li>
-                                                            <span>Maret 2025 (Ramadhan)</span>
+                                                            <span>{{ $schedule->name }}</span>
                                                             <ul>
                                                                 <li>
                                                                     <i class="fa fa-calendar" aria-hidden="true"></i> &nbsp;
                                                                     <span>Keberangkatan</span>
-                                                                    <span class="float-right">: {{ $umrah->departure }}</span>
+                                                                    <span class="float-right">: {{ $umrah->departure??"-" }}</span>
                                                                 </li>
                                                                 <li>
                                                                     <i class="fa fa-plane" aria-hidden="true"></i> &nbsp;
                                                                     <span>Maskapai</span>
-                                                                    <span class="float-right">: {{ $umrah->airline }}</span>
+                                                                    <span class="float-right">: {{ $umrah->airline??"-" }}</span>
                                                                 </li>
                                                             </ul>
                                                         </li>
+                                                        @empty
+                                                        <li>
+                                                            <span>Belum ada jadwal keberangkatan</span>
+                                                        </li>
+                                                        @endforelse
+
                                                     </ol>
                                                 </div>
                                                 <small class="mt-3" class="text-center">*Jadwal Keberangkatan dapat berubah sewaktu-waktu</small>
