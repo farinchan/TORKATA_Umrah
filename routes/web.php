@@ -7,6 +7,8 @@ use App\Http\Controllers\Back\DashboardController as BackDashboardController;
 use App\Http\Controllers\Back\NewsController as BackNewsController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/visit', [App\Http\Controllers\Front\HomeController::class, 'vistWebsite'])->name('visit.ajax');
+
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -25,11 +27,18 @@ Route::prefix('news')->name('news.')->group(function () {
     Route::post('/{slug}', [App\Http\Controllers\Front\NewsController::class, 'comment'])->name('comment');
 
     Route::get('/category/{slug}', [App\Http\Controllers\Front\NewsController::class, 'category'])->name('category');
+
+    Route::get('/visit/alt', [App\Http\Controllers\Front\NewsController::class, 'visit'])->name('visit');
 });
 
 Route::prefix('agent')->name('agent.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\AgentController::class, 'index'])->name('index');
     Route::get('/{id}', [App\Http\Controllers\Front\AgentController::class, 'show'])->name('show');
+});
+
+Route::prefix('payment')->name('payment.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\PaymentController::class, 'index'])->name('index');
+    Route::post('/{code}', [App\Http\Controllers\Front\PaymentController::class, 'show'])->name('show');
 });
 
 Route::prefix('contact')->name('contact.')->group(function () {
@@ -40,6 +49,10 @@ Route::prefix('contact')->name('contact.')->group(function () {
 Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [BackDashboardController::class, 'index'])->name('index');
+        Route::get('/visitor-stat', [App\Http\Controllers\Back\DashboardController::class, 'visistorStat'])->name('visitor.stat');
+
+        Route::get('/news', [App\Http\Controllers\Back\DashboardController::class, 'news'])->name('news');
+        Route::get('/news-stat', [App\Http\Controllers\Back\DashboardController::class, 'newsStat'])->name('news.stat');
     });
 
     Route::prefix('news')->name('news.')->group(function () {

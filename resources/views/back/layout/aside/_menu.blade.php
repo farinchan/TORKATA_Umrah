@@ -30,6 +30,17 @@
                     </a>
                 </div>
             </div>
+            <div class="menu-sub menu-sub-accordion">
+                <div class="menu-item">
+                    <a class="menu-link @if (request()->routeIs('back.dashboard.news')) active @endif"
+                        href="{{ route('back.dashboard.news') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">Berita</span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="menu-item pt-5">
             <div class="menu-content">

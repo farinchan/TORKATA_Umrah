@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsComment;
+use App\Models\NewsViewer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Facades\Agent;
+use Stevebauman\Location\Facades\Location;
 
 class NewsController extends Controller
 {
@@ -251,4 +254,6 @@ class NewsController extends Controller
 
         return redirect()->back()->with('success', 'Komentar berhasil ditandai sebagai spam');
     }
+
+    
 }

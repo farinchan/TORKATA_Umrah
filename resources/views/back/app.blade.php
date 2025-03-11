@@ -125,7 +125,37 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: '{{ session('success ') }}',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: '{{ session('warning') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            Swal.fire({
+                icon: 'info',
+                title: 'Info',
+                text: '{{ session('info') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
             });
         </script>
     @endif

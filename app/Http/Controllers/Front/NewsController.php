@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsCategory;
+use App\Models\NewsViewer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Jenssegers\Agent\Facades\Agent;
+use Stevebauman\Location\Facades\Location;
 
 class NewsController extends Controller
 {
@@ -112,5 +115,35 @@ class NewsController extends Controller
         $news = News::find($request->news_id);
         $news->comments()->create($request->all());
         return redirect()->back()->with('success', 'Comment has been added');
+    }
+
+    public function visit(Request $request)
+    {
+        $news_id = $request->news_id;
+        // dd($news_id);
+        try {
+            $currentUserInfo = Location::get(request()->ip());
+            $news_visitor = new NewsViewer();
+            $news_visitor->news_id = $news_id;
+            $news_visitor->ip = request()->ip();
+            if ($currentUserInfo) {
+                $news_visitor->country = $currentUserInfo->countryName;
+                $news_visitor->city = $currentUserInfo->cityName;
+                $news_visitor->region = $currentUserInfo->regionName;
+                $news_visitor->postal_code = $currentUserInfo->postalCode;
+                $news_visitor->latitude = $currentUserInfo->latitude;
+                $news_visitor->longitude = $currentUserInfo->longitude;
+                $news_visitor->timezone = $currentUserInfo->timezone;
+            }
+            $news_visitor->user_agent = Agent::getUserAgent();
+            $news_visitor->platform = Agent::platform();
+            $news_visitor->browser = Agent::browser();
+            $news_visitor->device = Agent::device();
+            $news_visitor->save();
+
+            return response()->json(['status' => 'success', 'message' => 'Visitor has been saved'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
     }
 }

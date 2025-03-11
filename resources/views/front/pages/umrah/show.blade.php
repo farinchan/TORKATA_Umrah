@@ -181,14 +181,14 @@
                                 <div class="accrodion active">
                                     <div class="accrodion-title">
                                         <h5 class="mb-0"><span>{{ $schedule->name }} -
-                                                {{ $schedule->departure?->format('d M Y') ?? '' }}
+                                                {{  $schedule->departure  }}
                                             </span></h5>
                                     </div>
                                     <div class="accrodion-content" style="display: block;">
                                         <div class="inner">
 
                                             <div style="margin-bottom: 10px"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Keberangkatan
-                                                : {{ $schedule->departure?->format('d M Y') ?? '-' }}
+                                                : {{ $schedule->departure }}
                                             </div>
                                             <div style="margin-bottom: 10px"><i class="fa fa-plane" aria-hidden="true"></i> &nbsp; Maskapai :
                                                 {{ $schedule->airline ?? '-' }}
