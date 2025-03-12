@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('umrah_jamaahs', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique()->nullable();
-            $table->string('nik')->unique()->nullable();
+            $table->string('nik')->nullable();
             $table->string('photo')->nullable();
             $table->string('name');
             $table->string('birthplace')->nullable();

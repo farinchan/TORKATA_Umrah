@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\UmrahJamaah;
+use App\Models\UmrahJamaahPayment;
+use App\Observers\BookingUmrahObserver;
+use App\Observers\PaymentUmrahVerificationObserver;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        UmrahJamaah::observe(BookingUmrahObserver::class);
+        UmrahJamaahPayment::observe(PaymentUmrahVerificationObserver::class);
     }
 }
