@@ -11,6 +11,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $code = $request->q;
+        $jamaah =  UmrahJamaah::where('code', $code)->with(['umrahSchedule', 'umrahJamaahPayments', 'user'])->first();
 
         $data = [
             'title' => 'Cek Pembayaran',
@@ -25,34 +26,12 @@ class PaymentController extends Controller
                 ]
             ],
             'code' => $code,
-            'jamaah' => UmrahJamaah::where('code', $code)->with(['umrahSchedule', 'umrahJamaahPayments', 'user'])->first()
+            'jamaah' => $jamaah,
+            'payments' => $jamaah->umrahJamaahPayments??[],
         ];
 
         return view('front.pages.payment.index', $data);
     }
 
-    public function show(Request $request, $code)
-    {
-        $data = [
-            'title' => 'Cek Pembayaran',
-            'breadcrumbs' => [
-                [
-                    'name' => 'Home',
-                    'link' => route('home')
-                ],
-                [
-                    'name' => 'Cek Pembayaran',
-                    'link' => route('payment.index')
-                ],
-                [
-                    'name' => 'Detail Pembayaran',
-                    'link' => null
-                ]
-            ],
-            'code' => $code,
-            'jamaah' => UmrahJamaah::where('code', $code)->with(['umrahSchedule', 'umrahJamaahPayments', 'user'])->first()
-        ];
 
-        return view('front.pages.payment.show', $data);
-    }
 }

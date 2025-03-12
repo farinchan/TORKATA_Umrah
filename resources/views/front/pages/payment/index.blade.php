@@ -80,36 +80,89 @@
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td> Price</td>
-                                                <td class="pink">$580.00</td>
+                                                <td>ID</td>
+                                                <td class="pink">{{ $jamaah->code }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Number of Travellers</td>
-                                                <td class="pink">1</td>
+                                                <td>Nama</td>
+                                                <td class="pink">{{ $jamaah->name }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Infant Price</td>
-                                                <td class="pink">$0.00</td>
+                                                <td>Jenis Kelamin</td>
+                                                <td class="pink">{{ $jamaah->gender }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Subtotal</td>
-                                                <td class="pink">$580.00</td>
+                                                <td>Tempat, Tanggal Lahir</td>
+                                                <td class="pink">{{ $jamaah->birthplace }}, {{ Carbon\Carbon::parse($jamaah->birthdate)->format('d F Y') }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Total</td>
-                                                <td class="pink">$580.00</td>
+                                                <td>Alamat</td>
+                                                <td class="pink">{{ $jamaah->address }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Tax &amp; fee</td>
-                                                <td class="pink">0</td>
+                                                <td>No.Telp</td>
+                                                <td class="pink">{{ substr($jamaah->phone, 0, 5) . '****' . substr($jamaah->phone, -3) }}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot class="bg-pink">
                                             <tr>
-                                                <th class="font-weight-bold white">Amount</th>
-                                                <th class="font-weight-bold white">$580.00</th>
+                                                <th class="font-weight-bold white">Paket Umrah</th>
+                                                <th class="font-weight-bold white">
+                                                    {{ $jamaah->umrahSchedule->umrahPackage->name }}
+                                                    <div style="font-weight: 100; font-size: 14px;">
+
+                                                        jadwal: {{ $jamaah->umrahSchedule->name }} <br>
+                                                        Tipe paket: {{ $jamaah->package_type }} <br>
+                                                    </div>
+
+                                                </th>
                                             </tr>
                                         </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <div class="sidebar-sticky sticky1 tab-sticky">
+                            <div class="list-sidebar">
+                                <div class="sidebar-item">
+                                    <h4>History Pembayaran</h4>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-100px">Tanggal</th>
+                                                <th>Tipe</th>
+                                                <th>Jumlah</th>
+                                                <th>Bukti</th>
+                                                <th>Status</th>
+                                                <th>Catatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($payments as $payment)
+
+                                            <tr>
+                                                <td>{{ $payment->created_at->format('d M Y H:i') }}</td>
+                                                <td>{{ $payment->type }} </td>
+                                                <td>@money($payment->amount)</td>
+                                                <td>
+                                                    <a href="{{ Storage::url($payment->proof) }}" target="_blank">Lihat
+                                                        Bukti</a>
+                                                </td>
+                                                <td>
+                                                    @if ($payment->status == 'pending')
+                                                        <span class="badge badge-light-warning">Pending</span>
+                                                    @elseif ($payment->status == 'approved')
+                                                        <span class="badge badge-light-success">Diterima</span>
+                                                    @else
+                                                        <span class="badge badge-light-danger">Ditolak</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $payment->note?? "-" }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
