@@ -23,11 +23,11 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('file_ktp')->nullable();
-            $table->string('file_kk')->nullable();
-            $table->string('file_paspor')->nullable();
+            $table->string('passport')->nullable();
             $table->foreignId('umrah_schedule_id')->constrained('umrah_schedules')->onDelete('cascade');
             $table->enum('package_type', ['quad', 'triple', 'double'])->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('discount')->default(0);
             $table->timestamps();
         });
     }

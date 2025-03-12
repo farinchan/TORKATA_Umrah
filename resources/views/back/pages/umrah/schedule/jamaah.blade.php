@@ -145,41 +145,24 @@
                                         @enderror
                                     </div>
                                     <div class="mb-5 fv-row">
-                                        <label class="form-label">KTP</label>
+                                        <label class="form-label required">KTP/KK</label>
                                         <input type="file" class="form-control form-control-lg form-control-solid"
                                             accept=".pdf, .jpg, .jpeg, .png" placeholder="KTP" name="file_ktp"
                                             value="{{ old('file_ktp') }}" />
                                         <div>File Sebelumnya : <a href="{{ Storage::url($jamaah->file_ktp) }}"
                                                 target="_blank">Lihat Disini</a></div>
-                                        <small class="text-muted">Kosongkan Jika Tidak Ingin Mengganti file KTP</small>
+                                        <small class="text-muted">Kosongkan Jika Tidak Ingin Mengganti file KTP/KK</small>
                                         @error('file_ktp')
                                             <br>
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
+
                                     <div class="mb-5 fv-row">
-                                        <label class="form-label required">Kartu Keluarga</label>
-                                        <input type="file" class="form-control form-control-lg form-control-solid"
-                                            accept=".pdf, .jpg, .jpeg, .png" placeholder="Kartu Keluarga" name="file_kk"
-                                            value="{{ old('file_kk') }}" />
-                                        <div>File Sebelumnya : <a href="{{ Storage::url($jamaah->file_kk) }}"
-                                                target="_blank">Lihat Disini</a></div>
-                                        <small class="text-muted">Kosongkan Jika Tidak Ingin Mengganti file Kartu
-                                            Keluarga</small>
-                                        @error('file_kk')
-                                            <br>
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-5 fv-row">
-                                        <label class="form-label required">Paspor</label>
-                                        <input type="file" class="form-control form-control-lg form-control-solid"
-                                            accept=".pdf, .jpg, .jpeg, .png" placeholder="Paspor" name="file_paspor"
-                                            value="{{ old('file_paspor') }}" />
-                                        <div>File Sebelumnya : <a href="{{ Storage::url($jamaah->file_paspor) }}"
-                                                target="_blank">Lihat Disini</a></div>
-                                        <small class="text-muted">Kosongkan Jika Tidak Ingin Mengganti file Paspor</small>
-                                        @error('file_paspor')
+                                        <label class="form-label required">No. Paspor</label>
+                                        <input type="text" class="form-control form-control-lg form-control-solid"
+                                            placeholder="No. Paspor" name="passport" value="{{ $jamaah->passport }}" />
+                                        @error('passport')
                                             <br>
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror

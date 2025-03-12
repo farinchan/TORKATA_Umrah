@@ -188,28 +188,19 @@
                                 </div>
                             </div>
                             <div class="mb-5 fv-row">
-                                <label class="form-label">KTP</label>
+                                <label class="form-label required">KTP/KK</label>
                                 <input type="file" class="form-control form-control-lg form-control-solid" accept=".pdf, .jpg, .jpeg, .png"
-                                    placeholder="KTP" name="file_ktp" value="{{ old('file_ktp') }}" />
+                                    placeholder="KTP" name="file_ktp" value="{{ old('file_ktp') }}" required />
                                 @error('file_ktp')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
 
                             <div class="mb-5 fv-row">
-                                <label class="form-label required">Kartu Keluarga</label>
-                                <input type="file" class="form-control form-control-lg form-control-solid" accept=".pdf, .jpg, .jpeg, .png"
-                                    placeholder="Kartu Keluarga" name="file_kk" value="{{ old('file_kk') }}" required />
-                                @error('file_kk')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="mb-5 fv-row">
-                                <label class="form-label required">Paspor</label>
-                                <input type="file" class="form-control form-control-lg form-control-solid" accept=".pdf, .jpg, .jpeg, .png"
-                                    placeholder="Paspor" name="file_paspor" value="{{ old('file_paspor') }}" required />
-                                @error('file_paspor')
+                                <label class="form-label required">No Paspor</label>
+                                <input type="text" class="form-control form-control-lg form-control-solid"
+                                    placeholder="No Paspor" name="passport" value="{{ old('passport') }}" required />
+                                @error('passport')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

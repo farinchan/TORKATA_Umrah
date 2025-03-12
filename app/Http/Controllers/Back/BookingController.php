@@ -43,9 +43,8 @@ class BookingController extends Controller
             'gender' => 'required|in:laki-laki,perempuan',
             'address' => 'required|string',
             'phone' => 'required|string',
-            'file_ktp' => 'nullable|mimes:jpeg,png,jpg,pdf',
-            'file_kk' => 'required|mimes:jpeg,png,jpg,pdf',
-            'file_paspor' => 'required|mimes:jpeg,png,jpg,pdf',
+            'passport' => 'required|string',
+            'file_ktp' => 'required|mimes:jpeg,png,jpg,pdf',
             'umrah_schedule_id' => 'required|exists:umrah_schedules,id',
             'package_type' => 'required|in:quad,triple,double',
         ], [
@@ -67,12 +66,7 @@ class BookingController extends Controller
             'phone.string' => 'Nomor telepon harus berupa huruf',
             'file_ktp.image' => 'File KTP harus berupa gambar',
             'file_ktp.mimes' => 'File KTP harus berformat jpeg, png, jpg, pdf',
-            'file_kk.required' => 'File KK wajib diisi',
-            'file_kk.image' => 'File KK harus berupa gambar',
-            'file_kk.mimes' => 'File KK harus berformat jpeg, png, jpg, pdf',
-            'file_paspor.required' => 'File Paspor wajib diisi',
-            'file_paspor.image' => 'File Paspor harus berupa gambar',
-            'file_paspor.mimes' => 'File Paspor harus berformat jpeg, png, jpg, pdf',
+            'passport.required' => 'Nomor Passport wajib diisi',
             'umrah_schedule_id.required' => 'Jadwal Umrah wajib diisi',
             'umrah_schedule_id.exists' => 'Jadwal Umrah tidak ditemukan',
             'package_type.required' => 'Tipe Paket wajib diisi',
@@ -95,6 +89,7 @@ class BookingController extends Controller
         $umrah_jamaah->umrah_schedule_id = $umrah_schedule->id;
         $umrah_jamaah->package_type = $request->package_type;
         $umrah_jamaah->user_id = Auth::user()->id;
+        $umrah_jamaah->passport = $request->passport;
 
         if ($request->hasFile('photo')) {
             $photo = $request->file('photo');
@@ -104,20 +99,8 @@ class BookingController extends Controller
 
         if ($request->hasFile('file_ktp')) {
             $file_ktp = $request->file('file_ktp');
-            $file_ktp_name = 'ktp-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_ktp->getClientOriginalExtension();
+            $file_ktp_name = 'ktp-kk-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_ktp->getClientOriginalExtension();
             $umrah_jamaah->file_ktp = $file_ktp->storeAs('umrah/jamaah', $file_ktp_name, 'public');
-        }
-
-        if ($request->hasFile('file_kk')) {
-            $file_kk = $request->file('file_kk');
-            $file_kk_name = 'kk-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_kk->getClientOriginalExtension();
-            $umrah_jamaah->file_kk = $file_kk->storeAs('umrah/jamaah', $file_kk_name, 'public');
-        }
-
-        if ($request->hasFile('file_paspor')) {
-            $file_paspor = $request->file('file_paspor');
-            $file_paspor_name = 'paspor-' . $umrah_jamaah->nik . '-' . time() . '.' . $file_paspor->getClientOriginalExtension();
-            $umrah_jamaah->file_paspor = $file_paspor->storeAs('umrah/jamaah', $file_paspor_name, 'public');
         }
 
         $umrah_jamaah->save();
