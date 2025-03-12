@@ -145,6 +145,12 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::delete('/{id}/delete', [App\Http\Controllers\Back\UserController::class, 'delete'])->name('delete');
     });
 
+    Route::prefix('whatsapp')->name('whatsapp.')->group(function () {
+        Route::get('/setting', [App\Http\Controllers\Back\WhatsappController::class, 'setting'])->name('setting');
+        Route::get('/message', [App\Http\Controllers\Back\WhatsappController::class, 'message'])->name('message');
+    });
+
+
     Route::prefix('setting')->name('setting.')->group(function () {
         Route::get('/website', [App\Http\Controllers\back\SettingController::class, 'website'])->name('website');
         Route::put('/website', [App\Http\Controllers\back\SettingController::class, 'websiteUpdate'])->name('website.update');
