@@ -219,19 +219,52 @@
                 </div>
             </div>
 
-            <div class="menu-item">
-                <a class="menu-link @if (request()->routeIs('back.booking.umrah.index')) active @endif"
-                    href="{{ route('back.booking.umrah.index') }}">
+            <div data-kt-menu-trigger="click"
+                class="menu-item menu-accordion @if (request()->routeIs('back.booking.umrah.*')) here show @endif ">
+                <span class="menu-link">
                     <span class="menu-icon">
-                        <i class="ki-duotone ki-like-tag fs-2">
+                        <i class="ki-duotone ki-bookmark-2 fs-2">
                             <span class="path1"></span>
                             <span class="path2"></span>
                         </i>
                     </span>
                     <span class="menu-title">Umrah</span>
-                </a>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.booking.umrah.index')) active @endif"
+                            href="{{ route('back.booking.umrah.index') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Booking</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.booking.umrah.history')) active @endif"
+                            href="{{ route('back.booking.umrah.history') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">History</span>
+                        </a>
+                    </div>
+                    @role('super-admin|admin-kantor')
+                        <div class="menu-item">
+                            <a class="menu-link @if (request()->routeIs('back.booking.umrah.history.all')) active @endif"
+                                href="{{ route('back.booking.umrah.history.all') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Semua History</span>
+                            </a>
+                        </div>
+                    @endrole    
+                </div>
             </div>
         @endrole
+
 
         @role('super-admin|admin-kantor')
             <div class="menu-item pt-5">
@@ -293,35 +326,35 @@
             </div>
 
             <div data-kt-menu-trigger="click"
-                        class="menu-item menu-accordion @if (request()->routeIs('back.whatsapp.*')) here show @endif">
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-setting-4 fs-2"></i>
+                class="menu-item menu-accordion @if (request()->routeIs('back.whatsapp.*')) here show @endif">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-setting-4 fs-2"></i>
+                    </span>
+                    <span class="menu-title">Whatsapp API</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.whatsapp.setting')) active @endif"
+                            href="{{ route('back.whatsapp.setting') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Whatsapp API</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link @if (request()->routeIs('back.whatsapp.setting')) active @endif"
-                                    href="{{ route('back.whatsapp.setting') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Pengaturan</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link @if (request()->routeIs('back.whatsapp.message')) active @endif"
-                                    href="{{ route('back.whatsapp.message') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Kirim Pesan</span>
-                                </a>
-                            </div>
-                        </div>
+                            <span class="menu-title">Pengaturan</span>
+                        </a>
                     </div>
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.whatsapp.message')) active @endif"
+                            href="{{ route('back.whatsapp.message') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Kirim Pesan</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <div data-kt-menu-trigger="click"
                 class="menu-item menu-accordion @if (request()->routeIs('back.setting.*')) here show @endif">

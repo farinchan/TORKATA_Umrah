@@ -123,6 +123,10 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::post("/", [App\Http\Controllers\Back\BookingController::class, "umrahStore"])->name("store");
             Route::get("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "umrahPayment"])->name("payment");
             Route::post("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "umrahPaymentStore"])->name("payment.store");
+
+            Route::get("/history", [App\Http\Controllers\Back\BookingController::class, "umrahHistory"])->name("history");
+            Route::get("/history/{code}", [App\Http\Controllers\Back\BookingController::class, "umrahHistoryDetail"])->name("history.detail");
+            Route::get("/history-all", [App\Http\Controllers\Back\BookingController::class, "umrahHistoryAll"])->name("history.all");
         });
     });
 

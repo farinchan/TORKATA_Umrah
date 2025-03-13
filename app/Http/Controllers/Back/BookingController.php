@@ -108,7 +108,6 @@ class BookingController extends Controller
         $umrah_jamaah->save();
 
         return redirect()->route('back.booking.umrah.payment', $umrah_jamaah->id)->with('success', 'Data berhasil disimpan, silahkan lakukan pembayaran');
-
     }
 
     public function umrahPayment($id)
@@ -170,6 +169,97 @@ class BookingController extends Controller
         $payment->save();
 
         return redirect()->route('back.booking.umrah.index')->with('success', 'Pembayaran berhasil disimpan');
+    }
 
+    public function umrahHistory()
+    {
+        $data = [
+            'title' => 'History Booking Umrah',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'History Booking Umrah',
+                    'link' => route('back.booking.umrah.history')
+                ]
+            ],
+            'list_jamaah' => UmrahJamaah::where('user_id', Auth::user()->id)
+                ->withSum(['umrahJamaahPayments as total_payment' => function ($query) {
+                    $query->where('status', 'approved');
+                }], 'amount')->with('umrahSchedule')->latest()->get(),
+        ];
+        // return response()->json($data);
+        return view('back.pages.booking.umrah.history', $data);
+    }
+
+    public function umrahHistoryAll()
+    {
+        $data = [
+            'title' => 'History Booking Umrah',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Semua History Booking Umrah',
+                    'link' => route('back.booking.umrah.history.all')
+                ]
+            ],
+            'list_jamaah' => UmrahJamaah::withSum(['umrahJamaahPayments as total_payment' => function ($query) {
+                    $query->where('status', 'approved');
+                }], 'amount')->with('umrahSchedule')->latest()->get(),
+        ];
+        // return response()->json($data);
+        return view('back.pages.booking.umrah.history-all', $data);
+    }
+
+    public function umrahHistoryDetail($code)
+    {
+        $jamaah = UmrahJamaah::where('code', $code)->withSum(['umrahJamaahPayments as total_payment' => function ($query) {
+            $query->where('status', 'approved');
+        }], 'amount')
+        ->first();
+
+        if(Auth::user()->getRoleNames()[0] != 'super-admin' || Auth::user()->getRoleNames()[0] != 'admin-kantor'){
+            if($jamaah->user_id != Auth::user()->id){
+                return redirect()->route('back.dashboard.index')->with('error', 'Data tidak ditemukan');
+            }
+        }
+        $schedule = UmrahSchedule::with('umrahPackage')->withCount([
+            'jamaah as quad_count' => function ($query) {
+                $query->where('package_type', 'quad');
+            },
+            'jamaah as triple_count' => function ($query) {
+                $query->where('package_type', 'triple');
+            },
+            'jamaah as double_count' => function ($query) {
+                $query->where('package_type', 'double');
+            }
+        ])->findOrFail($jamaah->umrah_schedule_id);
+        $data = [
+            'title' => 'Detail Booking Umrah',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'History Booking Umrah',
+                    'link' => route('back.booking.umrah.history')
+                ],
+                [
+                    'name' => 'Detail Booking Umrah',
+                    'link' => route('back.booking.umrah.history.detail', $code)
+                ]
+            ],
+            'schedule' => $schedule,
+            'jamaah' => $jamaah,
+            'payments' => $jamaah->umrahJamaahPayments()->latest()->get(),
+        ];
+        // return response()->json($data);
+        return view('back.pages.booking.umrah.history-detail', $data);
     }
 }
