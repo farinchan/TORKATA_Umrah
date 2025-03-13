@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsViewer;
+use App\Models\SettingWebsite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jenssegers\Agent\Facades\Agent;
@@ -16,6 +17,7 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $search = $request->q;
+        $setting_web = SettingWebsite::first();
 
         $data = [
             'title' => 'Berita',
@@ -29,6 +31,12 @@ class NewsController extends Controller
                     'link' => route('news.index')
                 ]
                 ],
+            'meta' => [
+                'title' => 'Berita | ' . $setting_web->name,
+                'description' => 'Berita terbaru seputar umrah, haji, travel, dan paket wisata muslim',
+                'keywords' =>  $setting_web->name, 'home', 'umrah', 'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata', 'berita', 'news', 'berita terbaru', 'berita umrah',  'berita travel', 'berita wisata',
+                'favicon' => $setting_web->favicon
+            ],
             'news' => News::where('title', 'like', "%$search%")->with(['category', 'comments', 'user', 'viewers'])->where('status', 'published')->latest()->paginate(6),
             'categories' => NewsCategory::withCount('news')->get(),
             'news_populars' => News::with(['category', 'comments', 'user', 'viewers'])->where('status', 'published')->withCount('viewers')->orderBy('viewers_count', 'desc')->limit(5)->get(),
@@ -41,7 +49,7 @@ class NewsController extends Controller
     public function show($slug)
     {
         $news = News::where('slug', $slug)->with(['category', 'comments', 'user', 'viewers'])->where('status', 'published')->firstOrFail();
-
+        $setting_web = SettingWebsite::first();
         $data = [
             'title' => $news->title,
             'breadcrumbs' => [
@@ -58,6 +66,12 @@ class NewsController extends Controller
                     'link' => route('news.show', $news->slug)
                 ]
             ],
+            'meta' => [
+                'title' => $news->title . ' | ' . $setting_web->name,
+                'description' => strip_tags($news->content),
+                'keywords' => $setting_web->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah', 'paket wisata', 'berita', 'news', 'berita terbaru', 'berita umrah', 'berita travel', 'berita wisata',
+                'favicon' => $news->thumbnail
+            ],
             'news' => $news,
             'categories' => NewsCategory::withCount('news')->get(),
             'news_populars' => News::with(['category', 'comments', 'user', 'viewers'])->where('status', 'published')->withCount('viewers')->orderBy('viewers_count', 'desc')->limit(5)->get(),
@@ -72,6 +86,7 @@ class NewsController extends Controller
     public function category($slug)
     {
         $category = NewsCategory::where('slug', $slug)->withCount('news')->firstOrFail();
+        $setting_web = SettingWebsite::first();
 
         $data = [
             'title' => $category->name,
@@ -88,6 +103,12 @@ class NewsController extends Controller
                     'name' => 'Kategori Berita',
                     'link' => route('news.category', $category->slug)
                 ]
+            ],
+            'meta' => [
+                'title' => $category->name . ' | ' . $setting_web->name,
+                'description' => 'Kategori berita ' . $category->name,
+                'keywords' => $setting_web->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata', 'berita', 'news', 'berita terbaru', 'berita umrah', 'berita travel', 'berita wisata',
+                'favicon' => $setting_web->favicon
             ],
             'category' => $category,
             'news' => $category->news()->with(['category', 'comments', 'user', 'viewers'])->where('status', 'published')->latest()->paginate(6),

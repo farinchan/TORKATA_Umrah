@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
 
 @php
-    $setting_web = \App\Models\SettingWebsite::first()?? null;
+    $setting_web = \App\Models\SettingWebsite::first() ?? null;
 @endphp
 
 <head>
@@ -11,13 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-        {{ $setting_web->name }} | @isset($title)
-            {{ $title }}
+        @isset($title)
+            {{ $title }} |
         @endisset
+        {{ $setting_web->name }}
     </title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ Storage::url($setting_web->favicon) }}">
+    <link rel="shortcut icon" href="{{ Storage::url($setting_web->favicon) }}">
+    <link rel="icon" href="{{ Storage::url($setting_web->favicon) }}" type="image/png">
+
     @yield('seo')
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('front/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -86,29 +89,29 @@
                             <form action="{{ route('login.process') }}" method="POST" class="form">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" placeholder="Masukkan Email*" name="email" value="{{ old('email') }}"
-                                        required>
-                                        @error('email')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
+                                    <input type="email" placeholder="Masukkan Email*" name="email"
+                                        value="{{ old('email') }}" required>
+                                    @error('email')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <input type="password" placeholder="Masukkan password*" name="password" required>
                                     @error('password')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <div class="form-group mb-0 form-checkbox px-2">
                                     <span class="float-left">
 
-                                        <input type="checkbox" name="remember"  value="1"
-                                        @if (old('remember') == 1) checked @endif> Ingat saya
+                                        <input type="checkbox" name="remember" value="1"
+                                            @if (old('remember') == 1) checked @endif> Ingat saya
                                     </span>
                                     <a href="#" class="float-right">Forgot Password?</a>
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit" onclick="this.form.submit();"
-                                     class="nir-btn btn-block">LOGIN</button>
+                                        class="nir-btn btn-block">LOGIN</button>
                                 </div>
 
                             </form>

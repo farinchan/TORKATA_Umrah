@@ -17,6 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $setting_web = SettingWebsite::first();
         $data = [
             'title' => 'Home',
             'breadcrumbs' => [
@@ -24,6 +25,12 @@ class HomeController extends Controller
                     'name' => 'Home',
                     'link' => route('home')
                 ]
+            ],
+            'meta' => [
+                'title' => 'Home | ' . $setting_web->name,
+                'description' => strip_tags($setting_web->about),
+                'keywords' => $setting_web->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata',
+                'favicon' => $setting_web->favicon
             ],
             'agents' => User::role('agen')->take(10)->get(),
             'setting_web' => SettingWebsite::first(),

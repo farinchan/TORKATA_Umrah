@@ -11,6 +11,7 @@ class UmrahController extends Controller
 {
     public function index()
     {
+        $setting_web = SettingWebsite::first();
 
         $data = [
             'title' => 'Umrah',
@@ -23,6 +24,12 @@ class UmrahController extends Controller
                     'name' => 'Umrah',
                     'link' => route('umrah.index')
                 ]
+            ],
+            'meta' => [
+                'title' => 'Umrah | ' . $setting_web->name,
+                'description' => 'Temukan paket umrah terbaik dan terbaru dari ' . $setting_web->name . '. Kami menyediakan berbagai paket wisata muslim yang sesuai dengan kebutuhan Anda.',
+                'keywords' =>  $setting_web->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah', 'paket haji', 'paket wisata', 'umrah', 'umrah terbaru', 'umrah umrah', 'umrah travel', 'umrah wisata',
+                'favicon' => $setting_web->favicon
             ],
             'umrahs' => UmrahPackage::where('status', 'enabled')->with(['images', 'schedules'])->get(),
         ];
@@ -49,6 +56,12 @@ class UmrahController extends Controller
                     'name' => $umrah->name,
                     'link' => route('umrah.show', $umrah->slug)
                 ]
+            ],
+            'meta' => [
+                'title' => $umrah->name . ' | ' . $umrah->location,
+                'description' => strip_tags($umrah->description),
+                'keywords' =>  $umrah->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah', 'paket haji', 'paket wisata', 'umrah', 'umrah terbaru', 'umrah umrah', 'umrah travel', 'umrah wisata',
+                'favicon' => $umrah->banner
             ],
             'umrah' => $umrah,
             'setting_web' => SettingWebsite::first()

@@ -12,6 +12,7 @@ class ContactController extends Controller
 {
     public function index()
     {
+        $setting_web = SettingWebsite::first();
         $data = [
             'title' => 'Kontak Kami',
             'breadcrumbs' => [
@@ -23,6 +24,12 @@ class ContactController extends Controller
                     'name' => 'Kontak Kami',
                     'link' => route('contact.index')
                 ]
+            ],
+            'meta' => [
+                'title' => 'Kontak Kami | ' . $setting_web->name,
+                'description' => 'Hubungi kami untuk informasi lebih lanjut. Phone/WA : ' . $setting_web->phone . ' Email : ' . $setting_web->email . ' Alamat : ' . $setting_web->address,
+                'keywords' => $setting_web->name, 'home', 'umrah', 'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata', 'kontak', 'contact', 'hubungi kami', 'phone', 'wa', 'email', 'alamat',
+                'favicon' => $setting_web->favicon
             ],
             'setting_web' => SettingWebsite::first()
         ];

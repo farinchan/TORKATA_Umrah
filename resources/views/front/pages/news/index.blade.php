@@ -3,6 +3,21 @@
 @section('styles')
 @endsection
 
+@section('seo')
+    <title>{{ $title }}</title>
+    <meta name="description" content="{{ $meta["description"] }}">
+    <meta name="keywords" content="{{ $meta["keywords"] }}">
+    <meta name="author" content="PT. Torkata Jaya Persada">
+
+    <meta property="og:title" content="{{ $meta["title"] }}">
+    <meta property="og:description" content="{{ $meta["description"] }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ route('news.index') }}">
+    <link rel="canonical" href="{{ route('news.index') }}">
+    <meta property="og:image" content="{{ Storage::url($meta["favicon"]) }}">
+@endsection
+
+
 @section('content')
     @include('front.partials.breadcrumb')
     <!-- blog starts -->
