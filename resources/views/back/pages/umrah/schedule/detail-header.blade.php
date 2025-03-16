@@ -107,6 +107,10 @@
                     href="{{ route('back.umrah.schedule.jamaah', $schedule->id) }}">Jama'ah</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link text-active-primary py-5 me-6 @if (request()->routeIs('back.umrah.schedule.finance')) active @endif"
+                    href="{{ route('back.umrah.schedule.finance', $schedule->id) }}">Keuangan</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-active-primary py-5 me-6 @if (request()->routeIs('back.umrah.schedule.setting')) active @endif"
                     href="{{ route('back.umrah.schedule.setting', $schedule->id) }}">Settings</a>
             </li>

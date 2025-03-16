@@ -114,6 +114,11 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::get('/{id}/jamaah', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleJamaah'])->name('jamaah');
             Route::get('/{id}/jamaah/{code}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleJamaahDetail'])->name('jamaah.detail');
             Route::put('/{id}/jamaah/{code}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleJamaahUpdate'])->name('jamaah.update');
+
+            Route::get('/{id}/finance', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinance'])->name('finance');
+            Route::post('/{id}/finance', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceStore'])->name('finance.store');
+            Route::put('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceUpdate'])->name('finance.update');
+            Route::delete('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceDestroy'])->name('finance.destroy');
         });
     });
 

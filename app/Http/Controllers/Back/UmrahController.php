@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\UmrahFinance;
 use App\Models\UmrahJamaah;
 use App\Models\UmrahPackage;
 use App\Models\UmrahPackageItinerary;
 use App\Models\UmrahSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -262,6 +264,8 @@ class UmrahController extends Controller
 
         return redirect()->route('back.umrah.package.index')->with('success', 'Data berhasil dihapus');
     }
+
+    //Schedule
 
     public function umrahScheduleIndex()
     {
@@ -606,5 +610,167 @@ class UmrahController extends Controller
         $umrah_jamaah->save();
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
+    }
+
+    public function UmrahScheduleFinance($id)
+    {
+        $schedule = UmrahSchedule::with('umrahPackage')->withCount([
+            'jamaah as quad_count' => function ($query) {
+                $query->where('package_type', 'quad');
+            },
+            'jamaah as triple_count' => function ($query) {
+                $query->where('package_type', 'triple');
+            },
+            'jamaah as double_count' => function ($query) {
+                $query->where('package_type', 'double');
+            }
+        ])->findOrFail($id);
+        $data = [
+            'title' => $schedule->name,
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Jadwal Umrah',
+                    'link' => route('back.umrah.schedule.index')
+                ],
+                [
+                    'name' => 'Keuangan',
+                    'link' => route('back.umrah.schedule.finance', $id)
+                ]
+            ],
+            'schedule' => $schedule,
+            'list_finance' => UmrahFinance::where('umrah_schedule_id', $id)->get(),
+            'total_income' => UmrahFinance::where('umrah_schedule_id', $id)->where('type', 'income')->sum('amount'),
+            'total_expense' => UmrahFinance::where('umrah_schedule_id', $id)->where('type', 'expense')->sum('amount')
+        ];
+
+        return view('back.pages.umrah.schedule.detail-finance', $data);
+    }
+
+    public function UmrahScheduleFinanceStore(Request $request, $id)
+    {
+        $validator =  Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'nullable',
+            'amount' => 'required',
+            'type' => 'required',
+            'date' => 'required',
+            'payment_method' => 'nullable',
+            'payment_reference' => 'nullable',
+            'payment_note' => 'nullable',
+            'attachment' => 'nullable|mimes:jpeg,png,jpg,pdf',
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'description.required' => 'Deskripsi wajib diisi',
+            'amount.required' => 'Jumlah wajib diisi',
+            'type.required' => 'Tipe wajib diisi',
+            'date.required' => 'Tanggal wajib diisi',
+            'date.date' => 'Tanggal harus berupa tanggal',
+            'payment_method.required' => 'Metode pembayaran wajib diisi',
+            'payment_reference.required' => 'Referensi pembayaran wajib diisi',
+            'payment_note.required' => 'Catatan pembayaran wajib diisi',
+            'attachment.required' => 'Bukti pembayaran wajib diisi',
+            'attachment.mimes' => 'Bukti pembayaran harus berformat jpeg, png, jpg, pdf',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', implode(', ', $validator->errors()->all()));
+        }
+
+        // $umrah_schedule = UmrahSchedule::find($id);
+        $umrah_finance = new UmrahFinance();
+        $umrah_finance->umrah_schedule_id = $id;
+        $umrah_finance->name = $request->name;
+        $umrah_finance->description = $request->description;
+        $umrah_finance->amount = $request->amount;
+        $umrah_finance->type = $request->type;
+        $umrah_finance->date = $request->date;
+        $umrah_finance->payment_method = $request->payment_method;
+        $umrah_finance->payment_reference = $request->payment_reference;
+        $umrah_finance->payment_note = $request->payment_note;
+        $umrah_finance->created_by = Auth::user()->id;
+        $umrah_finance->updated_by = Auth::user()->id;
+
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $attachment_name = 'attachment-' . Str::slug($umrah_finance->name, '-') . '-' . time() . '.' . $attachment->getClientOriginalExtension();
+            $umrah_finance->attachment = $attachment->storeAs('umrah/finance', $attachment_name, 'public');
+        }
+
+        $umrah_finance->save();
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
+
+    }
+
+    public function UmrahScheduleFinanceUpdate(Request $request, $id, $finance_id)
+    {
+        $validator =  Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'nullable',
+            'amount' => 'required',
+            'type' => 'required',
+            'date' => 'required',
+            'payment_method' => 'nullable',
+            'payment_reference' => 'nullable',
+            'payment_note' => 'nullable',
+            'attachment' => 'nullable|mimes:jpeg,png,jpg,pdf',
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'description.required' => 'Deskripsi wajib diisi',
+            'amount.required' => 'Jumlah wajib diisi',
+            'type.required' => 'Tipe wajib diisi',
+            'date.required' => 'Tanggal wajib diisi',
+            'date.date' => 'Tanggal harus berupa tanggal',
+            'payment_method.required' => 'Metode pembayaran wajib diisi',
+            'payment_reference.required' => 'Referensi pembayaran wajib diisi',
+            'payment_note.required' => 'Catatan pembayaran wajib diisi',
+            'attachment.required' => 'Bukti pembayaran wajib diisi',
+            'attachment.mimes' => 'Bukti pembayaran harus berformat jpeg, png, jpg, pdf',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', implode(', ', $validator->errors()->all()));
+        }
+
+        // $umrah_schedule = UmrahSchedule::find($id);
+        $umrah_finance = UmrahFinance::find($finance_id);
+        $umrah_finance->name = $request->name;
+        $umrah_finance->description = $request->description;
+        $umrah_finance->amount = $request->amount;
+        $umrah_finance->type = $request->type;
+        $umrah_finance->date = $request->date;
+        $umrah_finance->payment_method = $request->payment_method;
+        $umrah_finance->payment_reference = $request->payment_reference;
+        $umrah_finance->payment_note = $request->payment_note;
+        $umrah_finance->updated_by = Auth::user()->id;
+
+        if ($request->hasFile('attachment')) {
+            if ($umrah_finance->attachment) {
+                Storage::delete('public/' . $umrah_finance->attachment);
+            }
+            $attachment = $request->file('attachment');
+            $attachment_name = 'attachment-' . Str::slug($umrah_finance->name, '-') . '-' . time() . '.' . $attachment->getClientOriginalExtension();
+            $umrah_finance->attachment = $attachment->storeAs('umrah/finance', $attachment_name, 'public');
+        }
+
+        $umrah_finance->save();
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
+
+    }
+
+    public function UmrahScheduleFinanceDestroy($id, $finance_id)
+    {
+        $umrah_finance = UmrahFinance::find($finance_id);
+        if ($umrah_finance->attachment) {
+            Storage::delete('public/' . $umrah_finance->attachment);
+        }
+        $umrah_finance->delete();
+
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }

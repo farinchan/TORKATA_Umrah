@@ -165,7 +165,7 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion">
                     <div class="menu-item">
-                        <a class="menu-link @if (request()->routeIs('back.umrah.package.index')) active @endif"
+                        <a class="menu-link @if (request()->routeIs('back.umrah.package.*')) active @endif"
                             href="{{ route('back.umrah.package.index') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -175,7 +175,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link @if (request()->routeIs('back.umrah.schedule.index')) active @endif"
+                        <a class="menu-link @if (request()->routeIs('back.umrah.schedule.*')) active @endif"
                             href="{{ route('back.umrah.schedule.index') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -260,7 +260,7 @@
                                 <span class="menu-title">Semua History</span>
                             </a>
                         </div>
-                    @endrole    
+                    @endrole
                 </div>
             </div>
         @endrole
