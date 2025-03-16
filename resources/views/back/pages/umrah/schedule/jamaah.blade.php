@@ -167,6 +167,20 @@
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
+
+                                    <div class="mb-5 fv-row">
+                                        <label class="form-label">Diskon <i class="ki-outline ki-information-5 text-gray-500 fs-6" data-bs-toggle="tooltip" data-bs-placement="right" title="berikan Diskon kepada jama'ah yang berhak diberikan"></i></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rp</span>
+                                            <input type="number" class="form-control form-control-lg form-control-solid"
+                                                placeholder="Diskon" name="discount" value="{{ $jamaah->discount }}" />
+                                        </div>
+                                            <small class="text-muted">Diskon dalam nilai uang</small>
+                                        @error('discount')
+                                            <br>
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                                     <button type="reset"

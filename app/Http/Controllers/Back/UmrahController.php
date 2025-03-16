@@ -532,6 +532,7 @@ class UmrahController extends Controller
             'file_ktp' => 'nullable|mimes:jpeg,png,jpg,pdf',
             'file_kk' => 'nullable|mimes:jpeg,png,jpg,pdf',
             'file_paspor' => 'nullable|mimes:jpeg,png,jpg,pdf',
+            'discount' => 'nullable|numeric',
         ], [
             'nik.required' => 'NIK wajib diisi',
             'photo.required' => 'Foto wajib diisi',
@@ -555,6 +556,7 @@ class UmrahController extends Controller
             'file_kk.mimes' => 'File KK harus berformat jpeg, png, jpg, pdf',
             'file_paspor.image' => 'File Paspor harus berupa gambar',
             'file_paspor.mimes' => 'File Paspor harus berformat jpeg, png, jpg, pdf',
+            'discount.numeric' => 'Diskon harus berupa angka',
         ]);
 
         if ($validator->fails()) {
@@ -570,6 +572,7 @@ class UmrahController extends Controller
         $umrah_jamaah->gender = $request->gender;
         $umrah_jamaah->address = $request->address;
         $umrah_jamaah->phone = $request->phone;
+        $umrah_jamaah->discount = $request->discount;
 
         if ($request->hasFile('photo')) {
             if ($umrah_jamaah->photo) {

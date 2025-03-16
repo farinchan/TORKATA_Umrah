@@ -98,11 +98,12 @@
                                             data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                                     </div>
                                 </th>
-                                <th class="min-w-125px">Jama'ah</th>
+                                <th class="min-w-200px">Jama'ah</th>
                                 <th class="min-w-125px">Jenis Kelamin</th>
                                 <th class="min-w-125px">No Telp</th>
                                 <th class="min-w-125px">Paket</th>
                                 <th class="min-w-125px">Total Pembayaran</th>
+                                <th class="min-w-125px">Diskon</th>
                                 <th class="text-end min-w-100px">Actions</th>
                             </tr>
                         </thead>
@@ -152,26 +153,32 @@
 
                                         <span class="text-primary">@money($user->total_payment)</span>
                                         <br>
+                                        @php
+                                            $totalPaymentWithDiscount = $user->total_payment + $user->discount;
+                                        @endphp
                                         @if ($user->package_type == 'quad')
-                                            @if ($user->total_payment < $schedule->quad_price)
+                                            @if ($totalPaymentWithDiscount < $schedule->quad_price)
                                                 <span class="badge badge-light-danger">Belum Lunas</span>
                                             @else
                                                 <span class="badge badge-light-success">Lunas</span>
                                             @endif
                                         @elseif($user->package_type == 'triple')
-                                            @if ($user->total_payment <  $schedule->triple_price)
+                                            @if ($totalPaymentWithDiscount < $schedule->triple_price)
                                                 <span class="badge badge-light-danger">Belum Lunas</span>
                                             @else
                                                 <span class="badge badge-light-success">Lunas</span>
-
                                             @endif
                                         @elseif($user->package_type == 'double')
-                                            @if ($user->total_payment <  $schedule->double_price)
+                                            @if ($totalPaymentWithDiscount < $schedule->double_price)
                                                 <span class="badge badge-light-danger">Belum Lunas</span>
                                             @else
                                                 <span class="badge badge-light-success">Lunas</span>
                                             @endif
                                         @endif
+                                    </td>
+
+                                    <td>
+                                        <span class="text-warning">- @money($user->discount)</span>
                                     </td>
 
                                     <td class="text-end">

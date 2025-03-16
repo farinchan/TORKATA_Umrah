@@ -62,7 +62,7 @@
 
                         <div class="btn-group">
 
-                           
+
                             <a class="btn btn-secondary" href="">
                                 <i class="ki-duotone ki-file-up fs-2">
                                     <span class="path1"></span>
@@ -92,11 +92,12 @@
                                         data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-125px">Jama'ah</th>
+                            <th class="min-w-200px">Jama'ah</th>
                             <th class="min-w-125px">Jenis Kelamin</th>
                             <th class="min-w-125px">No Telp</th>
-                            <th class="min-w-125px">Paket</th>
+                            <th class="min-w-200px">Paket</th>
                             <th class="min-w-125px">Total Pembayaran</th>
+                            <th class="min-w-125px">Diskon</th>
                             <th class="min-w-125px">Agen/Staff</th>
                             <th class="text-end min-w-100px">Actions</th>
                         </tr>
@@ -147,25 +148,26 @@
 
                                     <span class="text-primary">@money($user->total_payment)</span>
                                     <br>
-                                    @if ($user->package_type == 'quad')
-                                        @if ($user->total_payment < $user->umrahSchedule->quad_price)
-                                            <span class="badge badge-light-danger">Belum Lunas</span>
-                                        @else
-                                            <span class="badge badge-light-success">Lunas</span>
-                                        @endif
-                                    @elseif($user->package_type == 'triple')
-                                        @if ($user->total_payment < $user->umrahSchedule->triple_price)
-                                            <span class="badge badge-light-danger">Belum Lunas</span>
-                                        @else
-                                            <span class="badge badge-light-success">Lunas</span>
-                                        @endif
-                                    @elseif($user->package_type == 'double')
-                                        @if ($user->total_payment < $user->umrahSchedule->double_price)
-                                            <span class="badge badge-light-danger">Belum Lunas</span>
-                                        @else
-                                            <span class="badge badge-light-success">Lunas</span>
-                                        @endif
+                                    @php
+                                        $discounted_price = 0;
+                                        if ($user->package_type == 'quad') {
+                                            $discounted_price = $user->umrahSchedule->quad_price - $user->discount;
+                                        } elseif ($user->package_type == 'triple') {
+                                            $discounted_price = $user->umrahSchedule->triple_price - $user->discount;
+                                        } elseif ($user->package_type == 'double') {
+                                            $discounted_price = $user->umrahSchedule->double_price - $user->discount;
+                                        }
+                                    @endphp
+
+                                    @if ($user->total_payment < $discounted_price)
+                                        <span class="badge badge-light-danger">Belum Lunas</span>
+                                    @else
+                                        <span class="badge badge-light-success">Lunas</span>
                                     @endif
+                                </td>
+
+                                <td>
+                                    <span class="text-primary">@money($user->discount)</span>
                                 </td>
 
                                 <td >
