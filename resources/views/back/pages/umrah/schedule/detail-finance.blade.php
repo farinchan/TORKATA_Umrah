@@ -74,24 +74,13 @@
                                 <div class="separator border-gray-200"></div>
                                 <div class="px-7 py-5" data-kt-user-table-filter="form">
                                     <div class="mb-5">
-                                        <label class="form-label fs-6 fw-semibold">Jenis Kelamin</label>
-                                        <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-kt-user-table-filter="role" data-hide-search="true">
-                                            <option></option>
-                                            <option value="laki-laki">Laki-laki</option>
-                                            <option value="perempuan">Perempuan</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label class="form-label fs-6 fw-semibold">Paket</label>
+                                        <label class="form-label fs-6 fw-semibold">Type</label>
                                         <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                             data-placeholder="Select option" data-allow-clear="true"
                                             data-kt-user-table-filter="type" data-hide-search="true">
                                             <option></option>
-                                            <option value="Quad">Quad</option>
-                                            <option value="Triple">Triple</option>
-                                            <option value="Double">Double</option>
+                                            <option value="income">Income</option>
+                                            <option value="expense">Expense</option>
                                         </select>
                                     </div>
                                     <div class="d-flex justify-content-end">
