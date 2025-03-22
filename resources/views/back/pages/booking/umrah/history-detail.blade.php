@@ -3,11 +3,11 @@
     @php
         $total_price = 0;
         if ($jamaah->package_type == 'quad') {
-            $total_price = $schedule->quad_price;
+            $total_price = $schedule->quad_price - $jamaah->discount;
         } elseif ($jamaah->package_type == 'triple') {
-            $total_price = $schedule->triple_price;
+            $total_price = $schedule->triple_price - $jamaah->discount;
         } elseif ($jamaah->package_type == 'double') {
-            $total_price = $schedule->double_price;
+            $total_price = $schedule->double_price - $jamaah->discount;
         }
     @endphp
     <div id="kt_content_container" class=" container-xxl ">

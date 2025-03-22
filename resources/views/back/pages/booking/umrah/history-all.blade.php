@@ -167,7 +167,11 @@
                                 </td>
 
                                 <td>
-                                    <span class="text-primary">@money($user->discount)</span>
+                                    @if ($user->discount > 0)
+                                        <span class="text-warning">- @money($user->discount)</span>
+                                    @else
+                                        <span class="text-muted">No Discount</span>
+                                    @endif
                                 </td>
 
                                 <td >

@@ -223,11 +223,12 @@ class BookingController extends Controller
         }], 'amount')
         ->first();
 
-        if(Auth::user()->getRoleNames()[0] != 'super-admin' || Auth::user()->getRoleNames()[0] != 'admin-kantor'){
+        if(!in_array('super-admin', Auth::user()->getRoleNames()->toArray()) && !in_array('admin-kantor', Auth::user()->getRoleNames()->toArray())){
             if($jamaah->user_id != Auth::user()->id){
-                return redirect()->route('back.dashboard.index')->with('error', 'Data tidak ditemukan');
+            return redirect()->route('back.dashboard.index')->with('error', 'Data tidak ditemukan');
             }
         }
+
         $schedule = UmrahSchedule::with('umrahPackage')->withCount([
             'jamaah as quad_count' => function ($query) {
                 $query->where('package_type', 'quad');

@@ -101,7 +101,7 @@
                                 <th class="min-w-200px">Jama'ah</th>
                                 <th class="min-w-125px">Jenis Kelamin</th>
                                 <th class="min-w-125px">No Telp</th>
-                                <th class="min-w-125px">Paket</th>
+                                <th class="min-w-200px">Paket</th>
                                 <th class="min-w-125px">Total Pembayaran</th>
                                 <th class="min-w-125px">Diskon</th>
                                 <th class="text-end min-w-100px">Actions</th>
@@ -178,13 +178,25 @@
                                     </td>
 
                                     <td>
-                                        <span class="text-warning">- @money($user->discount)</span>
+                                        @if ($user->discount > 0)
+                                            <span class="text-warning">- @money($user->discount)</span>
+                                        @else
+                                            <span class="text-muted">No Discount</span>
+                                        @endif
                                     </td>
 
-                                    <td class="text-end">
-                                        <a href="{{ route('back.umrah.schedule.jamaah.detail', [$schedule->id, $user->code]) }}
-                                        "
+                                    <td class="text-end d-flex">
+                                        <a href="{{ route('back.umrah.schedule.jamaah.detail', [$schedule->id, $user->code]) }}"
                                             class="btn btn-light-primary">Detail</a>
+                                        <a href="{{ route('back.umrah.schedule.jamaah.invoice', [$schedule->id, $user->code]) }}" class="ms-2 btn btn-light-info">
+                                            <i class="ki-duotone ki-printer fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                                <span class="path5"></span>
+                                            </i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

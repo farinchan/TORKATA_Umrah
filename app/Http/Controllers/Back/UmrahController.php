@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\SettingWebsite;
 use App\Models\UmrahFinance;
 use App\Models\UmrahJamaah;
 use App\Models\UmrahPackage;
 use App\Models\UmrahPackageItinerary;
 use App\Models\UmrahSchedule;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -516,6 +518,33 @@ class UmrahController extends Controller
         ];
 
         return view('back.pages.umrah.schedule.jamaah', $data);
+    }
+
+    public function umrahScheduleJamaahInvoice($id, $code)
+    {
+        $schedule = UmrahSchedule::with('umrahPackage')->withCount([
+            'jamaah as quad_count' => function ($query) {
+                $query->where('package_type', 'quad');
+            },
+            'jamaah as triple_count' => function ($query) {
+                $query->where('package_type', 'triple');
+            },
+            'jamaah as double_count' => function ($query) {
+                $query->where('package_type', 'double');
+            }
+        ])->findOrFail($id);
+        $jamaah = UmrahJamaah::where('umrah_schedule_id', $id)->where('code', $code)->first();
+        $data = [
+            'schedule' => $schedule,
+            'jamaah' => $jamaah,
+            'payments' => $jamaah->umrahJamaahPayments->where('status', 'approved'),
+            'setting' => SettingWebsite::first()
+        ];
+
+        $pdf = Pdf::loadView('back.pages.umrah.schedule.jamaah-invoice-pdf', $data);
+
+        return $pdf->stream('invoice-' . $jamaah->code . '.pdf');
+
     }
 
     public function umrahScheduleJamaahUpdate(Request $request, $id, $code)
