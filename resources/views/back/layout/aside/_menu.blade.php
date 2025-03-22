@@ -291,6 +291,52 @@
             </div>
         @endrole
 
+        @role('super-admin|admin-kantor')
+            <div class="menu-item pt-5">
+                <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">Laporan</span>
+                </div>
+            </div>
+
+            <div data-kt-menu-trigger="click"
+                class="menu-item menu-accordion @if (request()->routeIs('back.report.*')) here show @endif ">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-cheque fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                            <span class="path5"></span>
+                            <span class="path6"></span>
+                            <span class="path7"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Umrah</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.report.umrah.finance')) active @endif"
+                            href="{{ route('back.report.umrah.finance') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Keuangan</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.booking.umrah.history')) active @endif"
+                            href="{{ route('back.booking.umrah.history') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Paket & Jadwal</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endrole
+
         @role('super-admin')
             <div class="menu-item pt-5">
                 <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-7">Administrator</span>

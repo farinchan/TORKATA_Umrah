@@ -16,7 +16,8 @@
         "maatwebsite/excel": "^3.1",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-permission": "^6.15",
-        "stevebauman/location": "^7.5"
+        "stevebauman/location": "^7.5",
+        "yajra/laravel-datatables": "^12.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

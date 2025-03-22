@@ -93,6 +93,7 @@
                                 <th class="min-w-125px">Email</th>
                                 <th class="min-w-125px">phone</th>
                                 <th class="min-w-125px">Role</th>
+                                <th class="min-w-125px">Wallet</th>
                                 <th class="text-end min-w-100px">Actions</th>
                             </tr>
                         </thead>
@@ -138,6 +139,9 @@
                                                 <span class="badge badge-light-primary">{{ $role }}</span>
                                             @endif
                                         @endforeach
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold"></span>@money($user->balance)
                                     </td>
 
                                     <td class="text-end">

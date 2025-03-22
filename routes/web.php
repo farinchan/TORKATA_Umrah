@@ -168,4 +168,10 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::get('/banner', [App\Http\Controllers\back\SettingController::class, 'banner'])->name('banner');
         Route::put('/banner/{id}/update', [App\Http\Controllers\back\SettingController::class, 'bannerUpdate'])->name('banner-update');
     });
+
+    Route::prefix('report')->name('report.')->group(function () {
+        Route::get('/umrah-finance', [App\Http\Controllers\Back\ReportController::class, 'UmrahFinance'])->name('umrah.finance');
+        Route::get('/umrah-finance/datatables', [App\Http\Controllers\Back\ReportController::class, 'UmrahFinanceDatatables'])->name('umrah.finance.datatables');
+        Route::get('/umrah-finance/export', [App\Http\Controllers\Back\ReportController::class, 'UmrahFinanceExport'])->name('umrah.finance.export');
+    });
 });
