@@ -168,7 +168,7 @@ class BookingController extends Controller
         $payment->status = 'pending';
         $payment->save();
 
-        return redirect()->route('back.booking.umrah.index')->with('success', 'Pembayaran berhasil disimpan');
+        return redirect()->route('back.booking.umrah.index')->with('success', 'Pembayaran berhasil dilakukan, silahkan tunggu verifikasi');
     }
 
     public function umrahHistory()

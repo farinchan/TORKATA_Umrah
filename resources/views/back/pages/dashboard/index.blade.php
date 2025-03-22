@@ -66,40 +66,31 @@
         </div>
         <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
             <div class="col-xl-6">
-                <div class="card card-flush h-xl-50">
+                <div class="card card-flush ">
                     <div class="card-header py-5">
-                        <h3 class="card-title fw-bold text-gray-800">Monthly Targets</h3>
-                        <div class="card-toolbar">
-                            <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4">
-                                <div class="text-gray-600 fw-bold">Loading date range...</div>
-                                <i class="ki-duotone ki-calendar-8 text-gray-500 lh-0 fs-2 ms-2 me-0">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                    <span class="path6"></span>
-                                </i>
-                            </div>
-                        </div>
+                        <h3 class="card-title fw-bold text-gray-800">Dompet Saya</h3>
+
                     </div>
                     <div class="card-body d-flex justify-content-between flex-column pb-0 px-0 pt-1">
                         <div class="d-flex flex-wrap d-grid gap-5 px-9 mb-5">
                             <div class="me-md-2">
                                 <div class="d-flex mb-2">
-                                    <span class="fs-4 fw-semibold text-gray-500 me-1">$</span>
-                                    <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">12,706</span>
+                                    <span class="fs-4 fw-semibold text-gray-500 me-1">Rp.</span>
+                                    <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">
+                                        {{ number_format(Auth::user()->balance, 0, ',', '.') }}
+                                    </span>
                                 </div>
-                                <span class="fs-6 fw-semibold text-gray-500">Targets for April</span>
+                                <span class="fs-6 fw-semibold text-gray-500">Saldo Saya</span>
                             </div>
                             <div class="border-start-dashed border-end-dashed border-start border-end border-gray-300 px-5 ps-md-10 pe-md-7 me-md-5">
                                 <div class="d-flex mb-2">
-                                    <span class="fs-4 fw-semibold text-gray-500 me-1">$</span>
-                                    <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">8,035</span>
+                                    <span class="fs-4 fw-semibold text-gray-500 me-1">Rp.</span>
+                                    <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">
+                                        {{ number_format(Auth::user()->transactions->where('amount', '>', 0)->sum('amount'), 0, ',', '.') }}
                                 </div>
-                                <span class="fs-6 fw-semibold text-gray-500">Actual for April</span>
+                                <span class="fs-6 fw-semibold text-gray-500">Total Pendapatan</span>
                             </div>
-                            <div class="m-0">
+                            {{-- <div class="m-0">
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1">$</span>
                                     <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">4,684</span>
@@ -107,23 +98,12 @@
                                     <i class="ki-duotone ki-black-up fs-7 text-success ms-n1"></i>4.5%</span>
                                 </div>
                                 <span class="fs-6 fw-semibold text-gray-500">GAP</span>
-                            </div>
+                            </div> --}}
                         </div>
                         <div id="kt_charts_widget_20" class="min-h-auto ps-4 pe-6" data-kt-chart-info="Revenue" style="height: 300px"></div>
                     </div>
                 </div>
-                <div class="card card-flush h-lg-100">
-                    <div class="card-header pt-5">
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold text-gray-900">Dompet Saya</span>
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <h1>
-                            Saldo: Rp. {{ number_format(Auth::user()->balance, 0, ',', '.') }}
-                        </h1>
-                    </div>
-                </div>
+
             </div>
             <div class="col-xl-6">
                 <div class="card card-flush h-lg-100">
@@ -134,9 +114,10 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
-                            @forelse (Auth::user()->transactions as $transaction)
+                            {{-- @dd(Auth::user()->transactions) --}}
+                            @forelse (Auth::user()->transactions->sortByDesc('created_at')->take(10) as $transaction)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ $transaction->description }}
+                                    {{ $transaction->meta['description'] }}
                                     <span class="badge bg-{{ $transaction->amount > 0 ? 'success' : 'danger' }}">
                                         {{ $transaction->amount > 0 ? '+' : '-' }}Rp. {{ number_format(abs($transaction->amount), 0, ',', '.') }}
                                     </span>
@@ -151,10 +132,73 @@
         </div>
         <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
             <div class="col-xl-12">
+                <div class="card card-flush ">
+                    <div class="card-header py-5">
+                        <h3 class="card-title fw-bold text-gray-800">Paket & Jadwal Umrah yang Tersedia</h3>
+
+                    </div>
+                    <div class="card-body pt-0">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_umrah_schedule">
+                            <thead>
+                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+
+                                    <th class="min-w-200px">Jadwal Umrah</th>
+                                    <th class="text-center min-w-150px">Quad</th>
+                                    <th class="text-center min-w-150px">Triple</th>
+                                    <th class="text-center min-w-100px">Double</th>
+                                    <th class="text-center min-w-100px">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                @foreach ($list_umrah_schedule as $umrah_schedule)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+
+                                                <div class="">
+                                                    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
+                                                        data-kt-ecommerce-category-filter="category_name">{{ $umrah_schedule->name }}</a>
+                                                    <div class="text-muted fs-7 fw-bold">
+                                                        Paket: {{ $umrah_schedule->umrahPackage->name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center @if($umrah_schedule->quad_count == $umrah_schedule->quad_quota) text-danger @endif pe-0">
+                                            {{ $umrah_schedule->quad_count }}/{{ $umrah_schedule->quad_quota }} <br>
+                                            Harga: @money($umrah_schedule->quad_price)
+                                        </td>
+                                        <td class="text-center pe-0 @if($umrah_schedule->triple_count == $umrah_schedule->triple_quota) text-danger @endif">
+                                            {{ $umrah_schedule->triple_count }}/{{ $umrah_schedule->triple_quota }}<br>
+                                            Harga: @money($umrah_schedule->triple_price)
+                                        </td>
+                                        <td class="text-center pe-0 @if($umrah_schedule->double_count == $umrah_schedule->double_quota) text-danger @endif">
+                                            {{ $umrah_schedule->double_count }}/{{ $umrah_schedule->double_quota }}<br>
+                                            Harga: @money($umrah_schedule->double_price)
+                                        </td>
+                                        <td class="text-center">
+                                            @if ($umrah_schedule->status == 'aktif')
+                                                <span class="badge badge-light-success">Aktif</span>
+                                            @else
+                                                <span class="badge badge-light-danger">Berakhir</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+            <div class="col-xl-12">
                 <div class="card card-flush h-lg-100">
                     <div class="card-header pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold text-gray-900">Statistik Pengunjung berita sebulan
+                            <span class="card-label fw-bold text-gray-900">Statistik Pengunjung Website sebulan
                                 terakhir</span>
                         </h3>
                     </div>
@@ -198,6 +242,22 @@
     <!--end::Container-->
 @endsection
 @section('scripts')
+<script>
+
+        $('#table_umrah_schedule').DataTable({
+            responsive: true,
+            paging: false,
+            info: false,
+            searching: false,
+            ordering: false,
+            autoWidth: false,
+            columnDefs: [{
+                targets: 0,
+                orderable: false,
+            }],
+        });
+
+</script>
     <script>
         var chart_1 = new ApexCharts(document.querySelector("#chart_1"), {
             series: [{

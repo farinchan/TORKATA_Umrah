@@ -44,6 +44,21 @@
                 </div>
             @endrole
         </div>
+
+        <div class="menu-item">
+            <a class="menu-link @if (request()->routeIs('back.payment.umrah.verification')) active @endif"
+                href="{{ route('back.payment.umrah.verification') }}">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-wallet fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                        <span class="path4"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Dompet Saya</span>
+            </a>
+        </div>
         @role('super-admin|admin-kantor')
             <div class="menu-item pt-5">
                 <div class="menu-content">

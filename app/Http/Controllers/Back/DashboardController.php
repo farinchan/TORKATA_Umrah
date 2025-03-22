@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsViewer;
+use App\Models\UmrahSchedule;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
@@ -21,7 +22,18 @@ class DashboardController extends Controller
                     'name' => 'Dashboard',
                     'link' => route('back.dashboard.index')
                 ]
-            ]
+            ],
+            'list_umrah_schedule' => UmrahSchedule::withCount([
+                'jamaah as quad_count' => function ($query) {
+                    $query->where('package_type', 'quad');
+                },
+                'jamaah as triple_count' => function ($query) {
+                    $query->where('package_type', 'triple');
+                },
+                'jamaah as double_count' => function ($query) {
+                    $query->where('package_type', 'double');
+                }
+            ])->where('status', 'aktif')->get(),
         ];
         return view('back.pages.dashboard.index', $data);
     }

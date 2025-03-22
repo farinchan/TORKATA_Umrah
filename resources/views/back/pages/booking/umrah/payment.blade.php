@@ -69,7 +69,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label required">Nama Pengirim</label>
                                         <input type="text" class="form-control" name="account_name" value="{{ old('account_name') }}"
-                                            placeholder="Nama Bank">
+                                            placeholder="Nama Pengirim" required>
                                             @error('account_name')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -77,7 +77,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label required">Nominal</label>
                                         <input type="number" class="form-control" name="amount" value="{{ old('amount') }}"
-                                            placeholder="Nominal">
+                                            placeholder="Nominal" required>
                                             @error('amount')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -87,7 +87,7 @@
                             <div class="mb-5">
                                 <label class="form-label required">bukti Pembayaran</label>
                                 <input type="file" class="form-control" name="proof" value="{{ old('proof') }}"
-                                    placeholder="bukti Pembayaran">
+                                    placeholder="bukti Pembayaran" required>
                                     @error('proof')
                                     <small class="text-danger">{{ $message }}</small>
                                     <br>
@@ -107,4 +107,11 @@
     </div>
 @endsection
 @section('scripts')
+<script>
+    $(document).ready(function() {
+        $('form').submit(function() {
+            $(this).find('button[type="submit"]').attr('disabled', true);
+        });
+    });
+</script>
 @endsection

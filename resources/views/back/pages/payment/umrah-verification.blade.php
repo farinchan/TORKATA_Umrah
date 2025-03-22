@@ -151,10 +151,14 @@
                                 </td>
 
                                 <td class="text-end">
-                                    <a href="#" class="btn btn-icon btn-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#edit{{ $payment->id }}">
-                                        <i class="bi bi-pencil-square fs-4 me-2"></i>
-                                    </a>
+                                    @if ($payment->status == 'pending')
+                                        <a href="#" class="btn btn-icon btn-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#edit{{ $payment->id }}">
+                                            <i class="bi bi-pencil-square fs-4 me-2"></i>
+                                        </a>
+                                        @else
+                                        -
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -216,4 +220,11 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('back/js/custom/apps/user-management/users/list/payment.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function() {
+                $(this).find("button[type='submit']").prop('disabled', true);
+            });
+        });
+    </script>
 @endsection

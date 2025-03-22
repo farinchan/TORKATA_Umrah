@@ -128,7 +128,7 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::get("/", [App\Http\Controllers\Back\BookingController::class, "umrahIndex"])->name("index");
             Route::post("/", [App\Http\Controllers\Back\BookingController::class, "umrahStore"])->name("store");
             Route::get("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "umrahPayment"])->name("payment");
-            Route::post("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "umrahPaymentStore"])->name("payment.store");
+            Route::post("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "umrahPaymentStore"])->name("payment.store")->middleware('throttle:7,1');
 
             Route::get("/history", [App\Http\Controllers\Back\BookingController::class, "umrahHistory"])->name("history");
             Route::get("/history/{code}", [App\Http\Controllers\Back\BookingController::class, "umrahHistoryDetail"])->name("history.detail");
