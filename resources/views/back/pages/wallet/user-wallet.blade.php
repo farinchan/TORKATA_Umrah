@@ -38,7 +38,12 @@
                                 {{ number_format($user->transactions->where('type', 'deposit')->where('confirmed', 1)->sum('amount'), 0, ',', '.') }}</span>
                             <span class="badge badge-light-success fs-base">
                                 <i class="ki-duotone ki-black-up fs-7 text-success ms-n1"></i>
-                                {{ ($user->transactions->where('type', 'deposit')->where('confirmed', 1)->where('created_at', '>=', now()->startOfYear())->sum('amount') ?? 0) / ($user->transactions->where('type', 'deposit')->where('confirmed', 1)->sum('amount') ?? 0) *100 }}%</span>
+                                @php
+                                    $totalDeposits = $user->transactions->where('type', 'deposit')->where('confirmed', 1)->sum('amount') ?? 0;
+                                    $yearlyDeposits = $user->transactions->where('type', 'deposit')->where('confirmed', 1)->where('created_at', '>=', now()->startOfYear())->sum('amount') ?? 0;
+                                    $percentage = $totalDeposits > 0 ? ($yearlyDeposits / $totalDeposits) * 100 : 0;
+                                @endphp
+                                {{ $percentage }}%</span>
                         </div>
                         <span class="fs-6 fw-semibold text-gray-500">Total Pendapatan</span>
                     </div>
