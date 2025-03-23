@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements Wallet
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, HasWallet;
+    use HasFactory, Notifiable, HasRoles, HasWallet, softDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +23,18 @@ class User extends Authenticatable implements Wallet
      * @var list<string>
      */
     protected $fillable = [
+        'nik',
+        'photo',
         'name',
+        'birthplace',
+        'birthdate',
+        'gender',
+        'address',
+        'religion',
+        'occupation',
+        'phone',
+        'file_ktp',
+        'file_cv',
         'email',
         'password',
     ];
