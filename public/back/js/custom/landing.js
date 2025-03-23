@@ -14,7 +14,7 @@ var KTLandingPage = function () {
     return {
         init: function () {
             //initTyped();
-        }   
+        }
     }
 }();
 

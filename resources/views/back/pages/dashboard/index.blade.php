@@ -82,7 +82,8 @@
                                 </div>
                                 <span class="fs-6 fw-semibold text-gray-500">Saldo Saya</span>
                             </div>
-                            <div class="border-start-dashed border-end-dashed border-start border-end border-gray-300 px-5 ps-md-10 pe-md-7 me-md-5">
+                            <div
+                                class="border-start-dashed border-end-dashed border-start border-end border-gray-300 px-5 ps-md-10 pe-md-7 me-md-5">
                                 <div class="d-flex mb-2">
                                     <span class="fs-4 fw-semibold text-gray-500 me-1">Rp.</span>
                                     <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">
@@ -100,7 +101,8 @@
                                 <span class="fs-6 fw-semibold text-gray-500">GAP</span>
                             </div> --}}
                         </div>
-                        <div id="kt_charts_widget_20" class="min-h-auto ps-4 pe-6" data-kt-chart-info="Revenue" style="height: 300px"></div>
+                        <div id="wallet_chart" class="min-h-auto ps-4 pe-6" data-kt-chart-info="Revenue"
+                            style="height: 300px"></div>
                     </div>
                 </div>
 
@@ -118,8 +120,9 @@
                             @forelse (Auth::user()->transactions->sortByDesc('created_at')->take(10) as $transaction)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     {{ $transaction->meta['description'] }}
-                                    <span class="badge bg-{{ $transaction->amount > 0 ? 'success' : 'danger' }}">
-                                        {{ $transaction->amount > 0 ? '+' : '-' }}Rp. {{ number_format(abs($transaction->amount), 0, ',', '.') }}
+                                    <span class="badge bg-{{ $transaction->type == 'deposit' ? 'success' : 'danger' }}">
+                                        {{ $transaction->type == 'deposit' ? '+' : '-' }}Rp.
+                                        {{ number_format(abs($transaction->amount), 0, ',', '.') }}
                                     </span>
                                 </li>
                             @empty
@@ -156,7 +159,8 @@
                                             <div class="d-flex align-items-center">
 
                                                 <div class="">
-                                                    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
+                                                    <a href="#"
+                                                        class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
                                                         data-kt-ecommerce-category-filter="category_name">{{ $umrah_schedule->name }}</a>
                                                     <div class="text-muted fs-7 fw-bold">
                                                         Paket: {{ $umrah_schedule->umrahPackage->name }}
@@ -164,15 +168,15 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center @if($umrah_schedule->quad_count == $umrah_schedule->quad_quota) text-danger @endif pe-0">
+                                        <td class="text-center @if ($umrah_schedule->quad_count == $umrah_schedule->quad_quota) text-danger @endif pe-0">
                                             {{ $umrah_schedule->quad_count }}/{{ $umrah_schedule->quad_quota }} <br>
                                             Harga: @money($umrah_schedule->quad_price)
                                         </td>
-                                        <td class="text-center pe-0 @if($umrah_schedule->triple_count == $umrah_schedule->triple_quota) text-danger @endif">
+                                        <td class="text-center pe-0 @if ($umrah_schedule->triple_count == $umrah_schedule->triple_quota) text-danger @endif">
                                             {{ $umrah_schedule->triple_count }}/{{ $umrah_schedule->triple_quota }}<br>
                                             Harga: @money($umrah_schedule->triple_price)
                                         </td>
-                                        <td class="text-center pe-0 @if($umrah_schedule->double_count == $umrah_schedule->double_quota) text-danger @endif">
+                                        <td class="text-center pe-0 @if ($umrah_schedule->double_count == $umrah_schedule->double_quota) text-danger @endif">
                                             {{ $umrah_schedule->double_count }}/{{ $umrah_schedule->double_quota }}<br>
                                             Harga: @money($umrah_schedule->double_price)
                                         </td>
@@ -242,8 +246,7 @@
     <!--end::Container-->
 @endsection
 @section('scripts')
-<script>
-
+    <script>
         $('#table_umrah_schedule').DataTable({
             responsive: true,
             paging: false,
@@ -256,8 +259,7 @@
                 orderable: false,
             }],
         });
-
-</script>
+    </script>
     <script>
         var chart_1 = new ApexCharts(document.querySelector("#chart_1"), {
             series: [{
@@ -397,5 +399,143 @@
                 });
             }
         });
+    </script>
+
+    <script>
+        var wallet_chart = @json($wallet_chart);
+
+        console.log(wallet_chart);
+        var element = document.getElementById("wallet_chart");
+        var height = parseInt(KTUtil.css(element, 'height'));
+        var labelColor = '#6c757d'; // Grey 500
+        var borderColor = '#e5eaee'; // Grey 200
+        var baseColor = '#8967d0';
+        var lightColor = '#d1d9e6';
+
+
+        var options = {
+            series: [{
+                name: 'Transaksi',
+                data: wallet_chart.map(function(item) {
+                    return item.y;
+                })
+            }],
+            chart: {
+                fontFamily: 'inherit',
+                type: 'area',
+                height: height,
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+
+            },
+            legend: {
+                show: false
+            },
+            dataLabels: {
+                enabled: false
+            },
+            fill: {
+                type: 'solid',
+                opacity: 1
+            },
+            stroke: {
+                curve: 'smooth',
+                show: true,
+                width: 3,
+                colors: [baseColor]
+            },
+            xaxis: {
+                categories: wallet_chart.map(function(item) {
+                    return item.x;
+                }),
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false
+                },
+                labels: {
+                    style: {
+                        colors: labelColor,
+                        fontSize: '12px'
+                    }
+                },
+                crosshairs: {
+                    position: 'front',
+                    stroke: {
+                        color: baseColor,
+                        width: 1,
+                        dashArray: 3
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    formatter: undefined,
+                    offsetY: 0,
+                    style: {
+                        fontSize: '12px'
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: labelColor,
+                        fontSize: '12px'
+                    }
+                }
+            },
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0
+                    }
+                },
+                hover: {
+                    filter: {
+                        type: 'none',
+                        value: 0
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'none',
+                        value: 0
+                    }
+                }
+            },
+            tooltip: {
+                style: {
+                    fontSize: '12px'
+                },
+                y: {
+                    formatter: function(val) {
+                        return 'Rp. ' + val.toLocaleString('id-ID');
+                    }
+                }
+            },
+            colors: [lightColor],
+            grid: {
+                borderColor: borderColor,
+                strokeDashArray: 4,
+                yaxis: {
+                    lines: {
+                        show: true
+                    }
+                }
+            },
+            markers: {
+                strokeColor: baseColor,
+                strokeWidth: 3
+            }
+        };
+
+        var chart = new ApexCharts(element, options);
+        chart.render();
     </script>
 @endsection

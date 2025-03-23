@@ -9,6 +9,7 @@ use App\Models\UmrahSchedule;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -34,7 +35,18 @@ class DashboardController extends Controller
                     $query->where('package_type', 'double');
                 }
             ])->where('status', 'aktif')->get(),
+            'wallet_chart' => Auth::user()->transactions
+                ->where('created_at', '>=', now()->subMonths(11))
+                ->groupBy(function ($transaction) {
+                    return $transaction->created_at->format('M');
+                })->map(function ($item) {
+                    return [
+                        'x' => $item->first()->created_at->format('M'),
+                        'y' => $item->sum('amount')
+                    ];
+                })->values(),
         ];
+        // return response()->json($data);
         return view('back.pages.dashboard.index', $data);
     }
 
