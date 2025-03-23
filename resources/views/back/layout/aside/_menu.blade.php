@@ -46,8 +46,8 @@
         </div>
 
         <div class="menu-item">
-            <a class="menu-link @if (request()->routeIs('back.payment.umrah.verification')) active @endif"
-                href="{{ route('back.payment.umrah.verification') }}">
+            <a class="menu-link @if (request()->routeIs('back.wallet.my-wallet')) active @endif"
+                href="{{ route('back.wallet.my-wallet') }}">
                 <span class="menu-icon">
                     <i class="ki-duotone ki-wallet fs-2">
                         <span class="path1"></span>

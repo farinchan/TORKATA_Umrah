@@ -141,6 +141,15 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::put('/umrah/{id}/verification', [App\Http\Controllers\Back\PaymentController::class, 'umrahPaymentVerificationUpdate'])->name('umrah.verification.update');
     });
 
+    Route::prefix('wallet')->name('wallet.')->group(function () {
+        Route::get('/my-wallet', [App\Http\Controllers\Back\WalletController::class, 'myWallet'])->name('my-wallet');
+
+        Route::get('/user-wallet/{id}', [App\Http\Controllers\Back\WalletController::class, 'userWallet'])->name('user-wallet');
+        Route::post('/user-wallet/{id}/deposit', [App\Http\Controllers\Back\WalletController::class, 'userWalletDeposit'])->name('user-wallet.deposit');
+        Route::post('/user-wallet/{id}/withdraw', [App\Http\Controllers\Back\WalletController::class, 'userWalletWithdraw'])->name('user-wallet.withdraw');
+
+    });
+
     Route::prefix('message')->name('message.')->group(function () {
         Route::get('/', [App\Http\Controllers\Back\MessageController::class, 'index'])->name('index');
         Route::delete('/{id}', [App\Http\Controllers\Back\MessageController::class, 'destroy'])->name('destroy');
