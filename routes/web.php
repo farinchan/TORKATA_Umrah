@@ -31,6 +31,10 @@ Route::prefix('news')->name('news.')->group(function () {
     Route::get('/visit/alt', [App\Http\Controllers\Front\NewsController::class, 'visit'])->name('visit');
 });
 
+Route::prefix('gallery')->name('gallery.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Front\GalleryController::class, 'index'])->name('index');
+});
+
 Route::prefix('agent')->name('agent.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\AgentController::class, 'index'])->name('index');
     Route::get('/{id}', [App\Http\Controllers\Front\AgentController::class, 'show'])->name('show');

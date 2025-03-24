@@ -1,43 +1,52 @@
 @extends('front.app')
 
 @section('styles')
-
 @endsection
 
 @section('seo')
     <title>{{ $title }}</title>
-    <meta name="description" content="{{ $meta["description"] }}">
-    <meta name="keywords" content="{{ $meta["keywords"] }}">
+    <meta name="description" content="{{ $meta['description'] }}">
+    <meta name="keywords" content="{{ $meta['keywords'] }}">
     <meta name="author" content="PT. Torkata Jaya Persada">
 
-    <meta property="og:title" content="{{ $meta["title"] }}">
-    <meta property="og:description" content="{{ $meta["description"] }}">
+    <meta property="og:title" content="{{ $meta['title'] }}">
+    <meta property="og:description" content="{{ $meta['description'] }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ route('tour.index') }}">
     <link rel="canonical" href="{{ route('tour.index') }}">
-    <meta property="og:image" content="{{ Storage::url($meta["favicon"]) }}">
+    <meta property="og:image" content="{{ Storage::url($meta['favicon']) }}">
 @endsection
 
 @section('content')
-@include('front.partials.breadcrumb')
+    @include('front.partials.breadcrumb')
 
-    <!-- error section starts -->
-    <section class="error overflow-hidden">
+    <!-- Gallery starts -->
+    <div class="gallery pb-6 pt-10">
         <div class="container">
+            <div class="row blog-main">
 
-            <div class="error-content text-center">
-                <h3>Cooming Soon</h3>
-                <img src="{{ asset("front/images/404.svg") }}" alt="" class="mb-4">
-                <h3 class="mb-0 navy">
-                    We are working on it and we will be back soon
-                </h3>
-                <div class="error-btn mt-4">
-                    <a href="{{ route("home") }}" class="nir-btn mr-2">Kembali ke Home</a>
-                </div>
+                @foreach ($galleries as $gallery)
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mansonry-item">
+                        <div class="gallery-item mb-4">
+                            <div class="gallery-image">
+                                <img src="{{ $gallery->getFoto() }}" alt="image">
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="gallery-content">
+                                <ul>
+                                    <li><a href="{{ $gallery->getFoto() }}" data-lightbox="gallery"
+                                            data-title="{{ $gallery?->album?->title }} - {{ carbon\carbon::parse($gallery?->created_at)->format('d F Y') }}">
+                                            <i class="fa fa-eye"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-link"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
-    </section>
-    <!-- error section Ends -->
+    </div>
+    <!-- Gallery Ends -->
 @endsection
 
 @section('scripts')
