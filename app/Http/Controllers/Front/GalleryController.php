@@ -26,7 +26,7 @@ class GalleryController extends Controller
             ],
             'meta' => [
                 'title' => 'Gallery | ' . $setting_web->name,
-                'description' => 'Gallery ' . $setting_web->name . ' - ' . substr(strip_tags($setting_web->description), 0, 150),
+                'description' => 'Gallery ' . $setting_web->name . ' - ' . substr(strip_tags($setting_web->about), 0, 150),
                 'keywords' => $setting_web->name, 'home', 'umrah', 'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata', 'gallery',
                 'favicon' => $setting_web->favicon
             ],
