@@ -59,7 +59,7 @@
                                     @endforeach
                                 </ul>
                             </li>
-                            {{-- <li><a href="{{ route('agent.index') }}">Gallery</a></li> --}}
+                            <li><a href="{{ route('agent.index') }}">Gallery</a></li>
                             <li><a href="{{ route('agent.index') }}">Agen Kami</a></li>
                             {{-- <li><a href="#">Tentang Kami</a></li> --}}
                             <li><a href="{{ route('contact.index') }}">kontak</a></li>

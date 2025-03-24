@@ -340,8 +340,8 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link @if (request()->routeIs('back.booking.umrah.history')) active @endif"
-                            href="{{ route('back.booking.umrah.history') }}">
+                        <a class="menu-link "
+                            href="#">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
