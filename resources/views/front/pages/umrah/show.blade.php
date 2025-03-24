@@ -7,16 +7,16 @@
 
 @section('seo')
     <title>{{ $title }}</title>
-    <meta name="description" content="{{ $meta["description"] }}">
-    <meta name="keywords" content="{{ $meta["keywords"] }}">
+    <meta name="description" content="{{ $meta['description'] }}">
+    <meta name="keywords" content="{{ $meta['keywords'] }}">
     <meta name="author" content="PT. Torkata Jaya Persada">
 
-    <meta property="og:title" content="{{ $meta["title"] }}">
-    <meta property="og:description" content="{{ $meta["description"] }}">
+    <meta property="og:title" content="{{ $meta['title'] }}">
+    <meta property="og:description" content="{{ $meta['description'] }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ route('umrah.show', $umrah->slug) }}">
     <link rel="canonical" href="{{ route('umrah.show', $umrah->slug) }}">
-    <meta property="og:image" content="{{ Storage::url($meta["favicon"]) }}">
+    <meta property="og:image" content="{{ Storage::url($meta['favicon']) }}">
 @endsection
 
 @section('content')
@@ -112,53 +112,33 @@
                                 </div>
                             </div>
 
-                            <div class="description-inner mb-4" id="dokumentasi">
-                                <h4>Dokumentasi Perjalanan</h4>
-                                <div class="description-images mb-4">
-                                    <div class="thumbnail-images">
-                                        <div class="slider-store">
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/1.jpg') }}" alt="1">
+                            @if ($umrah->images->count() > 0)
+                                <div class="description-inner mb-4" id="dokumentasi">
+                                    <h4>Dokumentasi Perjalanan</h4>
+                                    <div class="description-images mb-4">
+                                        <div class="thumbnail-images">
+                                            <div class="slider-store">
+                                                @foreach ($umrah->images as $image)
+                                                    <div>
+                                                        <img src="{{ Storage::url($image->image) }}"
+                                                            alt="Gambar {{ $loop->index }}" style="width: 100%; height: 500px; object-fit: cover;">
+                                                    </div>
+                                                @endforeach
                                             </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/3.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/7.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/8.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
-                                            </div>
-                                        </div>
-                                        <div class="slider-thumbs">
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/1.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/3.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/7.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/8.jpg') }}" alt="1">
-                                            </div>
-                                            <div>
-                                                <img src="{{ asset('front/images/slider/2.jpg') }}" alt="1">
+                                            <div class="slider-thumbs">
+                                                @foreach ($umrah->images as $image)
+                                                    <div>
+                                                        <img src="{{ Storage::url($image->image) }}"
+                                                            alt="Gambar {{ $loop->index }}" style="width: 100%; height: 100px; object-fit: cover;">
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+
+
                         </div>
 
                         <div class="accrodion-grp faq-accrodion mb-4" id="iternary" data-grp-name="faq-accrodion">
@@ -195,22 +175,26 @@
                                 <div class="accrodion active">
                                     <div class="accrodion-title">
                                         <h5 class="mb-0"><span>{{ $schedule->name }} -
-                                                {{  $schedule->departure  }}
+                                                {{ $schedule->departure }}
                                             </span></h5>
                                     </div>
                                     <div class="accrodion-content" style="display: block;">
                                         <div class="inner">
 
-                                            <div style="margin-bottom: 10px"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp; Keberangkatan
+                                            <div style="margin-bottom: 10px"><i class="fa fa-calendar"
+                                                    aria-hidden="true"></i> &nbsp; Keberangkatan
                                                 : {{ $schedule->departure }}
                                             </div>
-                                            <div style="margin-bottom: 10px"><i class="fa fa-plane" aria-hidden="true"></i> &nbsp; Maskapai :
+                                            <div style="margin-bottom: 10px"><i class="fa fa-plane" aria-hidden="true"></i>
+                                                &nbsp; Maskapai :
                                                 {{ $schedule->airline ?? '-' }}
                                             </div>
-                                            <div style="margin-bottom: 10px"><i class="fa fa-hotel" aria-hidden="true"></i> &nbsp; Hotel Mekkah :
+                                            <div style="margin-bottom: 10px"><i class="fa fa-hotel" aria-hidden="true"></i>
+                                                &nbsp; Hotel Mekkah :
                                                 {{ $schedule->hotel ?? '-' }}
                                             </div>
-                                            <div style="margin-bottom: 10px"><i class="fa fa-hotel" aria-hidden="true"></i> &nbsp; Hotel Madinah :
+                                            <div style="margin-bottom: 10px"><i class="fa fa-hotel" aria-hidden="true"></i>
+                                                &nbsp; Hotel Madinah :
                                                 {{ $schedule->hotel_madinah ?? '-' }}
                                             </div>
 
@@ -231,12 +215,12 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Triple</td>
-                                                        <td>@money( $schedule->triple_price )</td>
+                                                        <td>@money($schedule->triple_price)</td>
                                                         <td>0/{{ $schedule->triple_quota }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Double</td>
-                                                        <td>@money( $schedule->double_price )</td>
+                                                        <td>@money($schedule->double_price)</td>
                                                         <td>0/{{ $schedule->double_quota }}</td>
                                                     </tr>
                                                 </tbody>
@@ -412,7 +396,9 @@
                                 <div class="col-md-12">
                                     <ul id="tabs" class="nav nav-tabs bordernone">
                                         <li class="active"><a data-toggle="tab" href="#description">Deskripsi</a></li>
-                                        <li><a data-toggle="tab" href="#dokumentasi">Dokumentasi</a></li>
+                                        @if ($umrah->images->count() > 0)
+                                            <li><a data-toggle="tab" href="#dokumentasi">Dokumentasi</a></li>
+                                        @endif
                                         <li><a data-toggle="tab" href="#iternary">Iternary</a></li>
                                         <li><a data-toggle="tab" href="#single-map">Map</a></li>
                                         <li><a data-toggle="tab" href="#jadwal">Jadwal</a></li>

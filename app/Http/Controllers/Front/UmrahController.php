@@ -67,6 +67,7 @@ class UmrahController extends Controller
             'setting_web' => SettingWebsite::first()
         ];
 
+        // return response()->json($data);
         return view('front.pages.umrah.show', $data);
     }
 }
