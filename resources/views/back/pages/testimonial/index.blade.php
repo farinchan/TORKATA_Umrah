@@ -1,6 +1,6 @@
 @extends('back.app')
 @section('content')
-    <div id="kt_content_container" class=" container-xxl "> 
+    <div id="kt_content_container" class=" container-xxl ">
 
         <div class="card card-flush">
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
