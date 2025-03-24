@@ -7,6 +7,7 @@ use App\Models\SettingWebsite;
 use App\Models\UmrahFinance;
 use App\Models\UmrahJamaah;
 use App\Models\UmrahPackage;
+use App\Models\UmrahPackageImage;
 use App\Models\UmrahPackageItinerary;
 use App\Models\UmrahSchedule;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -267,6 +268,58 @@ class UmrahController extends Controller
         return redirect()->route('back.umrah.package.index')->with('success', 'Data berhasil dihapus');
     }
 
+    public function umrahPackageImageUpload(Request $request, $id)
+    {
+        $request->validate([
+            'file' => 'required|image|max:10240', // validasi file gambar
+        ]);
+
+        $umrah_package_image = new UmrahPackageImage();
+        $umrah_package_image->umrah_package_id = $id;
+        $umrah_package_image->image = $request->file('file')->storeAs('umrah/package', Str::random(16) . '.' . $request->file('file')->getClientOriginalExtension(), 'public');
+        $umrah_package_image->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Gambar berhasil diupload',
+            'image_id' => $umrah_package_image->id
+        ]);
+    }
+
+    public function umrahPackageImageDelete(Request $request, $id, $image_id)
+    {
+
+        $umrah_package_image = UmrahPackageImage::findOrFail($image_id);
+
+        if (Storage::exists( $umrah_package_image->image)) {
+            Storage::delete( $umrah_package_image->image);
+        }
+        $umrah_package_image->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Gambar berhasil dihapus'
+        ]);
+    }
+
+    public function umrahPackageImage($id)
+    {
+        $umrah_package_images = UmrahPackageImage::where('umrah_package_id', $id)->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diambil',
+            'images' => $umrah_package_images->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->image,
+                    'size' =>  Storage::size( $item->image),
+                    'url' => Storage::url( $item->image),
+                    'dataURL' => Storage::url($item->image),
+                ];
+            })
+        ]);
+    }
+
     //Schedule
 
     public function umrahScheduleIndex()
@@ -468,10 +521,10 @@ class UmrahController extends Controller
             ],
             'schedule' => $schedule,
             'list_jamaah' => UmrahJamaah::where('umrah_schedule_id', $id)
-            ->withSum([ 'umrahJamaahPayments as total_payment' => function ($query) {
-                $query->where('status', 'approved');
-            }], 'amount')
-            ->get()
+                ->withSum(['umrahJamaahPayments as total_payment' => function ($query) {
+                    $query->where('status', 'approved');
+                }], 'amount')
+                ->get()
         ];
 
         // return response()->json($data);
@@ -544,7 +597,6 @@ class UmrahController extends Controller
         $pdf = Pdf::loadView('back.pages.umrah.schedule.jamaah-invoice-pdf', $data);
 
         return $pdf->stream('invoice-' . $jamaah->code . '.pdf');
-
     }
 
     public function umrahScheduleJamaahUpdate(Request $request, $id, $code)
@@ -735,7 +787,6 @@ class UmrahController extends Controller
         $umrah_finance->save();
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
-
     }
 
     public function UmrahScheduleFinanceUpdate(Request $request, $id, $finance_id)
@@ -792,7 +843,6 @@ class UmrahController extends Controller
         $umrah_finance->save();
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
-
     }
 
     public function UmrahScheduleFinanceDestroy($id, $finance_id)

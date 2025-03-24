@@ -105,6 +105,10 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageEdit'])->name('edit');
             Route::put('/edit/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageUpdate'])->name('update');
             Route::delete('/delete/{id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageDestroy'])->name('destroy');
+
+            Route::get('/{id}/image', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageImage'])->name('image');
+            Route::post('/{id}/image', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageImageUpload'])->name('image.upload');
+            Route::delete('/{id}/image/{image_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahPackageImageDelete'])->name('image.delete');
         });
 
         Route::prefix('schedule')->name('schedule.')->group(function () {

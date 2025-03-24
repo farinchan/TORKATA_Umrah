@@ -1,4 +1,6 @@
 @extends('back.app')
+@section('styles')
+@endsection
 @section('content')
     <div id="kt_content_container" class=" container-xxl ">
         <form id="kt_ecommerce_edit_category_form" class="form d-flex flex-column flex-lg-row"
@@ -156,6 +158,31 @@
                                 dari satu keywoard yang digunakan
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="card card-flush py-4">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>Dokumentasi</h2>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <form class="form" action="#" method="post">
+                            <div class="fv-row">
+                                <div class="dropzone" id="kt_dropzonejs_example_1">
+                                    <div class="dz-message needsclick">
+                                        <i class="ki-duotone ki-file-up fs-3x text-primary"><span
+                                                class="path1"></span><span class="path2"></span></i>
+                                        <div class="ms-4">
+                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">Letakkan file di sini atau klik untuk mengunggah.
+                                            </h3>
+                                            <span class="fs-7 fw-semibold text-gray-500">Unggah hingga 10 gambar</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -349,6 +376,81 @@
                     }
                 }
                 console.log($('#delete_itinerary').val());
+            }
+        });
+    </script>
+    <script>
+        var package_id = @json($package->id);
+        var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
+            url: "{{ route('back.umrah.package.image.upload', $package->id) }}",
+            paramName: "file", // The name that will be used to transfer the file
+            maxFiles: 10,
+            maxFilesize: 10, // MB
+            acceptedFiles: "image/*",
+            addRemoveLinks: true,
+            dictDefaultMessage: "Drop files here or click to upload.",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function(file, response) {
+                console.log(response);
+                toastr.success(response.message);
+                file.previewElement.setAttribute('data-id', response.image_id);
+            },
+            error: function(file, response) {
+                toastr.error('Gagal mengupload gambar.');
+            },
+            removedfile: function(file) {
+                var imageId = file.previewElement.getAttribute('data-id');
+                if (imageId) {
+                    $.ajax({
+                        url: "/back/umrah/package/" + package_id + "/image/" + imageId,
+                        type: "DELETE",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            image_id: imageId
+                        },
+                        success: function(response) {
+                            toastr.success(response.message);
+                        },
+                        error: function(response) {
+                            toastr.error('Gagal menghapus gambar.');
+                        }
+                    });
+                }
+                file.previewElement.remove();
+
+                // Check if there are no more files in the dropzone
+                if (myDropzone.files.length === 0) {
+                    myDropzone.emit("reset");
+                }
+            }
+        });
+
+        // Load existing images from API
+        $.ajax({
+            url: "{{ route('back.umrah.package.image', $package->id) }}",
+            type: "GET",
+            success: function(response) {
+                response.images.forEach(function(image) {
+                    var mockFile = {
+                        name: image.name,
+                        size: image.size,
+                        dataURL: image.dataURL,
+                        accepted: true,
+                        status: Dropzone.ADDED,
+                        url: image.url,
+                    };
+                    myDropzone.emit("addedfile", mockFile);
+                    myDropzone.emit("thumbnail", mockFile, image.url);
+                    myDropzone.emit("complete", mockFile); // Ensure the file is marked as complete
+                    myDropzone.files.push(mockFile);
+                    mockFile.previewElement.setAttribute('data-id', image.id);
+                });
+
+            },
+            error: function(response) {
+                toastr.error('Gagal memuat gambar.');
             }
         });
     </script>

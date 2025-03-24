@@ -3999,6 +3999,12 @@ span.flatpickr-weekday {
 }
 
 .dropzone .dz-preview .dz-image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.dropzone .dz-preview .dz-image img {
   display: block;
 }
 
