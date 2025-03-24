@@ -14,10 +14,14 @@
             </div>
             <div class="links float-right">
                 <ul>
-                    <li><a href="{{ $setting_web->facebook?? "#" }}"><i class="fab fa-facebook white" aria-hidden="true"></i></a></li>
-                    <li><a href="{{ $setting_web->instagram?? "#" }}"><i class="fab fa-instagram white" aria-hidden="true"></i></a></li>
-                    <li><a href="{{ $setting_web->tiktok?? "#" }}"><i class="fab fa-tiktok white" aria-hidden="true"></i></a></li>
-                    <li><a href="{{ $setting_web->linkedin?? "#" }}"><i class="fab fa-linkedin white" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ $setting_web->facebook ?? '#' }}"><i class="fab fa-facebook white"
+                                aria-hidden="true"></i></a></li>
+                    <li><a href="{{ $setting_web->instagram ?? '#' }}"><i class="fab fa-instagram white"
+                                aria-hidden="true"></i></a></li>
+                    <li><a href="{{ $setting_web->tiktok ?? '#' }}"><i class="fab fa-tiktok white"
+                                aria-hidden="true"></i></a></li>
+                    <li><a href="{{ $setting_web->linkedin ?? '#' }}"><i class="fab fa-linkedin white"
+                                aria-hidden="true"></i></a></li>
                     <li><a href="#search1" class="mt_search"><i class="icon-magnifier white"></i></a></li>
                 </ul>
             </div>
@@ -30,7 +34,7 @@
                 <div class="navbar-flex d-flex align-items-center justify-content-between w-100 pb-2 pt-2">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="{{ route("home") }}">
+                        <a class="navbar-brand" href="{{ route('home') }}">
                             <img src="{{ Storage::url($setting_web->logo) }}" alt="image" style="width: 250px;">
                         </a>
                     </div>
@@ -41,22 +45,33 @@
                                     href="{{ route('home') }}">Home</a></li>
 
 
-                            <li><a href="{{ route("umrah.index") }}">Umrah</a></li>
-                            <li><a href="{{ route("tour.index") }}">Tour</a></li>
+                            <li><a href="{{ route('umrah.index') }}">Umrah</a></li>
+                            <li><a href="{{ route('tour.index') }}">Tour</a></li>
                             <li class="submenu dropdown">
-                                <a href="{{ route("news.index") }}" class="dropdown-toggle" data-toggle="dropdown"
+                                <a href="{{ route('news.index') }}" class="dropdown-toggle" data-toggle="dropdown"
                                     role="button" aria-haspopup="true" aria-expanded="false">Berita
                                     <i class="icon-arrow-down" aria-hidden="true"></i></a>
                                 <ul class="dropdown-menu">
                                     @foreach ($category_news as $item)
-                                        <li><a href="{{ route('news.category', $item->slug) }}">{{ $item->name }}</a></li>
+                                        <li><a
+                                                href="{{ route('news.category', $item->slug) }}">{{ $item->name }}</a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </li>
-                            <li><a href="{{ route("agent.index") }}">Agen Kami</a></li>
+                            <li><a href="{{ route('agent.index') }}">Gallery</a></li>
+                            <li><a href="{{ route('agent.index') }}">Agen Kami</a></li>
                             {{-- <li><a href="#">Tentang Kami</a></li> --}}
-                            <li><a href="{{ route("contact.index") }}">kontak</a></li>
-                            <li><a href="{{ route("payment.index")}}">Cek Pembayaran</a></li>
+                            <li><a href="{{ route('contact.index') }}">kontak</a></li>
+                            <li><a href="{{ route('payment.index') }}">Cek Pembayaran</a></li>
+                            <li class="mobile-login" style="display: none;">
+                                @guest
+                                    <a href="#" data-toggle="modal" data-target="#login">Login</a>
+                                @endguest
+                                @auth
+                                    <a href="{{ route('back.dashboard.index') }}">{{ Auth::user()->name }}</a>
+                                @endauth
+                            </li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
 

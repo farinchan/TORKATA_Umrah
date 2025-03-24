@@ -6,7 +6,7 @@
 -------------------------------------------------------------------
 
  TABLE OF CONTENT
-  
+
   1. Swiper
   3. Animate
   4. Slick
@@ -3764,7 +3764,7 @@ Slicknav - a Mobile Menu
 .slicknav_menu {
     *zoom: 1
 }
-/* 
+/*
 User Default Style
 Change the following styles to modify the appearance of the menu.
 */
@@ -3962,12 +3962,12 @@ Change the following styles to modify the appearance of the menu.
 .slicknav_menu .slicknav_icon {
     display: none;
 }
-@media(min-width: 1100px) {
+@media(min-width: 1200px) {
     div#slicknav-mobile {
         display: none;
     }
 }
-@media(max-width: 1099px) {
+@media(max-width: 1200px) {
     div#slicknav-mobile {
         display: block;
     }

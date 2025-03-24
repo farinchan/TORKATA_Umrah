@@ -134,6 +134,21 @@
     {{-- <script src="{{ asset('front/js/custom-date.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        function toggleMobileLogin() {
+            if ($(window).width() < 1200) {
+                $('.mobile-login').css('display', 'block');
+            } else {
+                $('.mobile-login').css('display', 'none');
+            }
+        }
+
+        toggleMobileLogin();
+
+        $(window).on('resize', function() {
+            toggleMobileLogin();
+        });
+    </script>
 
     @if (session('success'))
         <script>
@@ -156,6 +171,8 @@
     @endif
 
     @yield('scripts')
+
+
 </body>
 
 </html>
