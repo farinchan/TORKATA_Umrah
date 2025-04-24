@@ -80,12 +80,20 @@
                                 </label>
                             </div>
                             <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" name="role_admin_cabang" value="1"
+                                    @if (old('role_admin_cabang') == 1) checked @endif id="flexCheckAgen" />
+                                <label class="form-check-label" for="flexCheckAgen">
+                                    Admin Cabang
+                                </label>
+                            </div>
+                            <div class="form-check mt-3">
                                 <input class="form-check-input" type="checkbox" name="role_agen" value="1"
                                     @if (old('role_agen') == 1) checked @endif id="flexCheckAgen" />
                                 <label class="form-check-label" for="flexCheckAgen">
                                     Agen
                                 </label>
                             </div>
+
 
                             @error('status')
                                 <div class="text-danger fs-7">{{ $message }}</div>

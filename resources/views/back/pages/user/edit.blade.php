@@ -81,6 +81,13 @@
                                 </label>
                             </div>
                             <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" name="role_admin_cabang" value="1"
+                                    @if ($user->hasRole('admin-cabang')) checked @endif id="flexCheckKantor" />
+                                <label class="form-check-label" for="flexCheckKantor">
+                                    Admin Cabang
+                                </label>
+                            </div>
+                            <div class="form-check mt-3">
                                 <input class="form-check-input" type="checkbox" name="role_agen" value="1"
                                     @if ($user->hasRole('agen')) checked @endif id="flexCheckAgen" />
                                 <label class="form-check-label" for="flexCheckAgen">

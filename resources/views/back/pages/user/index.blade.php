@@ -36,6 +36,7 @@
                                             <option></option>
                                             <option value="super-admin">super-admin</option>
                                             <option value="admin-kantor">admin-kantor</option>
+                                            <option value="admin-cabang">admin-cabang</option>
                                             <option value="agen">agen</option>
                                         </select>
                                     </div>
@@ -135,6 +136,8 @@
                                                 <span class="badge badge-light-danger">{{ $role }}</span>
                                             @elseif ($role == 'admin-kantor')
                                                 <span class="badge badge-light-warning">{{ $role }}</span>
+                                            @elseif ($role == 'admin-cabang')
+                                                <span class="badge badge-light-info">{{ $role }}</span>
                                             @elseif ($role == 'agen')
                                                 <span class="badge badge-light-primary">{{ $role }}</span>
                                             @endif

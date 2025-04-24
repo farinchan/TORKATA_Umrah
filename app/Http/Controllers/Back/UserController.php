@@ -96,6 +96,9 @@ class UserController extends Controller
         if ($request->role_kantor) {
             $user->assignRole('admin-kantor');
         }
+        if ($request->role_admin_cabang) {
+            $user->assignRole('admin-cabang');
+        }
         if ($request->role_agen) {
             $user->assignRole('agen');
         }
@@ -187,6 +190,11 @@ class UserController extends Controller
             $user->assignRole('admin-kantor');
         } else {
             $user->removeRole('admin-kantor');
+        }
+        if ($request->role_admin_cabang) {
+            $user->assignRole('admin-cabang');
+        } else {
+            $user->removeRole('admin-cabang');
         }
         if ($request->role_agen) {
             $user->assignRole('agen');
