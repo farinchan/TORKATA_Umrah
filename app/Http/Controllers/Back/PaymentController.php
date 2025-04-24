@@ -55,7 +55,7 @@ class PaymentController extends Controller
             }
             $money = $money - $jamaah->discount;
 
-            if ($money <= UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount')) {
+            if ($money >= UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount')) {
                 User::findOrFail($jamaah->user_id)->deposit(500000, [ 'description' => 'Pembayaran Komisi dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')']);
             }
 
