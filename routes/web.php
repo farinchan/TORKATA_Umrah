@@ -128,6 +128,7 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::post('/{id}/finance', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceStore'])->name('finance.store');
             Route::put('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceUpdate'])->name('finance.update');
             Route::delete('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceDestroy'])->name('finance.destroy');
+
         });
     });
 
@@ -185,6 +186,11 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
 
         Route::get('/banner', [App\Http\Controllers\Back\SettingController::class, 'banner'])->name('banner');
         Route::put('/banner/{id}/update', [App\Http\Controllers\Back\SettingController::class, 'bannerUpdate'])->name('banner-update');
+
+        Route::prefix('payment-account')->name('payment-account.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Back\SettingController::class, 'paymentAccount'])->name('index');
+            Route::put('/update', [App\Http\Controllers\Back\SettingController::class, 'paymentAccountUpdate'])->name('update');
+        });
     });
 
     Route::prefix('report')->name('report.')->group(function () {

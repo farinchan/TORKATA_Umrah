@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentAccount;
 use App\Models\UmrahJamaah;
 use App\Models\UmrahJamaahPayment;
 use App\Models\UmrahPackage;
@@ -126,6 +127,7 @@ class BookingController extends Controller
                 ]
             ],
             'jamaah' => $jamaah,
+            'payment_accounts' => PaymentAccount::all(),
         ];
         return view('back.pages.booking.umrah.payment', $data);
     }

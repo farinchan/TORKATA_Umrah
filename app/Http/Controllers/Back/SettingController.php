@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentAccount;
 use App\Models\SettingBanner;
 use App\Models\SettingWebsite;
 use Illuminate\Http\Request;
@@ -160,5 +161,86 @@ class SettingController extends Controller
 
         $banner->save();
         return redirect()->route('back.setting.banner')->with('success', 'Pengaturan Banner berhasil diubah');
+    }
+
+    public function paymentAccount()
+    {
+        $data = [
+            'title' => 'Rekening Pembayaran',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Dashboard',
+                    'link' => route('back.dashboard.index')
+                ],
+                [
+                    'name' => 'Rekening Pembayaran',
+                    'link' => route('back.setting.payment-account.index')
+                ]
+            ],
+            'payment_accounts' => PaymentAccount::all()
+        ];
+
+        return view('back.pages.setting.payment', $data);
+    }
+
+    public function paymentAccountUpdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'payment_accounts' => 'array',
+            'payment_accounts.*.account_name' => 'required|string|max:255',
+            'payment_accounts.*.account_number' => 'required|string|max:255',
+            'payment_accounts.*.bank' => 'required|string|max:255',
+        ],
+        [
+            'payment_accounts.*.account_name.required' => 'Nama pemilik rekening tidak boleh kosong',
+            'payment_accounts.*.account_number.required' => 'Nomor rekening tidak boleh kosong',
+            'payment_accounts.*.bank.required' => 'Nama bank tidak boleh kosong',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', $validator->errors()->all());
+        }
+
+
+
+        if($request->delete_account) {
+            $account_delete = json_decode($request->delete_account, true);
+            foreach ($account_delete as $accountId) {
+                $account = PaymentAccount::find($accountId);
+                if ($account) {
+                    $account->delete();
+                }
+            }
+        }
+
+        if ($request->payment_accounts) {
+            foreach ($request->payment_accounts as $accountData) {
+                $accountName = $accountData['account_name'] ?? '-';
+                $accountNumber = $accountData['account_number'] ?? '-';
+                $accountBank = $accountData['bank'] ?? '-';
+
+                // Jika ada ID sertifikat, berarti update data lama
+                if (isset($accountData['account_id'])) {
+                    $account = PaymentAccount::find($accountData['account_id']);
+
+                    if (!$account) continue;
+
+                    // Update informasi lainnya
+                    $account->account_name = $accountName;
+                    $account->account_number = $accountNumber;
+                    $account->bank = $accountBank;
+                    $account->save();
+                } else {
+                    // Jika tidak ada ID, buat data baru
+                    $account = new PaymentAccount();
+                    $account->account_name = $accountName;
+                    $account->account_number = $accountNumber;
+                    $account->bank = $accountBank;
+                    $account->save();
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Rekening pembayaran berhasil diperbarui');
     }
 }

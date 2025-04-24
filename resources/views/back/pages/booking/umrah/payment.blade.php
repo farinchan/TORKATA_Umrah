@@ -9,7 +9,7 @@
                             <div class="symbol symbol-100px symbol-circle mb-7">
                                 <img src="{{ $jamaah->getPhoto()}}" alt="image">
                             </div>
-                            <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">
+                            <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3 text-center">
                                 {{ $jamaah->name }}
                              </a>
                             <div class="mb-9">
@@ -28,22 +28,30 @@
                         <div class="card-title fs-3 fw-bold">Informasi Rekening</div>
                     </div>
                     <div class="card-body p-9">
+                        @foreach ($payment_accounts as $account)
+
                         <div class="border border-hover-primary p-7 rounded mb-7">
                             <div class="d-flex fv-row">
                                 <div class="form-check form-check-custom form-check-solid">
                                     <img class="w-45px me-3"
-                                        src="{{ asset('ext_images/bank_logo/BRI.png') }}"
+                                        src="{{ asset('ext_images/bank_logo/bank.png') }}"
                                         alt="">
+
+
                                     <label class="form-check-label"
                                         for="kt_modal_update_role_option_0">
-                                        <div class="fw-bold text-gray-800">BRI</div>
+                                        <div class="fw-bold text-gray-800">
+                                            {{ $account->bank }}
+                                        </div>
                                         <div class="text-gray-600">
-                                            0000-0000-0000-0000 a/n PT. Torkata
+                                            {{ $account->account_number }}
+                                             a/n {{ $account->account_name }}
                                         </div>
                                     </label>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card">
