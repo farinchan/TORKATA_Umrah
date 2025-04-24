@@ -132,7 +132,7 @@
                                 <td class="d-flex align-items-center">
 
                                     <div class="d-flex flex-column">
-                                        <a href="#"
+                                        <a href="{{ route("back.booking.umrah.history.detail", $payment->umrahJamaah->code) }}"
                                             class="text-gray-800 text-hover-primary mb-1">{{ $payment->umrahJamaah->name }}</a>
                                         <span> ID. {{ $payment->umrahJamaah->code }}</span>
                                     </div>

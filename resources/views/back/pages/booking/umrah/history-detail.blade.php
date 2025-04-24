@@ -19,7 +19,7 @@
                             <div class="symbol symbol-100px symbol-circle mb-7">
                                 <img src="{{ $jamaah->getPhoto() }}" alt="image">
                             </div>
-                            <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">
+                            <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3 text-center">
                                 {{ $jamaah->name }}
                             </a>
                             <div class="mb-9">
@@ -45,6 +45,22 @@
                         </div>
                     </div>
                 </div>
+                @role('super-admin|admin-kantor')
+                    <div class="card mb-5 mb-xl-8">
+                        <div class="card-body text-center">
+                            <a href="{{ route('back.umrah.schedule.jamaah.invoice', [$schedule->id, $jamaah->code]) }}"
+                                target="_blank" class="btn btn-primary w-100">
+                                <i class="ki-duotone ki-printer fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i> Cetak Invoice
+                            </a>
+                        </div>
+                    </div>
+                @endrole
             </div>
             <div class="flex-lg-row-fluid ms-lg-15">
                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8"
@@ -61,7 +77,8 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="kt_user_view_overview_tab" role="tabpanel">
-                        <div class="card card-flush mb-6 mb-xl-9">
+
+                        <div class="card  mb-6 mb-xl-9">
                             <div class="card-header">
                                 <div class="card-title fs-3 fw-bold">Data Jama'ah</div>
                             </div>
@@ -69,7 +86,7 @@
                                 action="{{ route('back.umrah.schedule.jamaah.update', [$schedule->id, $jamaah->code]) }}">
                                 @method('PUT')
                                 @csrf
-                                <div class="card-body p-9">
+                                <div class="card-body">
                                     {{-- <div class="mb-5 fv-row">
                                         <div class="image-input image-input-empty" data-kt-image-input="true"
                                             style="background-image: url('{{ $jamaah->getPhoto() }}')">
@@ -141,6 +158,37 @@
                                 </div> --}}
                             </form>
                         </div>
+                        <div class="card  mb-6 mb-xl-9">
+                            <div class="card-header">
+                                <div class="card-title fs-3 fw-bold">Data Umrah</div>
+                            </div>
+                            <form id="kt_project_settings_form" class="form" method="POST" enctype="multipart/form-data"
+                                action="{{ route('back.umrah.schedule.jamaah.update', [$schedule->id, $jamaah->code]) }}">
+                                @method('PUT')
+                                @csrf
+                                <div class="card-body ">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Paket</th>
+                                            <td>{{ $schedule->umrahPackage->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Jadwal</th>
+                                            <td>{{ $schedule->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tipe Paket</th>
+                                            <td>{{ $jamaah->package_type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tanggal Mendaftar</th>
+                                            <td>{{ Carbon\Carbon::parse($jamaah->created_at)->format('d M Y H:i') }}</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="kt_user_view_overview_security" role="tabpanel">
 
@@ -191,7 +239,8 @@
                                                     <td>{{ $payment->type }} </td>
                                                     <td>@money($payment->amount)</td>
                                                     <td>
-                                                        <a href="{{ Storage::url($payment->proof) }}" target="_blank">Lihat
+                                                        <a href="{{ Storage::url($payment->proof) }}"
+                                                            target="_blank">Lihat
                                                             Bukti</a>
                                                     </td>
                                                     <td>

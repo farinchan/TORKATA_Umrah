@@ -45,19 +45,23 @@ class PaymentController extends Controller
 
 
         if ($request->status == 'approved') {
-            $money = 0;
+            $moneyTemp = 0;
             if ($jamaah->package_type == 'quad') {
-                $money = $shedule->price_quad;
+                $moneyTemp = $shedule->quad_price;
             } elseif ($jamaah->package_type == 'triple') {
-                $money = $shedule->price_triple;
+                $moneyTemp = $shedule->triple_price;
             } elseif ($jamaah->package_type == 'double') {
-                $money = $shedule->price_double;
+                $moneyTemp = $shedule->double_price;
             }
-            $money = $money - $jamaah->discount;
+            $money = $moneyTemp - $jamaah->discount;
 
-            if ($money >= UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount')) {
+            // dd($money, UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount'));
+
+            if ($money <= UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount')) {
                 User::findOrFail($jamaah->user_id)->deposit(500000, [ 'description' => 'Pembayaran Komisi dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')']);
             }
+
+
 
             UmrahFinance::create([
                 'umrah_schedule_id' => $jamaah->umrah_schedule_id,
