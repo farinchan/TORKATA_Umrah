@@ -37,7 +37,8 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <span class="fs-5 fw-bold text-gray-700 me-3 fs-2">Balance:</span>
-                                        <span class="fs-5 fw-bold fs-2 @if(($total_income - $total_expense) < 0) text-danger @else text-success @endif">
+                                        <span
+                                            class="fs-5 fw-bold fs-2 @if ($total_income - $total_expense < 0) text-danger @else text-success @endif">
                                             @money($total_income - $total_expense)
                                         </span>
                                     </div>
@@ -149,7 +150,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="fw-bold">{{ Carbon\Carbon::parse($finance->date)->format('d M Y H:i') }}
+                                        <span
+                                            class="fw-bold">{{ Carbon\Carbon::parse($finance->date)->format('d M Y H:i') }}
                                         </span>
                                     </td>
                                     <td>
@@ -185,13 +187,17 @@
                                     <td>
                                         @if ($finance->attachment)
                                             <a href="{{ asset('storage/' . $finance->attachment) }}" target="_blank">
-                                                <i class="ki-duotone ki-file-added text-primary fs-3x" data-bs-toggle="tooltip" data-bs-placement="right" title="Lihat File">
+                                                <i class="ki-duotone ki-file-added text-primary fs-3x"
+                                                    data-bs-toggle="tooltip" data-bs-placement="right"
+                                                    title="Lihat File">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
                                                 </i>
                                             </a>
                                         @else
-                                            <i class="ki-duotone ki-file-deleted text-danger fs-3x" data-bs-toggle="tooltip" data-bs-placement="right" title="File Tidak Ada">
+                                            <i class="ki-duotone ki-file-deleted text-danger fs-3x"
+                                                data-bs-toggle="tooltip" data-bs-placement="right"
+                                                title="File Tidak Ada">
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                             </i>
@@ -223,8 +229,14 @@
                                         </ul>
                                     </td>
                                     <td class="text-end d-flex">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#edit_finance_{{ $finance->id }}" class="btn btn-icon btn-light-warning me-5 "><i class="fa-solid fa-pen-to-square fs-4"></i></a>
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#delete_finance_{{ $finance->id }}" class="btn btn-icon btn-light-danger me-5 "><i class="fa-solid fa-trash fs-4"></i></a>
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#edit_finance_{{ $finance->id }}"
+                                            class="btn btn-icon btn-light-warning me-5 "><i
+                                                class="fa-solid fa-pen-to-square fs-4"></i></a>
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#delete_finance_{{ $finance->id }}"
+                                            class="btn btn-icon btn-light-danger me-5 "><i
+                                                class="fa-solid fa-trash fs-4"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -248,7 +260,8 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <form action="{{ route('back.umrah.schedule.finance.store', $schedule->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('back.umrah.schedule.finance.store', $schedule->id) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-5">
@@ -264,9 +277,11 @@
                             <label class="form-label required">Jumlah</label>
                             <div class="input-group mb-5">
                                 <span class="input-group-text">Rp.</span>
-                                <input type="number" class="form-control" placeholder="Jumlah transaksi keuangan"
-                                    name="amount" value="{{ old('amount') }}" required />
+                                <input type="text" class="form-control" placeholder="Jumlah transaksi keuangan"
+                                    value="{{ old('amount') }}" oninput="formatRupiah(this)" required />
                             </div>
+                            <input type="hidden" id="rupiah_value" name="amount"
+                                        value="{{ old('amount') }}">
                         </div>
                         <div class="mb-5">
                             <label class="form-label required">Tanggal</label>
@@ -322,11 +337,13 @@
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
                             aria-label="Close">
-                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                    class="path2"></span></i>
                         </div>
                         <!--end::Close-->
                     </div>
-                    <form action="{{ route('back.umrah.schedule.finance.update', [$schedule->id, $finance->id]) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('back.umrah.schedule.finance.update', [$schedule->id, $finance->id]) }}"
+                        method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="modal-body mb-5">
@@ -349,14 +366,17 @@
                             </div>
                             <div class="mb-5">
                                 <label class="form-label required">Tanggal</label>
-                                <input type="datetime-local" class="form-control" placeholder="Tanggal transaksi keuangan"
-                                    name="date" value="{{ Carbon\Carbon::parse($finance->date)->format('Y-m-d\TH:i') }}" required />
+                                <input type="datetime-local" class="form-control"
+                                    placeholder="Tanggal transaksi keuangan" name="date"
+                                    value="{{ Carbon\Carbon::parse($finance->date)->format('Y-m-d\TH:i') }}" required />
                             </div>
                             <div class="mb-5">
                                 <label class="form-label required">Type</label>
                                 <select class="form-select" name="type" required>
-                                    <option value="income" {{ $finance->type == 'income' ? 'selected' : '' }}>Income</option>
-                                    <option value="expense" {{ $finance->type == 'expense' ? 'selected' : '' }}>Expense</option>
+                                    <option value="income" {{ $finance->type == 'income' ? 'selected' : '' }}>Income
+                                    </option>
+                                    <option value="expense" {{ $finance->type == 'expense' ? 'selected' : '' }}>Expense
+                                    </option>
                                 </select>
                             </div>
                             <div class="row mb-5">
@@ -367,8 +387,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label ">No Ref</label>
-                                    <input type="text" class="form-control" placeholder="No Ref" name="payment_reference"
-                                        value="{{ $finance->payment_reference }}" />
+                                    <input type="text" class="form-control" placeholder="No Ref"
+                                        name="payment_reference" value="{{ $finance->payment_reference }}" />
                                 </div>
                             </div>
                             <div class="mb-5">
@@ -400,7 +420,8 @@
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
                             aria-label="Close">
-                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                    class="path2"></span></i>
                         </div>
                         <!--end::Close-->
                     </div>
@@ -409,7 +430,8 @@
                         <p>Apakah Anda yakin ingin menghapus transaksi ini?</p>
                         <p class="text-danger">
                             <strong>Peringatan: </strong> Seluruh data yang terkait dengan transaksi ini
-                            akan dihapus dan tidak dapat dikembalikan. </p>
+                            akan dihapus dan tidak dapat dikembalikan.
+                        </p>
                     </div>
 
                     <div class="modal-footer">
@@ -425,10 +447,16 @@
             </div>
         </div>
     @endforeach
-
-
 @endsection
 
 @section('scripts')
     <script src="{{ asset('back/js/custom/apps/user-management/users/list/jamaah.js') }}"></script>
+    <script>
+        function formatRupiah(element) {
+            let angka = element.value.replace(/\D/g, '');
+            let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            element.value = formatted;
+            document.getElementById('rupiah_value').value = angka;
+        }
+    </script>
 @endsection

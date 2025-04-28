@@ -149,9 +149,10 @@
                             <label class="form-label required">Jumlah</label>
                             <div class="input-group mb-5">
                                 <span class="input-group-text" id="basic-addon1">Rp</span>
-                                <input type="number" class="form-control" placeholder="100xxxx" name="amount"
-                                    aria-label="amount" aria-describedby="basic-addon1" />
+                                <input type="text" class="form-control" placeholder="100xxxx"
+                                    aria-label="amount" aria-describedby="basic-addon1" oninput="formatRupiah1(this)" />
                             </div>
+                            <input type="hidden" id="rupiah_value1" name="amount">
                             <small class="text-muted">Jumlah yang diinputkan berupa angka tanpa titik atau koma</small>
                         </div>
                         <div class="mb-5">
@@ -196,9 +197,10 @@
                             <label class="form-label required">Jumlah</label>
                             <div class="input-group mb-5">
                                 <span class="input-group-text" id="basic-addon1">Rp</span>
-                                <input type="number" class="form-control" placeholder="100xxxx" name="amount"
-                                    aria-label="amount" aria-describedby="basic-addon1" />
+                                <input type="text" class="form-control" placeholder="100xxxx"
+                                    aria-label="amount" aria-describedby="basic-addon1" oninput="formatRupiah2(this)" />
                             </div>
+                            <input type="hidden" id="rupiah_value2" name="amount">
                             <small class="text-muted">Jumlah yang diinputkan berupa angka tanpa titik atau koma</small>
                         </div>
                         <div class="mb-5">
@@ -392,5 +394,26 @@
 
         // var chart = new ApexCharts(element2, options);
         // chart.render();
+    </script>
+    <script>
+        function formatRupiah1(element) {
+            let angka = element.value.replace(/\D/g, '');
+            let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            element.value = formatted;
+            document.getElementById('rupiah_value1').value = angka;
+        }
+
+        function formatRupiah2(element) {
+            let angka = element.value.replace(/\D/g, '');
+            let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            element.value = formatted;
+            document.getElementById('rupiah_value2').value = angka;
+        }
+
+        $(document).ready(function() {
+            $('form').submit(function() {
+                $(this).find('button[type="submit"]').attr('disabled', true);
+            });
+        });
     </script>
 @endsection

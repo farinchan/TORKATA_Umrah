@@ -66,15 +66,15 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center @if($umrah_schedule->quad_count == $umrah_schedule->quad_quota) text-danger @endif pe-0">
+                                <td class="text-center @if ($umrah_schedule->quad_count == $umrah_schedule->quad_quota) text-danger @endif pe-0">
                                     {{ $umrah_schedule->quad_count }}/{{ $umrah_schedule->quad_quota }} <br>
                                     Harga: @money($umrah_schedule->quad_price)
                                 </td>
-                                <td class="text-center pe-0 @if($umrah_schedule->triple_count == $umrah_schedule->triple_quota) text-danger @endif">
+                                <td class="text-center pe-0 @if ($umrah_schedule->triple_count == $umrah_schedule->triple_quota) text-danger @endif">
                                     {{ $umrah_schedule->triple_count }}/{{ $umrah_schedule->triple_quota }}<br>
                                     Harga: @money($umrah_schedule->triple_price)
                                 </td>
-                                <td class="text-center pe-0 @if($umrah_schedule->double_count == $umrah_schedule->double_quota) text-danger @endif">
+                                <td class="text-center pe-0 @if ($umrah_schedule->double_count == $umrah_schedule->double_quota) text-danger @endif">
                                     {{ $umrah_schedule->double_count }}/{{ $umrah_schedule->double_quota }}<br>
                                     Harga: @money($umrah_schedule->double_price)
                                 </td>
@@ -86,7 +86,8 @@
                                     @endif
                                 </td>
                                 <td class="text-end">
-                                    <a href="{{ route("back.umrah.schedule.setting", $umrah_schedule->id) }}" class="btn btn-light-primary">Detail</a>
+                                    <a href="{{ route('back.umrah.schedule.setting', $umrah_schedule->id) }}"
+                                        class="btn btn-light-primary">Detail</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -108,7 +109,7 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <form action="{{ route("back.umrah.schedule.store") }}" method="post">
+                <form action="{{ route('back.umrah.schedule.store') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-5">
@@ -131,9 +132,11 @@
                                     <label class="form-label">Harga Paket Quad</label>
                                     <div class="input-group mb-5">
                                         <span class="input-group-text">Rp.</span>
-                                        <input type="number" class="form-control" placeholder="Harga Paket Quad"
-                                            name="quad_price" value="{{ old('quad_price') }}" />
+                                        <input type="text" class="form-control" placeholder="Harga Paket Quad"
+                                            value="{{ old('quad_price') }}" oninput="formatRupiah1(this)">
                                     </div>
+                                    <input type="hidden" id="rupiah_value1" name="quad_price"
+                                        value="{{ old('quad_price') }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Kuota Quad</label>
@@ -148,9 +151,11 @@
                                     <label class="form-label">Harga Paket Triple</label>
                                     <div class="input-group mb-5">
                                         <span class="input-group-text">Rp.</span>
-                                        <input type="number" class="form-control" placeholder="Harga Paket Triple"
-                                            name="triple_price" value="{{ old('triple_price') }}" />
+                                        <input type="text" class="form-control" placeholder="Harga Paket Triple"
+                                            value="{{ old('triple_price') }}" oninput="formatRupiah2(this)">
                                     </div>
+                                    <input type="hidden" id="rupiah_value2" name="triple_price"
+                                        value="{{ old('triple_price') }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Kuota Triple</label>
@@ -165,9 +170,11 @@
                                     <label class="form-label">Harga Paket Double</label>
                                     <div class="input-group mb-5">
                                         <span class="input-group-text">Rp.</span>
-                                        <input type="number" class="form-control" placeholder="Harga Paket Double"
-                                            name="double_price" value="{{ old('double_price') }}" />
+                                        <input type="text" class="form-control" placeholder="Harga Paket Double"
+                                            value="{{ old('double_price') }}" oninput="formatRupiah3(this)">
                                     </div>
+                                    <input type="hidden" id="rupiah_value3" name="double_price"
+                                        value="{{ old('double_price') }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Kuota Double</label>
@@ -210,8 +217,34 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('scripts')
     <script src="{{ asset('back/js/custom/apps/ecommerce/catalog/schdule_umrah.js') }}"></script>
+    <script>
+        function formatRupiah1(element) {
+            let angka = element.value.replace(/\D/g, '');
+            let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            element.value = formatted;
+            document.getElementById('rupiah_value1').value = angka;
+        }
+
+        function formatRupiah2(element) {
+            let angka = element.value.replace(/\D/g, '');
+            let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            element.value = formatted;
+            document.getElementById('rupiah_value2').value = angka;
+        }
+
+        function formatRupiah3(element) {
+            let angka = element.value.replace(/\D/g, '');
+            let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            element.value = formatted;
+            document.getElementById('rupiah_value3').value = angka;
+        }
+        $(document).ready(function() {
+            $('form').submit(function() {
+                $(this).find('button[type="submit"]').attr('disabled', true);
+            });
+        });
+    </script>
 @endsection

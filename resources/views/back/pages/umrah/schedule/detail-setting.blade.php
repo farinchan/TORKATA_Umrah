@@ -35,9 +35,11 @@
                                     <label class="form-label">Harga Paket Quad</label>
                                     <div class="input-group mb-5">
                                         <span class="input-group-text">Rp.</span>
-                                        <input type="number" class="form-control" placeholder="Harga Paket Quad"
-                                            name="quad_price" value="{{ $schedule->quad_price }}" />
+                                        <input type="text" class="form-control" placeholder="Harga Paket Quad"
+                                            value="{{ $schedule->quad_price }}" oninput="formatRupiah1(this)">
                                     </div>
+                                    <input type="hidden" id="rupiah_value1" name="quad_price"
+                                        value="{{ $schedule->quad_price }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Kuota Quad</label>
@@ -52,9 +54,11 @@
                                     <label class="form-label">Harga Paket Triple</label>
                                     <div class="input-group mb-5">
                                         <span class="input-group-text">Rp.</span>
-                                        <input type="number" class="form-control" placeholder="Harga Paket Triple"
-                                            name="triple_price" value="{{ $schedule->triple_price }}" />
+                                        <input type="text" class="form-control" placeholder="Harga Paket Triple"
+                                            value="{{ $schedule->triple_price }}" oninput="formatRupiah2(this)">
                                     </div>
+                                    <input type="hidden" id="rupiah_value2" name="triple_price"
+                                        value="{{ $schedule->triple_price }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Kuota Triple</label>
@@ -69,9 +73,11 @@
                                     <label class="form-label">Harga Paket Double</label>
                                     <div class="input-group mb-5">
                                         <span class="input-group-text">Rp.</span>
-                                        <input type="number" class="form-control" placeholder="Harga Paket Double"
-                                            name="double_price" value="{{ $schedule->double_price }}" />
+                                        <input type="text" class="form-control" placeholder="Harga Paket Double"
+                                            value="{{ $schedule->double_price }}" oninput="formatRupiah3(this)">
                                     </div>
+                                    <input type="hidden" id="rupiah_value3" name="double_price"
+                                        value="{{ $schedule->double_price }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Kuota Double</label>
@@ -127,4 +133,31 @@
     </div>
 @endsection
 @section('scripts')
+<script>
+    function formatRupiah1(element) {
+        let angka = element.value.replace(/\D/g, '');
+        let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        element.value = formatted;
+        document.getElementById('rupiah_value1').value = angka;
+    }
+
+    function formatRupiah2(element) {
+        let angka = element.value.replace(/\D/g, '');
+        let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        element.value = formatted;
+        document.getElementById('rupiah_value2').value = angka;
+    }
+
+    function formatRupiah3(element) {
+        let angka = element.value.replace(/\D/g, '');
+        let formatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        element.value = formatted;
+        document.getElementById('rupiah_value3').value = angka;
+    }
+    $(document).ready(function() {
+        $('form').submit(function() {
+            $(this).find('button[type="submit"]').attr('disabled', true);
+        });
+    });
+</script>
 @endsection
