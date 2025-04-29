@@ -57,8 +57,22 @@ class PaymentController extends Controller
 
             // dd($money, UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount'));
 
+
             if ($money <= UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount')) {
-                User::findOrFail($jamaah->user_id)->deposit(500000, [ 'description' => 'Pembayaran Komisi dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')']);
+                foreach ($payment->umrahJamaah->user->roles as $role) {
+
+                    User::findOrFail($jamaah->user_id)->deposit($role->reward_money, ['description' => 'Pembayaran Komisi ' . $role->name . ' dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')']);
+                    UmrahFinance::create([
+                        'umrah_schedule_id' => $jamaah->umrah_schedule_id,
+                        'name' => 'Pembayaran Komisi ' . $role->name,
+                        'description' => 'Pembayaran Komisi ' . $role->name . ' atas nama ' . $payment->umrahJamaah->user->name . ' dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')',
+                        'amount' => $role->reward_money,
+                        'type' => 'expense',
+                        'date' => now(),
+                        'created_by' => Auth::id(),
+                        'updated_by' => Auth::id()
+                    ]);
+                }
             }
 
 
