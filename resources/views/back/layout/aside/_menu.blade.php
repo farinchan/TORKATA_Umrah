@@ -201,7 +201,8 @@
                 </div>
             </div>
 
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
+            <div data-kt-menu-trigger="click"
+                class="menu-item menu-accordion @if (request()->routeIs('back.tour.*')) here show @endif">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-address-book fs-2">
@@ -215,16 +216,27 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion">
                     <div class="menu-item">
-                        <a class="menu-link " href="#">
+                        <a class="menu-link @if (request()->routeIs('back.tour.package.*')) active @endif"
+                            href="{{ route('back.tour.package.index') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Coming Soon</span>
+                            <span class="menu-title">Paket</span>
                         </a>
                     </div>
 
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.tour.schedule.*')) active @endif"
+                            href="{{ route('back.tour.schedule.index') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Jadwal</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+
         @endrole
 
         @role('super-admin|admin-kantor|agen')
@@ -278,6 +290,51 @@
                     @endrole
                 </div>
             </div>
+
+            <div data-kt-menu-trigger="click"
+                class="menu-item menu-accordion @if (request()->routeIs('back.booking.tour.*')) here show @endif ">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-bookmark-2 fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Tour</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.booking.tour.index')) active @endif"
+                            href="{{ route('back.booking.tour.index') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Booking</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link @if (request()->routeIs('back.booking.tour.history')) active @endif"
+                            href="{{ route('back.booking.tour.history') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">History</span>
+                        </a>
+                    </div>
+                    @role('super-admin|admin-kantor')
+                        <div class="menu-item">
+                            <a class="menu-link @if (request()->routeIs('back.booking.tour.history.all')) active @endif"
+                                href="{{ route('back.booking.tour.history.all') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Semua History</span>
+                            </a>
+                        </div>
+                    @endrole
+                </div>
+            </div>
         @endrole
 
 
@@ -288,8 +345,8 @@
             </div>
 
             <div class="menu-item">
-                <a class="menu-link @if (request()->routeIs('back.payment.umrah.verification')) active @endif"
-                    href="{{ route('back.payment.umrah.verification') }}">
+                <a class="menu-link @if (request()->routeIs('back.payment.index')) active @endif"
+                    href="{{ route('back.payment.index') }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-finance-calculator fs-2">
                             <span class="path1"></span>
@@ -340,8 +397,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link "
-                            href="#">
+                        <a class="menu-link " href="#">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>

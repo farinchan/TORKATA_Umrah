@@ -98,6 +98,7 @@
                                 </div>
                             </th>
                             <th>Tanggal</th>
+                            <th>Pembayaran</th>
                             <th>Tipe</th>
                             <th>Jumlah</th>
                             <th>Bukti</th>
@@ -108,7 +109,8 @@
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 fw-semibold">
-                        @foreach ($payments as $payment)
+                        @foreach ($payments ?? [] as $payment)
+                            {{-- @dd($payment) --}}
                             <tr>
                                 <td>
                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -116,6 +118,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $payment->created_at->format('d M Y H:i') }}</td>
+                                <td class="text-gray-900 text-bold">{{ strtoupper($payment->payment) }}</td>
                                 <td>
                                     @if ($payment->type == 'dp')
                                         DP
@@ -129,16 +132,24 @@
                                     <a href="{{ Storage::url($payment->proof) }}" target="_blank">Lihat
                                         Bukti</a>
                                 </td>
+                                {{-- @dd($payment->user) --}}
                                 <td class="d-flex align-items-center">
-
-                                    <div class="d-flex flex-column">
-                                        <a href="{{ route("back.booking.umrah.history.detail", $payment->umrahJamaah->code) }}"
-                                            class="text-gray-800 text-hover-primary mb-1">{{ $payment->umrahJamaah->name }}</a>
-                                        <span> ID. {{ $payment->umrahJamaah->code }}</span>
-                                    </div>
+                                    @if ($payment->payment == 'umrah')
+                                        <div class="d-flex flex-column">
+                                            <a href="{{ route('back.booking.umrah.history.detail', $payment->user['code']) }}"
+                                                class="text-gray-800 text-hover-primary mb-1">{{ $payment->user['name'] }}</a>
+                                            <span> ID. {{ $payment->user['code'] }}</span>
+                                        </div>
+                                    @elseif ($payment->payment == 'tour')
+                                        <div class="d-flex flex-column">
+                                            <a href="{{ route('back.booking.tour.history.detail', $payment->user['code']) }}"
+                                                class="text-gray-800 text-hover-primary mb-1">{{ $payment->user['name'] }}</a>
+                                            <span> ID. {{ $payment->user['code'] }}</span>
+                                        </div>
+                                    @endif
                                 </td>
                                 <td>
-                                    {{ $payment->umrahJamaah->user->name }}
+                                    {{ $payment->user['staff']['name'] }}
                                 </td>
                                 <td>
                                     @if ($payment->status == 'pending')
@@ -156,7 +167,7 @@
                                             data-bs-target="#edit{{ $payment->id }}">
                                             <i class="bi bi-pencil-square fs-4 me-2"></i>
                                         </a>
-                                        @else
+                                    @else
                                         -
                                     @endif
                                 </td>
@@ -183,7 +194,13 @@
                         </div>
                         <!--end::Close-->
                     </div>
-                    <form action="{{ route('back.payment.umrah.verification.update', $payment->id) }}" method="post">
+                    <form
+                        action="
+                    @if ($payment->payment == 'umrah') {{ route('back.payment.umrah.verification.update', $payment->id) }}
+                    @elseif ($payment->payment == 'tour')
+                    {{ route('back.payment.tour.verification.update', $payment->id) }} @endif
+                     "
+                        method="post">
                         @method('put')
                         @csrf
 

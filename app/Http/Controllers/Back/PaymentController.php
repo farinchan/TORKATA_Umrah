@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\TourFinance;
+use App\Models\TourUserPayment;
 use App\Models\UmrahFinance;
 use App\Models\UmrahJamaah;
 use App\Models\UmrahJamaahPayment;
@@ -13,8 +15,61 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    public function umrahPaymentVerification()
+    public function paymentVerification()
     {
+        $umrah_payment = UmrahJamaahPayment::with('umrahJamaah')->latest()->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'payment' => 'umrah',
+                'payment_method' => $item->payment_method,
+                'account_name' => $item->account_name,
+                'amount' => $item->amount,
+                'proof' => $item->proof,
+                'type' => $item->type,
+                'status' => $item->status,
+                'note' => $item->note,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+                'user' => [
+                    'id' => $item->umrahJamaah->id,
+                    'name' => $item->umrahJamaah->name,
+                    'code' => $item->umrahJamaah->code,
+                    'staff' => [
+                        'id' => $item->umrahJamaah->user->id,
+                        'name' => $item->umrahJamaah->user->name,
+                        'email' => $item->umrahJamaah->user->email,
+                        'phone' => $item->umrahJamaah->user->phone,
+                    ]
+                ]
+            ];
+        });
+        $tour_payment = TourUserPayment::with('tourUser')->latest()->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'payment' => 'tour',
+                'payment_method' => $item->payment_method,
+                'account_name' => $item->account_name,
+                'amount' => $item->amount,
+                'proof' => $item->proof,
+                'type' => $item->type,
+                'status' => $item->status,
+                'note' => $item->note,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+                'user' => [
+                    'id' => $item->tourUser->id,
+                    'name' => $item->tourUser->name,
+                    'code' => $item->tourUser->code,
+                    'staff' => [
+                        'id' => $item->tourUser->user->id,
+                        'name' => $item->tourUser->user->name,
+                        'email' => $item->tourUser->user->email,
+                        'phone' => $item->tourUser->user->phone,
+                    ]
+                ]
+            ];
+        });
+
         $data = [
             'title' => 'Verifikasi Pembayaran',
             'breadcrumbs' => [
@@ -24,11 +79,14 @@ class PaymentController extends Controller
                 ],
                 [
                     'name' => 'Verifikasi Pembayaran',
-                    'link' => route('back.payment.umrah.verification')
+                    'link' => route('back.payment.index')
                 ]
             ],
-            'payments' => UmrahJamaahPayment::with('umrahJamaah')->latest()->get()
+            'payments' => collect($umrah_payment->merge($tour_payment))->sortByDesc('created_at')->map(function ($item) {
+                return (object) $item;
+            }),
         ];
+        // dd($data);
         return view('back.pages.payment.umrah-verification', $data);
     }
 
@@ -87,6 +145,33 @@ class PaymentController extends Controller
                 'created_by' => Auth::id(),
                 'updated_by' => Auth::id()
             ]);
+        }
+
+        return redirect()->back()->with('success', 'Status pembayaran berhasil diubah');
+    }
+
+    public function tourPaymentVerificationUpdate(Request $request, $id)
+    {
+        $payment = TourUserPayment::findOrFail($id);
+        $payment->update([
+            'status' => $request->status,
+            'note' => $request->note
+        ]);
+
+        if ($request->status == 'approved') {
+            foreach ($payment->tourUser->user->roles as $role) {
+                User::findOrFail($payment->tourUser->user_id)->deposit($role->reward_money, ['description' => 'Pembayaran Komisi ' . $role->name . ' dari jamaah ' . $payment->tourUser->name . ' (' . $payment->tourUser->code . ')']);
+                TourFinance::create([
+                    'tour_schedule_id' => $payment->tourUser->tour_schedule_id,
+                    'name' => 'Pembayaran Komisi ' . $role->name,
+                    'description' => 'Pembayaran Komisi ' . $role->name . ' atas nama ' . $payment->tourUser->user->name . ' dari user ' . $payment->tourUser->name . ' (' . $payment->tourUser->code . ')',
+                    'amount' => $role->reward_money,
+                    'type' => 'expense',
+                    'date' => now(),
+                    'created_by' => Auth::id(),
+                    'updated_by' => Auth::id()
+                ]);
+            }
         }
 
         return redirect()->back()->with('success', 'Status pembayaran berhasil diubah');

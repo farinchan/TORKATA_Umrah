@@ -9,7 +9,10 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('booking/get-umrah-schedule', [App\Http\Controllers\Api\UmrahController::class, 'getUmrahSchedule'])->name('api.booking.get-umrah-schedule');
-Route::post('booking/get-umrah-schedule/info', [App\Http\Controllers\Api\UmrahController::class, 'getUmrahScheduleInfo'])->name('api.booking.get-umrah-schedule-info');
+Route::post('booking/get-umarah-schedule/info', [App\Http\Controllers\Api\UmrahController::class, 'getUmrahScheduleInfo'])->name('api.booking.get-umrah-schedule-info');
+
+Route::post('booking/get-tour-schedule', [App\Http\Controllers\Api\TourController::class, 'getTourSchedule'])->name('api.booking.get-tour-schedule');
+Route::post('booking/get-tour-schedule/info', [App\Http\Controllers\Api\TourController::class, 'getTourScheduleInfo'])->name('api.booking.get-tour-schedule-info');
 
 
 Route::prefix('whatsapp-api')->name('api.whatsapp.')->group(function () {

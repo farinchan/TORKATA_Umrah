@@ -128,7 +128,41 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::post('/{id}/finance', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceStore'])->name('finance.store');
             Route::put('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceUpdate'])->name('finance.update');
             Route::delete('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\UmrahController::class, 'umrahScheduleFinanceDestroy'])->name('finance.destroy');
+        });
+    });
 
+    Route::prefix('tour')->name('tour.')->group(function () {
+
+        Route::prefix('package')->name('package.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Back\TourController::class, 'tourPackageIIndex'])->name('index');
+            Route::get('/create', [App\Http\Controllers\Back\TourController::class, 'tourPackageCreate'])->name('create');
+            Route::post('/create', [App\Http\Controllers\Back\TourController::class, 'tourPackageStore'])->name('store');
+            Route::get('/edit/{id}', [App\Http\Controllers\Back\TourController::class, 'tourPackageEdit'])->name('edit');
+            Route::put('/edit/{id}', [App\Http\Controllers\Back\TourController::class, 'tourPackageUpdate'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\Back\TourController::class, 'tourPackageDestroy'])->name('destroy');
+
+            Route::get('/{id}/image', [App\Http\Controllers\Back\TourController::class, 'tourPackageImage'])->name('image');
+            Route::post('/{id}/image', [App\Http\Controllers\Back\TourController::class, 'tourPackageImageUpload'])->name('image.upload');
+            Route::delete('/{id}/image/{image_id}', [App\Http\Controllers\Back\TourController::class, 'tourPackageImageDelete'])->name('image.delete');
+        });
+
+        Route::prefix('schedule')->name('schedule.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Back\TourController::class, 'tourScheduleIndex'])->name('index');
+            Route::post('/create', [App\Http\Controllers\Back\TourController::class, 'tourScheduleStore'])->name('store');
+
+            Route::get('/{id}/setting', [App\Http\Controllers\Back\TourController::class, 'tourScheduleSetting'])->name('setting');
+            Route::put('/{id}/setting', [App\Http\Controllers\Back\TourController::class, 'tourScheduleUpdate'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\Back\TourController::class, 'tourScheduleDestroy'])->name('destroy');
+
+            Route::get('/{id}/user', [App\Http\Controllers\Back\TourController::class, 'tourScheduleUser'])->name('user');
+            Route::get('/{id}/user/{code}', [App\Http\Controllers\Back\TourController::class, 'tourScheduleUserDetail'])->name('user.detail');
+            Route::put('/{id}/user/{code}', [App\Http\Controllers\Back\TourController::class, 'tourScheduleUserUpdate'])->name('user.update');
+            Route::get('/{id}/user/{code}/invoice', [App\Http\Controllers\Back\TourController::class, 'tourScheduleUserInvoice'])->name('user.invoice');
+
+            Route::get('/{id}/finance', [App\Http\Controllers\Back\TourController::class, 'tourScheduleFinance'])->name('finance');
+            Route::post('/{id}/finance', [App\Http\Controllers\Back\TourController::class, 'tourScheduleFinanceStore'])->name('finance.store');
+            Route::put('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\TourController::class, 'tourScheduleFinanceUpdate'])->name('finance.update');
+            Route::delete('/{id}/finance/{finance_id}', [App\Http\Controllers\Back\TourController::class, 'tourScheduleFinanceDestroy'])->name('finance.destroy');
         });
     });
 
@@ -143,11 +177,23 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
             Route::get("/history/{code}", [App\Http\Controllers\Back\BookingController::class, "umrahHistoryDetail"])->name("history.detail");
             Route::get("/history-all", [App\Http\Controllers\Back\BookingController::class, "umrahHistoryAll"])->name("history.all");
         });
+
+        Route::prefix("tour")->name("tour.")->group(function () {
+            Route::get("/", [App\Http\Controllers\Back\BookingController::class, "tourIndex"])->name("index");
+            Route::post("/", [App\Http\Controllers\Back\BookingController::class, "tourStore"])->name("store");
+            Route::get("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "tourPayment"])->name("payment");
+            Route::post("/{id}/payment", [App\Http\Controllers\Back\BookingController::class, "tourPaymentStore"])->name("payment.store")->middleware('throttle:7,1');
+
+            Route::get("/history", [App\Http\Controllers\Back\BookingController::class, "tourHistory"])->name("history");
+            Route::get("/history/{code}", [App\Http\Controllers\Back\BookingController::class, "tourHistoryDetail"])->name("history.detail");
+            Route::get("/history-all", [App\Http\Controllers\Back\BookingController::class, "tourHistoryAll"])->name("history.all");
+        });
     });
 
     Route::prefix('payment')->name('payment.')->group(function () {
-        Route::get('/umrah', [App\Http\Controllers\Back\PaymentController::class, 'umrahPaymentVerification'])->name('umrah.verification');
+        Route::get('/', [App\Http\Controllers\Back\PaymentController::class, 'paymentVerification'])->name('index');
         Route::put('/umrah/{id}/verification', [App\Http\Controllers\Back\PaymentController::class, 'umrahPaymentVerificationUpdate'])->name('umrah.verification.update');
+        Route::put('/tour/{id}/verification', [App\Http\Controllers\Back\PaymentController::class, 'tourPaymentVerificationUpdate'])->name('tour.verification.update');
     });
 
     Route::prefix('wallet')->name('wallet.')->group(function () {
@@ -156,7 +202,6 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::get('/user-wallet/{id}', [App\Http\Controllers\Back\WalletController::class, 'userWallet'])->name('user-wallet');
         Route::post('/user-wallet/{id}/deposit', [App\Http\Controllers\Back\WalletController::class, 'userWalletDeposit'])->name('user-wallet.deposit');
         Route::post('/user-wallet/{id}/withdraw', [App\Http\Controllers\Back\WalletController::class, 'userWalletWithdraw'])->name('user-wallet.withdraw');
-
     });
 
     Route::prefix('message')->name('message.')->group(function () {

@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class TourSchedule extends Model
+{
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function tourPackage()
+    {
+        return $this->belongsTo(TourPackage::class);
+    }
+
+    public function tourUser()
+    {
+        return $this->hasMany(TourUser::class);
+    }
+
+}
