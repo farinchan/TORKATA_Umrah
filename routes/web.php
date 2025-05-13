@@ -6,20 +6,38 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Back\DashboardController as BackDashboardController;
 use App\Http\Controllers\Back\NewsController as BackNewsController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Untuk domain utama
+// Route::get('/', [HomeController::class, 'index']);
+
+Route::domain(env('TOUR_URL'))->group(function () {
+    Route::get('/', [HomeController::class, 'indexTour'])->name('home.tour');
+
+    Route::prefix('tour')->name('tour.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Front\TourController::class, 'index'])->name('index');
+        Route::get('/{slug}', [App\Http\Controllers\Front\TourController::class, 'show'])->name('show');
+    });
+});
+
+Route::domain(env('UMRAH_URL'))->group(function () {
+    Route::get('/', [HomeController::class, 'indexUmrah'])->name('home');
+
+    Route::prefix('umrah')->name('umrah.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Front\UmrahController::class, 'index'])->name('index');
+        Route::get('/{slug}', [App\Http\Controllers\Front\UmrahController::class, 'show'])->name('show');
+    });
+});
+
+
+
+// Route::get('/', [HomeController::class, 'indexUmrah'])->name('home');
+
 Route::get('/visit', [App\Http\Controllers\Front\HomeController::class, 'vistWebsite'])->name('visit.ajax');
 
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::prefix('umrah')->name('umrah.')->group(function () {
-    Route::get('/', [App\Http\Controllers\Front\UmrahController::class, 'index'])->name('index');
-    Route::get('/{slug}', [App\Http\Controllers\Front\UmrahController::class, 'show'])->name('show');
-});
 
-Route::prefix('tour')->name('tour.')->group(function () {
-    Route::get('/', [App\Http\Controllers\Front\TourController::class, 'index'])->name('index');
-});
+
 
 Route::prefix('news')->name('news.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\NewsController::class, 'index'])->name('index');
@@ -30,6 +48,7 @@ Route::prefix('news')->name('news.')->group(function () {
 
     Route::get('/visit/alt', [App\Http\Controllers\Front\NewsController::class, 'visit'])->name('visit');
 });
+
 
 Route::prefix('gallery')->name('gallery.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\GalleryController::class, 'index'])->name('index');

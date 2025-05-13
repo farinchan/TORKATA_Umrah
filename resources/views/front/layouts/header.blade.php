@@ -41,12 +41,17 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="navbar-collapse1 d-flex align-items-center" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav" id="responsive-menu">
-                            <li class="@if (request()->routeIs('home')) active @endif"><a
-                                    href="{{ route('home') }}">Home</a></li>
 
-
-                            <li><a href="{{ route('umrah.index') }}">Umrah</a></li>
-                            <li><a href="{{ route('tour.index') }}">Tour</a></li>
+                            @if (request()->getScheme() . '://' . request()->getHost() == env('UMRAH_URL'))
+                                <li class="@if (request()->routeIs('home')) active @endif"><a
+                                        href="{{ route('home') }}">Home</a></li>
+                                <li><a href="{{ route('umrah.index') }}">Umrah</a></li>
+                            @endif
+                            @if (request()->getScheme() . '://' . request()->getHost() === env('TOUR_URL'))
+                                <li class="@if (request()->routeIs('home.tour')) active @endif"><a
+                                        href="{{ route('home.tour') }}">Home</a></li>
+                                <li><a href="{{ route('tour.index') }}">Tour</a></li>
+                            @endif
                             <li class="submenu dropdown">
                                 <a href="{{ route('news.index') }}" class="dropdown-toggle" data-toggle="dropdown"
                                     role="button" aria-haspopup="true" aria-expanded="false">Berita

@@ -28,4 +28,9 @@ class UmrahPackage extends Model
     {
         return $this->hasMany(UmrahSchedule::class);
     }
+
+    public function getSchedulesLowestQuadPrice()
+    {
+        return $this->schedules()->min('quad_price');
+    }
 }

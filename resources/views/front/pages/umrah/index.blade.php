@@ -159,8 +159,7 @@
                                                                 <p class="mb-0 white"><i class="fa fa-clock-o"
                                                                         aria-hidden="true"></i> {{ $umrah->days }} Hari</p>
                                                                 <div class="trend-price">
-                                                                    <p class="price white mb-0">Mulai Dari <span>Rp.
-                                                                            32.000.000</span></p>
+                                                                    <p class="price white mb-0">Mulai Dari <span>@money($umrah->price_start)</span></p>
                                                                 </div>
                                                             </div>
                                                         </div>
