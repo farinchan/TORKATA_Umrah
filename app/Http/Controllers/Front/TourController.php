@@ -41,6 +41,10 @@ class TourController extends Controller
     {
         $tour = TourPackage::where('slug', $slug)->with('itineraries', 'images', 'schedules')->first();
 
+        if (!$tour) {
+            abort(404);
+        }
+
         $data = [
             'title' => $tour->name,
             'breadcrumbs' => [

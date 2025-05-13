@@ -41,6 +41,10 @@ class UmrahController extends Controller
     {
         $umrah = UmrahPackage::where('slug', $slug)->with('itineraries', 'images', 'schedules')->first();
 
+        if (!$umrah) {
+            abort(404);
+        }
+
         $data = [
             'title' => $umrah->name,
             'breadcrumbs' => [
