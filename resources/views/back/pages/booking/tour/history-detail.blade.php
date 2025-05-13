@@ -1,14 +1,8 @@
 @extends('back.app')
 @section('content')
     @php
-        $total_price = 0;
-        if ($jamaah->package_type == 'quad') {
-            $total_price = $schedule->quad_price - $jamaah->discount;
-        } elseif ($jamaah->package_type == 'triple') {
-            $total_price = $schedule->triple_price - $jamaah->discount;
-        } elseif ($jamaah->package_type == 'double') {
-            $total_price = $schedule->double_price - $jamaah->discount;
-        }
+        $total_price = $schedule->price;
+
     @endphp
     <div id="kt_content_container" class=" container-xxl ">
         <div class="d-flex flex-column flex-lg-row">
@@ -17,25 +11,25 @@
                     <div class="card-body">
                         <div class="d-flex flex-center flex-column py-5">
                             <div class="symbol symbol-100px symbol-circle mb-7">
-                                <img src="{{ $jamaah->getPhoto() }}" alt="image">
+                                <img src="{{ $user->getPhoto() }}" alt="image">
                             </div>
                             <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3 text-center">
-                                {{ $jamaah->name }}
+                                {{ $user->name }}
                             </a>
                             <div class="mb-9">
                                 <div class="text-gray-800">
-                                    ID. {{ $jamaah->code }}
+                                    ID. {{ $user->code }}
                                 </div>
                             </div>
                             <hr>
                             <div class="mb-3 text-center">
 
                                 <h2 class="mb-3">
-                                    @money($jamaah->total_payment) / @money($total_price) <br>
-                                    <small class="text-muted fs-6">Sisa Pembayaran : @money($total_price - $jamaah->total_payment)</small>
+                                    @money($user->total_payment) / @money($total_price) <br>
+                                    <small class="text-muted fs-6">Sisa Pembayaran : @money($total_price - $user->total_payment)</small>
 
                                 </h2>
-                                @if ($jamaah->total_payment >= $total_price)
+                                @if ($user->total_payment >= $total_price)
                                     <span class="badge badge-light-success">Lunas</span>
                                 @else
                                     <span class="badge badge-light-danger">Belum Lunas</span>
@@ -48,7 +42,7 @@
                 @role('super-admin|admin-kantor')
                     <div class="card mb-5 mb-xl-8">
                         <div class="card-body text-center">
-                            <a href="{{ route('back.tour.schedule.jamaah.invoice', [$schedule->id, $jamaah->code]) }}"
+                            <a href="{{ route('back.tour.schedule.user.invoice', [$schedule->id, $user->code]) }}"
                                 target="_blank" class="btn btn-primary w-100">
                                 <i class="ki-duotone ki-printer fs-2">
                                     <span class="path1"></span>
@@ -83,13 +77,13 @@
                                 <div class="card-title fs-3 fw-bold">Data Jama'ah</div>
                             </div>
                             <form id="kt_project_settings_form" class="form" method="POST" enctype="multipart/form-data"
-                                action="{{ route('back.tour.schedule.jamaah.update', [$schedule->id, $jamaah->code]) }}">
+                                action="{{ route('back.tour.schedule.user.update', [$schedule->id, $user->code]) }}">
                                 @method('PUT')
                                 @csrf
                                 <div class="card-body">
                                     {{-- <div class="mb-5 fv-row">
                                         <div class="image-input image-input-empty" data-kt-image-input="true"
-                                            style="background-image: url('{{ $jamaah->getPhoto() }}')">
+                                            style="background-image: url('{{ $user->getPhoto() }}')">
                                             <div class="image-input-wrapper w-125px h-125px"></div>
                                             <label
                                                 class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -117,37 +111,37 @@
                                     <table class="table table-bordered">
                                         <tr>
                                             <th>NIK</th>
-                                            <td>{{ $jamaah->nik }}</td>
+                                            <td>{{ $user->nik }}</td>
                                         </tr>
                                         <tr>
                                             <th>Nama Lengkap</th>
-                                            <td>{{ $jamaah->name }}</td>
+                                            <td>{{ $user->name }}</td>
                                         </tr>
                                         <tr>
                                             <th>Tempat, Tanggal Lahir</th>
-                                            <td>{{ $jamaah->birthplace }},
-                                                {{ Carbon\Carbon::parse($jamaah->birthdate)->format('d M Y') }}</td>
+                                            <td>{{ $user->birthplace }},
+                                                {{ Carbon\Carbon::parse($user->birthdate)->format('d M Y') }}</td>
                                         </tr>
                                         <tr>
                                             <th>Jenis Kelamin</th>
-                                            <td>{{ $jamaah->gender == 'laki-laki' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                            <td>{{ $user->gender == 'laki-laki' ? 'Laki-laki' : 'Perempuan' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Alamat</th>
-                                            <td>{{ $jamaah->address }}</td>
+                                            <td>{{ $user->address }}</td>
                                         </tr>
                                         <tr>
                                             <th>No. Telp / WA</th>
-                                            <td>{{ $jamaah->phone }}</td>
+                                            <td>{{ $user->phone }}</td>
                                         </tr>
                                         <tr>
                                             <th>KTP/KK</th>
-                                            <td><a href="{{ Storage::url($jamaah->file_ktp) }}" target="_blank"
+                                            <td><a href="{{ Storage::url($user->file_ktp) }}" target="_blank"
                                                     class="btn btn-sm btn-light-primary">Lihat Disini</a></td>
                                         </tr>
                                         <tr>
                                             <th>No. Paspor</th>
-                                            <td>{{ $jamaah->passport }}</td>
+                                            <td>{{ $user->passport }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -163,7 +157,7 @@
                                 <div class="card-title fs-3 fw-bold">Data Tour</div>
                             </div>
                             <form id="kt_project_settings_form" class="form" method="POST" enctype="multipart/form-data"
-                                action="{{ route('back.tour.schedule.jamaah.update', [$schedule->id, $jamaah->code]) }}">
+                                action="{{ route('back.tour.schedule.user.update', [$schedule->id, $user->code]) }}">
                                 @method('PUT')
                                 @csrf
                                 <div class="card-body ">
@@ -179,7 +173,7 @@
 
                                         <tr>
                                             <th>Tanggal Mendaftar</th>
-                                            <td>{{ Carbon\Carbon::parse($jamaah->created_at)->format('d M Y H:i') }}</td>
+                                            <td>{{ Carbon\Carbon::parse($user->created_at)->format('d M Y H:i') }}</td>
                                         </tr>
 
                                     </table>
@@ -192,9 +186,9 @@
                         <div class="card pt-4 mb-6 mb-xl-9">
                             <div class="card-header">
                                 <h3 class="card-title">Pembayaran</h3>
-                                @if ($jamaah->total_payment < $total_price)
+                                @if ($user->total_payment < $total_price)
                                     <div class="card-toolbar">
-                                        <a href="{{ route('back.booking.tour.payment', $jamaah->id) }}"
+                                        <a href="{{ route('back.booking.tour.payment', $user->id) }}"
                                             class="btn btn-sm btn-light-primary">
                                             Bayar Sisa
                                         </a>
@@ -203,8 +197,8 @@
                             </div>
                             <div class="card-body">
                                 <h2>
-                                    @money($jamaah->total_payment) / @money($total_price) <br>
-                                    <small class="text-muted fs-6">Sisa Pembayaran : @money($total_price - $jamaah->total_payment)</small>
+                                    @money($user->total_payment) / @money($total_price) <br>
+                                    <small class="text-muted fs-6">Sisa Pembayaran : @money($total_price - $user->total_payment)</small>
 
                                 </h2>
                             </div>

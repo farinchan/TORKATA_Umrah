@@ -474,18 +474,18 @@ class BookingController extends Controller
 
     public function tourHistoryDetail($code)
     {
-        $jamaah = TourUser::where('code', $code)->withSum(['tourUserPayments as total_payment' => function ($query) {
+        $user = TourUser::where('code', $code)->withSum(['tourUserPayments as total_payment' => function ($query) {
             $query->where('status', 'approved');
         }], 'amount')
         ->first();
 
         if(!in_array('super-admin', Auth::user()->getRoleNames()->toArray()) && !in_array('admin-kantor', Auth::user()->getRoleNames()->toArray())){
-            if($jamaah->user_id != Auth::user()->id){
+            if($user->user_id != Auth::user()->id){
             return redirect()->route('back.dashboard.index')->with('error', 'Data tidak ditemukan');
             }
         }
 
-        $schedule = TourSchedule::with(['tourPackage', 'tourUser'])->findOrFail($jamaah->tour_schedule_id);
+        $schedule = TourSchedule::with(['tourPackage', 'tourUser'])->findOrFail($user->tour_schedule_id);
         $data = [
             'title' => 'Detail Booking Tour',
             'breadcrumbs' => [
@@ -503,8 +503,8 @@ class BookingController extends Controller
                 ]
             ],
             'schedule' => $schedule,
-            'jamaah' => $jamaah,
-            'payments' => $jamaah->tourUserPayments()->latest()->get(),
+            'user' => $user,
+            'payments' => $user->tourUserPayments()->latest()->get(),
         ];
         // return response()->json($data);
         return view('back.pages.booking.tour.history-detail', $data);
