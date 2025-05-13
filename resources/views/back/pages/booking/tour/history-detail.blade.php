@@ -1,7 +1,7 @@
 @extends('back.app')
 @section('content')
     @php
-        $total_price = $schedule->price;
+        $total_price = $schedule->price - $user->discount;
 
     @endphp
     <div id="kt_content_container" class=" container-xxl ">

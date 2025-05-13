@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\TourFinance;
+use App\Models\TourSchedule;
+use App\Models\TourUser;
 use App\Models\TourUserPayment;
 use App\Models\UmrahFinance;
 use App\Models\UmrahJamaah;
@@ -118,18 +120,19 @@ class PaymentController extends Controller
 
             if ($money <= UmrahJamaahPayment::where('umrah_jamaah_id', $jamaah->id)->where('status', 'approved')->sum('amount')) {
                 foreach ($payment->umrahJamaah->user->roles as $role) {
-
-                    User::findOrFail($jamaah->user_id)->deposit($role->reward_money, ['description' => 'Pembayaran Komisi ' . $role->name . ' dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')']);
-                    UmrahFinance::create([
-                        'umrah_schedule_id' => $jamaah->umrah_schedule_id,
-                        'name' => 'Pembayaran Komisi ' . $role->name,
-                        'description' => 'Pembayaran Komisi ' . $role->name . ' atas nama ' . $payment->umrahJamaah->user->name . ' dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')',
-                        'amount' => $role->reward_money,
-                        'type' => 'expense',
-                        'date' => now(),
-                        'created_by' => Auth::id(),
-                        'updated_by' => Auth::id()
-                    ]);
+                    if ($role->reward_money > 0) {
+                        User::findOrFail($jamaah->user_id)->deposit($role->reward_money, ['description' => 'Pembayaran Komisi ' . $role->name . ' dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')']);
+                        UmrahFinance::create([
+                            'umrah_schedule_id' => $jamaah->umrah_schedule_id,
+                            'name' => 'Pembayaran Komisi ' . $role->name,
+                            'description' => 'Pembayaran Komisi ' . $role->name . ' atas nama ' . $payment->umrahJamaah->user->name . ' dari jamaah ' . $jamaah->name . ' (' . $jamaah->code . ')',
+                            'amount' => $role->reward_money,
+                            'type' => 'expense',
+                            'date' => now(),
+                            'created_by' => Auth::id(),
+                            'updated_by' => Auth::id()
+                        ]);
+                    }
                 }
             }
 
@@ -137,7 +140,7 @@ class PaymentController extends Controller
 
             UmrahFinance::create([
                 'umrah_schedule_id' => $jamaah->umrah_schedule_id,
-                'name' => 'Pembayaran ' . $jamaah->name,
+                'name' => 'Pembayaran ' . $payment->type  . " " . $jamaah->name,
                 'description' => 'Pembayaran di verifikasi oleh ' . Auth::user()->name  . 'melalui sistem verifikasi pembayaran',
                 'amount' => $payment->amount,
                 'type' => 'income',
@@ -158,20 +161,40 @@ class PaymentController extends Controller
             'note' => $request->note
         ]);
 
+        $user = TourUser::findOrFail($payment->tour_user_id);
+        $shedule = TourSchedule::findOrFail($user->tour_schedule_id);
+
+        $money = $shedule->price - $user->discount;
+
         if ($request->status == 'approved') {
-            foreach ($payment->tourUser->user->roles as $role) {
-                User::findOrFail($payment->tourUser->user_id)->deposit($role->reward_money, ['description' => 'Pembayaran Komisi ' . $role->name . ' dari jamaah ' . $payment->tourUser->name . ' (' . $payment->tourUser->code . ')']);
-                TourFinance::create([
-                    'tour_schedule_id' => $payment->tourUser->tour_schedule_id,
-                    'name' => 'Pembayaran Komisi ' . $role->name,
-                    'description' => 'Pembayaran Komisi ' . $role->name . ' atas nama ' . $payment->tourUser->user->name . ' dari user ' . $payment->tourUser->name . ' (' . $payment->tourUser->code . ')',
-                    'amount' => $role->reward_money,
-                    'type' => 'expense',
-                    'date' => now(),
-                    'created_by' => Auth::id(),
-                    'updated_by' => Auth::id()
-                ]);
+            if ($money <= TourUserPayment::where('tour_user_id', $user->id)->where('status', 'approved')->sum('amount')) {
+                foreach ($payment->tourUser->user->roles as $role) {
+                    if ($role->reward_money > 0) {
+                        User::findOrFail($payment->tourUser->user_id)->deposit($role->reward_money, ['description' => 'Pembayaran Komisi ' . $role->name . ' dari jamaah ' . $payment->tourUser->name . ' (' . $payment->tourUser->code . ')']);
+                        TourFinance::create([
+                            'tour_schedule_id' => $payment->tourUser->tour_schedule_id,
+                            'name' => 'Pembayaran Komisi ' . $role->name,
+                            'description' => 'Pembayaran Komisi ' . $role->name . ' atas nama ' . $payment->tourUser->user->name . ' dari user ' . $payment->tourUser->name . ' (' . $payment->tourUser->code . ')',
+                            'amount' => $role->reward_money,
+                            'type' => 'expense',
+                            'date' => now(),
+                            'created_by' => Auth::id(),
+                            'updated_by' => Auth::id()
+                        ]);
+                    }
+                }
             }
+
+            TourFinance::create([
+                'tour_schedule_id' => $user->tour_schedule_id,
+                'name' => 'Pembayaran ' . $payment->type  . " " . $user->name,
+                'description' => 'Pembayaran di verifikasi oleh ' . Auth::user()->name  . 'melalui sistem verifikasi pembayaran',
+                'amount' => $payment->amount,
+                'type' => 'income',
+                'date' => now(),
+                'created_by' => Auth::id(),
+                'updated_by' => Auth::id()
+            ]);
         }
 
         return redirect()->back()->with('success', 'Status pembayaran berhasil diubah');

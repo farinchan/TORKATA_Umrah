@@ -156,25 +156,12 @@
                                         @php
                                             $totalPaymentWithDiscount = $user->total_payment + $user->discount;
                                         @endphp
-                                        @if ($user->package_type == 'quad')
-                                            @if ($totalPaymentWithDiscount < $schedule->quad_price)
+                                            @if ($totalPaymentWithDiscount < $schedule->price)
                                                 <span class="badge badge-light-danger">Belum Lunas</span>
                                             @else
                                                 <span class="badge badge-light-success">Lunas</span>
                                             @endif
-                                        @elseif($user->package_type == 'triple')
-                                            @if ($totalPaymentWithDiscount < $schedule->triple_price)
-                                                <span class="badge badge-light-danger">Belum Lunas</span>
-                                            @else
-                                                <span class="badge badge-light-success">Lunas</span>
-                                            @endif
-                                        @elseif($user->package_type == 'double')
-                                            @if ($totalPaymentWithDiscount < $schedule->double_price)
-                                                <span class="badge badge-light-danger">Belum Lunas</span>
-                                            @else
-                                                <span class="badge badge-light-success">Lunas</span>
-                                            @endif
-                                        @endif
+
                                     </td>
 
                                     <td>
