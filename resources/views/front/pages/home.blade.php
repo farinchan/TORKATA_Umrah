@@ -324,7 +324,123 @@
     </section>
     <!-- Trending Ends -->
 
-    <!-- our teams starts -->
+    <!-- flight-list starts -->
+    <section class="flight-list pt-9">
+        <div class="container">
+            <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
+                <h2 class="m-0">Panggilan Terakhir <span>Umrah</span></h2>
+                <p class="mb-0">
+                    Ayo cepat pesan paket umrah anda sebelum kehabisan. ini merupakan panggilan terakhir untuk melakukan ibadah umrah dari kami.
+                </p>
+            </div>
+
+            <div class="flight-list">
+
+                <div class="tab-content">
+                    <div id="schedule1" class="tab-pane fade in active">
+                        <div class="flight-full">
+                            @forelse ($umrah_schedules as $schedule)
+                                <div class="item mb-2">
+                                    <div class="row d-flex align-items-center justify-content-between">
+
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <h4 class="mb-0">{{ $schedule->umrahPackage->name }}</h4>
+                                                    <h3 style="font-size: 15px" class="mb-0 pink">{{ $schedule->name }}</h3>
+                                                    <p class="mb-0 text-uppercase">
+                                                        @if ($schedule->departure)
+                                                            {{ \Carbon\Carbon::parse($schedule->departure)->translatedFormat('d F Y') }}
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <h4 class="mb-0">Quad</h4>
+                                                    <p class="mb-0 text-uppercase">@money($schedule->quad_price)</p>
+                                                    <p class="mb-0 text-uppercase">Kuota: {{ $schedule->umrahJamaah->where("package_type", "quad")->count() }}/{{ $schedule->quad_quota }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <h4 class="mb-0">Triple</h4>
+                                                    <p class="mb-0 text-uppercase">@money($schedule->triple_price)</p>
+                                                    <p class="mb-0 text-uppercase">Kuota: {{ $schedule->umrahJamaah->where("package_type", "triple")->count() }}/{{ $schedule->triple_quota }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <h4 class="mb-0">double</h4>
+                                                    <p class="mb-0 text-uppercase">@money($schedule->double_price)</p>
+                                                    <p class="mb-0 text-uppercase">Kuota: {{ $schedule->umrahJamaah->where("package_type", "double")->count() }}/{{ $schedule->double_quota }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <div class="item-inner flight-btn text-center p-0 bordernone mb-0">
+                                                <a href="{{ route('umrah.show', $schedule->umrahPackage->slug) }}"
+                                                    class="nir-btn-black">Pesan sekarang</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="item mb-2">
+                                    <div class="row d-flex align-items-center justify-content-center">
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                            <h4 class="mb-0">Tidak ada jadwal perjalanan</h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endforelse
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- flight-list ends -->
+
+
+
+    <!-- Call to action starts -->
+    <section class="call-to-action flight-call pb-7">
+        <div class="call-main">
+            <div class="container">
+                <div class="action-content text-center w-75 mx-auto">
+                    <h3 class="white mb-0">Find next place to visit</h3>
+                    <h2 class="white call-name">Make Your Holidays More Happening</h2>
+                </div>
+                <div class="video-button text-center">
+                    <img src="{{ asset("ext_images/umrah/1.png") }}" alt="">
+                     <div class="call-button text-center">
+                        <button type="button" class="play-btn js-video-button" data-video-id="152879427" data-channel="vimeo">
+                            <i class="fa fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="video-figure"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- call to action Ends -->
+
+       <!-- our teams starts -->
     <section class="our-team pb-4">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
@@ -358,243 +474,6 @@
     </section>
     <!-- our teams Ends -->
 
-    <!-- Call to action starts -->
-    <section class="call-to-action call-to-action1 pb-6 pt-10"
-        style="background-image:url({{ asset('front/images/bg/bg6.jpg') }})">
-        <div class="call-main">
-            <div class="container">
-                <div class="row d-flex align-items-center justify-content-between">
-                    <div class="col-lg-6 mb-4">
-                        <div class="action-content">
-                            <h3 class="white mb-0 text-uppercase">Selanjutnya Apa?</h3>
-                            <h2 class="white call-name">Ayo eksplorasi dunia</h2>
-                            <p class="white mb-4">
-                                Kami menawarkan berbagai paket Tour wisata yang menarik. Dapatkan pengalaman yang
-                                tak terlupakan bersama kami. Berikutnya apa yang anda tunggu?
-                            </p>
-                            <a href="#" class="nir-btn">Mulai Eksplore <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 mb-4">
-                        <div class="video-button">
-                            <img src="{{ asset('front/images/trending/trending3.jpg') }}" alt="">
-                            <div class="call-button text-center">
-                                <button type="button" class="play-btn js-video-button" data-video-id="152879427"
-                                    data-channel="vimeo">
-                                    <i class="fa fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="video-figure"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="dot-overlay"></div>
-    </section>
-    <!-- call to action Ends -->
-
-    <!-- top destination starts -->
-    <section class="top-destination overflow-hidden bg-navy p-0">
-        <div class="container-fluid">
-            <div class="desti-inner">
-                <div class="row d-flex align-items-center">
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/1.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Istanbul - Turki</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/2.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Osaka - Jepang</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/3.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Seoul - Korea</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/4.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Dubai - Uni emirate arab</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/5.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Paris - Francis</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex align-items-center">
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/6.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Sydney - Australia</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/7.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Singapura</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/8.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Bangkok - Thailand</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg p-0">
-                        <div class="desti-image bordernone">
-                            <img src="{{ asset('ext_images/tour/9.png') }}" alt="desti">
-                            <div class="desti-content">
-                                <div class="rating mb-1">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                </div>
-                                <h4 class="white mb-0">Kuala Lumpur - Malaysia</h4>
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Pesan Sekarang</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- top destination ends -->
 
 
 

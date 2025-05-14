@@ -9,6 +9,7 @@ use App\Models\Testimonial;
 use App\Models\TourPackage;
 use App\Models\TourSchedule;
 use App\Models\UmrahPackage;
+use App\Models\UmrahSchedule;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
@@ -31,13 +32,22 @@ class HomeController extends Controller
             'meta' => [
                 'title' => 'Home | ' . $setting_web->name,
                 'description' => strip_tags($setting_web->about),
-                'keywords' => $setting_web->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata',
+                'keywords' => $setting_web->name,
+                'home',
+                'umrah',
+                'travel',
+                'tour',
+                'islam',
+                'muslim',
+                'paket umrah',
+                'paket wisata',
                 'favicon' => $setting_web->favicon
             ],
             'agents' => User::role('agen')->take(10)->get(),
             'setting_web' => SettingWebsite::first(),
             'news' => News::orderBy('created_at', 'desc')->where('status', 'published')->limit(5)->get(),
             'umrah_packages' => UmrahPackage::orderBy('created_at', 'desc')->where('status', 'enabled')->get(),
+            'umrah_schedules' => UmrahSchedule::orderBy('departure', 'desc')->where('status', 'aktif')->get(),
             'testimonials' => Testimonial::orderBy('created_at', 'desc')->where('status', true)->get()
 
         ];
@@ -58,7 +68,15 @@ class HomeController extends Controller
             'meta' => [
                 'title' => 'Home | ' . $setting_web->name,
                 'description' => strip_tags($setting_web->about),
-                'keywords' => $setting_web->name, 'home', 'umrah',  'travel', 'tour', 'islam', 'muslim', 'paket umrah',  'paket wisata',
+                'keywords' => $setting_web->name,
+                'home',
+                'umrah',
+                'travel',
+                'tour',
+                'islam',
+                'muslim',
+                'paket umrah',
+                'paket wisata',
                 'favicon' => $setting_web->favicon
             ],
             'agents' => User::role('agen')->take(10)->get(),
