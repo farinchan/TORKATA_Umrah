@@ -243,14 +243,11 @@
                                 </div>
                             @empty
                                 <div class="item mb-2">
-                                    <div class="row d-flex align-items-center justify-content-between">
+                                    <div class="row d-flex align-items-center justify-content-center">
 
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <div class="item-inner">
-                                                <div class="content">
-                                                    <h4 class="mb-0">Tidak ada jadwal perjalanan</h4>
-                                                </div>
-                                            </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                            <h4 class="mb-0">Tidak ada jadwal perjalanan</h4>
+
                                         </div>
 
                                     </div>
