@@ -2,7 +2,7 @@
     $category_news = \App\Models\NewsCategory::all();
 @endphp
 <!-- header starts -->
-<header class="main_header_area">
+<header class="main_header_area @if (request()->routeIs('home.tour')) headerstye-1 @endif">
     <div class="header-content bg-navy">
         <div class="container d-flex align-items-center justify-content-between">
             <div class="links">

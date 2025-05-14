@@ -7,6 +7,7 @@ use App\Models\News;
 use App\Models\SettingWebsite;
 use App\Models\Testimonial;
 use App\Models\TourPackage;
+use App\Models\TourSchedule;
 use App\Models\UmrahPackage;
 use App\Models\User;
 use App\Models\Visitor;
@@ -64,6 +65,7 @@ class HomeController extends Controller
             'setting_web' => SettingWebsite::first(),
             'news' => News::orderBy('created_at', 'desc')->where('status', 'published')->limit(5)->get(),
             'tour_packages' => TourPackage::orderBy('created_at', 'desc')->where('status', 'enabled')->get(),
+            'tour_schedules' => TourSchedule::orderBy('departure', 'desc')->where('status', 'aktif')->get(),
             'testimonials' => Testimonial::orderBy('created_at', 'desc')->where('status', true)->get()
 
         ];

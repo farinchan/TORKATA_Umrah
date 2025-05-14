@@ -129,7 +129,11 @@
     <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/js/plugin.js') }}"></script>
     <script src="{{ asset('front/js/main.js') }}"></script>
-    <script src="{{ asset('front/js/custom-swiper2.js') }}"></script>
+    @if (request()->routeIs('home.tour'))
+        <script src="{{ asset('front/js/custom-swiper.js') }}"></script>
+    @else
+        <script src="{{ asset('front/js/custom-swiper2.js') }}"></script>
+    @endif
     <script src="{{ asset('front/js/custom-nav.js') }}"></script>
     {{-- <script src="{{ asset('front/js/custom-date.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

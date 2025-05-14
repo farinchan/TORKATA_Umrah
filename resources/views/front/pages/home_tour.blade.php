@@ -2,261 +2,120 @@
 
 @section('seo')
     <title>{{ $title }}</title>
-    <meta name="description" content="{{ $meta["description"] }}">
-    <meta name="keywords" content="{{ $meta["keywords"] }}">
+    <meta name="description" content="{{ $meta['description'] }}">
+    <meta name="keywords" content="{{ $meta['keywords'] }}">
     <meta name="author" content="PT. Torkata Jaya Persada">
 
-    <meta property="og:title" content="{{ $meta["title"] }}">
-    <meta property="og:description" content="{{ $meta["description"] }}">
+    <meta property="og:title" content="{{ $meta['title'] }}">
+    <meta property="og:description" content="{{ $meta['description'] }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ route('home') }}">
     <link rel="canonical" href="{{ route('home') }}">
-    <meta property="og:image" content="{{ Storage::url($meta["favicon"]) }}">
+    <meta property="og:image" content="{{ Storage::url($meta['favicon']) }}">
 @endsection
 
 @section('content')
-    @include('front.partials.banner')
+    @include('front.partials.banner2')
+
+    <!-- why us starts -->
+    <section class="why-us pt-10 pb-6">
+        <div class="container">
+            <div class="why-us-box pt-9">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="why-us-item text-center">
+                            <div class="why-us-icon mb-2">
+                                <i class="flaticon-call pink"></i>
+                            </div>
+                            <div class="why-us-content">
+                                <h4><a href="#">Saran & Dukungan</a></h4>
+                                <p class="mb-0">Bepergian dengan tenang karena kami selalu ada jika Anda membutuhkan, 24
+                                    jam sehari</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="why-us-item text-center">
+                            <div class="why-us-icon mb-2">
+                                <i class="flaticon-global pink"></i>
+                            </div>
+                            <div class="why-us-content">
+                                <h4><a href="#">Tiket Pesawat</a></h4>
+                                <p class="mb-0">Kami menyediakan layanan tiket pesawat dengan harga terbaik dan proses
+                                    yang mudah untuk perjalanan Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="why-us-item text-center">
+                            <div class="why-us-icon mb-2">
+                                <i class="flaticon-building pink"></i>
+                            </div>
+                            <div class="why-us-content">
+                                <h4><a href="#">Layanan Hotel</a></h4>
+                                <p class="mb-0">Nikmati kenyamanan menginap dengan layanan hotel terbaik yang kami
+                                    sediakan hingga membuat anda semakin betah.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="why-us-item text-center">
+                            <div class="why-us-icon mb-2">
+                                <i class="flaticon-location-pin pink"></i>
+                            </div>
+                            <div class="why-us-content">
+                                <h4><a href="#">Paket Wisata</a></h4>
+                                <p class="mb-0">
+                                    Paket wisata yang terjangkau dan pas untuk Anda dan keluarga
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- why us ends -->
+
 
     <!-- about-us starts -->
-    <section class="about-us bg-grey pb-6">
+    <section class="about-us pb-0" style="background-image: url({{ asset('front/images/bg5.jpg') }});">
         <div class="container">
-            <div class="about-image-box mb-4">
-                <div class="row d-flex align-items-center justify-content-between">
-                    <div class="col-lg-6 col-sm-12">
+            <div class="about-image-box">
+                <div class="row">
+                    <div class="col-lg-7 col-sm-12">
                         <div class="about-content">
-                            <h4 class="mb-1 font-weight-normal blue">Tentang Kami</h4>
-                            <h2 class="">
-                                {{ $setting_web->name }}
-                            </h2>
-                            <p class="mb-2">
-                                {!! $setting_web->about !!}
+                            <h4 class="mb-1 white font-weight-normal">Tentang Kami</h4>
+                            <h2 class="white">{{ $setting_web->name }}</h2>
+                            <p class="mb-2 white">
+                                {{ Str::limit(strip_tags($setting_web->about), 1000) }}
                             </p>
-                            {{-- <div class="about-featured mb-0">
+                            <div class="about-featured mb-0">
                                 <ul>
-                                    <li>Safety Travel System</li>
-                                    <li>Budget-Friendly Tour</li>
-                                    <li>Expert Trip Planning</li>
-                                    <li>Fast Communication</li>
-                                    <li>Right Solution & Guide</li>
-                                    <li>24/7 Customer Support</li>
+                                    <li class="white">Sistem Perjalanan Aman</li>
+                                    <li class="white">Paket Wisata Hemat</li>
+                                    <li class="white">Perencanaan Perjalanan Ahli</li>
+                                    <li class="white">Komunikasi Cepat</li>
+                                    <li class="white">Solusi & Panduan yang Tepat</li>
+                                    <li class="white">Dukungan Pelanggan 24/7</li>
                                 </ul>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-sm-12">
-                        <div class="about-image-main">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 mt-4">
-                                    <img src="{{ asset('ext_images/banner/1.png') }}" alt="">
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <img src="{{ asset('ext_images/banner/2.png') }}" alt="">
-                                </div>
-                            </div>
+                    <div class="col-lg-5 col-sm-12">
+                        <div class="about-image-desti mt-5">
+                            <img src="{{ asset('ext_images/tour/about.jpg') }}" alt="">
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- why us starts -->
-            <div class="why-us pt-4 border-t">
-                <div class="why-us-box">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="why-us-item text-center bg-lgrey">
-                                <div class="why-us-icon mb-2">
-                                    <i class="flaticon-call pink"></i>
-                                </div>
-                                <div class="why-us-content">
-                                    <h4><a href="#">Advice & Support</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="why-us-item text-center bg-lgrey">
-                                <div class="why-us-icon mb-2">
-                                    <i class="flaticon-global pink"></i>
-                                </div>
-                                <div class="why-us-content">
-                                    <h4><a href="#">Air Ticketing</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="why-us-item text-center bg-lgrey">
-                                <div class="why-us-icon mb-2">
-                                    <i class="flaticon-building pink"></i>
-                                </div>
-                                <div class="why-us-content">
-                                    <h4><a href="#">Hotel Services</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="why-us-item text-center bg-lgrey">
-                                <div class="why-us-icon mb-2">
-                                    <i class="flaticon-location-pin pink"></i>
-                                </div>
-                                <div class="why-us-content">
-                                    <h4><a href="#">Tour Packages</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- why us ends -->
         </div>
+        <div class="overlay"></div>
     </section>
     <!-- about-us ends -->
 
-    {{-- <!-- top destination starts -->
-    <section class="top-destination overflow-hidden pb-9">
-        <div class="container">
-            <div class="desti-inner">
-                <div class="row d-flex align-items-center">
-                    <div class="col-lg-4 col-md-6 p-1">
-                        <div class="desti-title text-center">
-                            <h2 class="white">Umrah <br> Ke tanah Suci</h2>
-                            <p class="white mb-5">Buat perjalanan umrah anda lebih mudah dan nyaman dengan kami sebagai
-                                agen umrah terpercaya.</p>
-                            <a href="#" class="nir-btn">Lihat Paket <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 p-1">
-                        <div class="desti-image">
-                            <img src="{{ asset('ext_images/umrah/1.png') }}" alt="desti">
 
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Book Now</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 p-1">
-                        <div class="desti-image">
-                            <img src="{{ asset('ext_images/umrah/2.png') }}" alt="desti">
-
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Book Now</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 p-1">
-                        <div class="desti-image">
-                            <img src="{{ asset('ext_images/umrah/3.png') }}" alt="desti">
-
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Book Now</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 p-1">
-                        <div class="desti-image">
-                            <img src="{{ asset('ext_images/umrah/4.png') }}" alt="desti">
-                            <div class="desti-content">
-
-                            </div>
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Book Now</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 p-1">
-                        <div class="desti-image">
-                            <img src="{{ asset('ext_images/umrah/5.png') }}" alt="desti">
-
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Book Now</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12 p-1">
-                        <div class="desti-image">
-                            <img src="{{ asset('ext_images/umrah/6.png') }}" alt="desti">
-
-                            <div class="desti-overlay">
-                                <a href="#" class="nir-btn">
-                                    <span class="white">Book Now</span>
-                                    <i class="fa fa-arrow-right white pl-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="particles-js"></div>
-    </section>
-    <!-- top destination ends --> --}}
-
-    {{-- <!-- link Starts -->
-    <div class="partners pt-4 pb-4">
-        <div class="container-fluid">
-            <div class="row attract-slider">
-                <div class="col">
-                    <div class="client-logo item">
-                        <a href="#">
-                            <img src="{{ asset('ext_images/link/1.png') }}" alt="" style="width: 60%;" />
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-logo item">
-                        <a href="#">
-                            <img src="{{ asset('ext_images/link/2.png') }}" alt="" style="width: 60%;" />
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-logo item">
-                        <a href="#">
-                            <img src="{{ asset('ext_images/link/3.png') }}" alt="" style="width: 60%;" />
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-logo item">
-                        <a href="#">
-                            <img src="{{ asset('ext_images/link/4.png') }}" alt="" style="width: 60%;" />
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="client-logo item">
-                        <a href="#">
-                            <img src="{{ asset('ext_images/link/5.png') }}" alt="" style="width: 60%;" />
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- link Ends --> --}}
 
     <!-- Trending Starts -->
     <section class="trending destination-b pb-6 pt-7">
@@ -281,7 +140,7 @@
                                 <div class="trend-content-main">
                                     <div class="trend-content">
                                         {{-- <h6 class="font-weight-normal"><i class="fa fa-map-marker-alt"></i> Thailand</h6> --}}
-                                        <h4><a href="{{ route('umrah.show', $tour->slug) }}">
+                                        <h4><a href="{{ route('tour.show', $tour->slug) }}">
                                                 {{ $tour->name }}
                                             </a></h4>
                                         <div class="rating-main d-flex align-items-center">
@@ -323,39 +182,70 @@
     </section>
     <!-- Trending Ends -->
 
-    <!-- our teams starts -->
-    <section class="our-team pb-4">
+    <!-- flight-list starts -->
+    <section class="flight-list pt-9">
         <div class="container">
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
-                <h2 class="m-0"><span> Agen & Pemandu</span> Resmi Kami</h2>
+                <h2 class="m-0">Panggilan Terakhir <span>Perjalanan</span></h2>
                 <p class="mb-0">
-                    Kami memiliki tim yang profesional dan berpengalaman dalam bidangnya masing-masing. Kami siap
-                    membantu anda dalam perjalanan umrah dan wisata anda.
+                    Ayo cepat pesan paket tour anda sebelum kehabisan. ini merupakan panggilan terakhir untuk anda menikmati tour wisata dari kami
                 </p>
             </div>
-            <div class="team-main">
-                <div class="row shop-slider">
 
-                    @foreach ($agents as $agent)
-                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                            <div class="team-list">
-                                <div class="team-image">
-                                    <img src="{{ $agent->getPhoto() }}" alt="team">
-                                </div>
-                                <div class="team-content1 text-center">
-                                    <h4 class="mb-0 pink">{{ $agent->name }}</h4>
-                                    <p class="mb-0">ID. {{ $agent->id }}-{{ $agent->created_at->format('mY') }}</p>
-                                </div>
+            <div class="flight-list">
 
-                            </div>
+                <div class="tab-content">
+                    <div id="schedule1" class="tab-pane fade in active">
+                        <div class="flight-full">
+                            @foreach ($tour_schedules as $schedule)
+                                <div class="item mb-2">
+                                    <div class="row d-flex align-items-center justify-content-between">
+
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <h4 class="mb-0">{{ $schedule->tourPackage->name }}</h4>
+                                                    <h3 class="mb-0 pink">{{ $schedule->name }}</h3>
+                                                    <p class="mb-0 text-uppercase">
+                                                        @if ($schedule->departure)
+                                                        {{ \Carbon\Carbon::parse($schedule->departure)->translatedFormat('d F Y') }}
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <p class="mb-0 text-uppercase">Penerbangan: {{ $schedule->airline ?? "-" }} </p>
+                                                    <p class="mb-0 text-uppercase">Hotel: {{ $schedule->hotel ?? "-" }} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <div class="item-inner flight-time">
+                                                <h4 class="mb-0">Kuota: {{ $schedule->tourUser->count() }}/{{ $schedule->quota }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <div class="item-inner flight-btn text-center p-0 bordernone mb-0">
+                                                <p class="navy">@money($schedule->price)</p>
+                                                <a href="#" class="nir-btn-black">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
                         </div>
-                    @endforeach
-
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- our teams Ends -->
+    <!-- flight-list ends -->
+
 
     <!-- Call to action starts -->
     <section class="call-to-action call-to-action1 pb-6 pt-10"
@@ -365,7 +255,6 @@
                 <div class="row d-flex align-items-center justify-content-between">
                     <div class="col-lg-6 mb-4">
                         <div class="action-content">
-                            <h3 class="white mb-0 text-uppercase">Selanjutnya Apa?</h3>
                             <h2 class="white call-name">Ayo eksplorasi dunia</h2>
                             <p class="white mb-4">
                                 Kami menawarkan berbagai paket Tour wisata yang menarik. Dapatkan pengalaman yang
@@ -376,10 +265,12 @@
                     </div>
                     <div class="col-lg-6 mb-4">
                         <div class="video-button">
-                            <img src="{{ asset('front/images/trending/trending3.jpg') }}" alt="">
+                            <img src="{{ asset('ext_images/tour/tour.jpg') }}" alt=""
+                                style="width: 100%; height: 30%; object-fit: cover;">
                             <div class="call-button text-center">
-                                <button type="button" class="play-btn js-video-button" data-video-id="152879427"
-                                    data-channel="vimeo">
+                                <button type="button" class="play-btn js-video-button"
+                                    data-video-url="https://res.cloudinary.com/duuawbwih/video/upload/v1747210350/Holiday_family_trip_of_emilyqueen.homephotostudio_and_queenstudio.company_to_around_Japan_with_torkata_tour_and_travel_Hokkaido_-_Kyoto_Kobe_Kobe_Tokyo._Yuks_yang_mau_liburan_ke_Jepang_bisa_dengan_Torkata._i1veve.mp4"
+                                    data-channel="html5">
                                     <i class="fa fa-play"></i>
                                 </button>
                             </div>
@@ -392,6 +283,8 @@
         <div class="dot-overlay"></div>
     </section>
     <!-- call to action Ends -->
+
+
 
     <!-- top destination starts -->
     <section class="top-destination overflow-hidden bg-navy p-0">
@@ -650,6 +543,42 @@
     </div> --}}
     <!-- cta-horizon Ends -->
 
+
+    <!-- our teams starts -->
+    <section class="our-team pb-4">
+        <div class="container">
+            <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
+                <h2 class="m-0"><span> Agen & Pemandu</span> Resmi Kami</h2>
+                <p class="mb-0">
+                    Kami memiliki tim yang profesional dan berpengalaman dalam bidangnya masing-masing. Kami siap
+                    membantu anda dalam perjalanan wisata anda.
+                </p>
+            </div>
+            <div class="team-main">
+                <div class="row shop-slider">
+
+                    @foreach ($agents as $agent)
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                            <div class="team-list">
+                                <div class="team-image">
+                                    <img src="{{ $agent->getPhoto() }}" alt="team">
+                                </div>
+                                <div class="team-content1 text-center">
+                                    <h4 class="mb-0 pink">{{ $agent->name }}</h4>
+                                    <p class="mb-0">ID. {{ $agent->id }}-{{ $agent->created_at->format('mY') }}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- our teams Ends -->
+
+
     <!-- testomonial start -->
     <section class="testimonial pb-6 pt-9">
         <div class="container">
@@ -669,8 +598,7 @@
                                 </p>
                             </div>
                             <div class="author-info mt-2">
-                                <a href="#"><img src="{{ $testimonial->getAvatar() }}"
-                                        alt=""></a>
+                                <a href="#"><img src="{{ $testimonial->getAvatar() }}" alt=""></a>
                                 <div class="author-title">
                                     <h4 class="m-0 pink">{{ $testimonial->name }}</h4>
                                     <span>{{ $testimonial->position }} at {{ $testimonial->company }}</span>
@@ -773,16 +701,16 @@
 @endsection
 
 @section('scripts')
-<script>
-    $.ajax({
-        url: "{{ route('visit.ajax') }}",
-        type: "GET",
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-</script>
+    <script>
+        $.ajax({
+            url: "{{ route('visit.ajax') }}",
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    </script>
 @endsection

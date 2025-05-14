@@ -68,9 +68,9 @@
                                     <i class="flaticon-call pink"></i>
                                 </div>
                                 <div class="why-us-content">
-                                    <h4><a href="#">Advice & Support</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
+                                <h4><a href="#">Saran & Dukungan</a></h4>
+                                <p class="mb-0">Bepergian dengan tenang karena kami selalu ada jika Anda membutuhkan, 24 jam sehari</p>
+
                                 </div>
                             </div>
                         </div>
@@ -80,9 +80,9 @@
                                     <i class="flaticon-global pink"></i>
                                 </div>
                                 <div class="why-us-content">
-                                    <h4><a href="#">Air Ticketing</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
+                                <h4><a href="#">Tiket Pesawat</a></h4>
+                                <p class="mb-0">Kami menyediakan layanan tiket pesawat dengan harga terbaik dan proses yang mudah untuk perjalanan Anda.</p>
+
                                 </div>
                             </div>
                         </div>
@@ -92,9 +92,10 @@
                                     <i class="flaticon-building pink"></i>
                                 </div>
                                 <div class="why-us-content">
-                                    <h4><a href="#">Hotel Services</a></h4>
-                                    <p class="mb-0">Travel worry free knowing that we're here if you need us, 24 hours a
-                                        day</p>
+                                <h4><a href="#">Paket Wisata</a></h4>
+                                <p class="mb-0">
+                                    Paket wisata yang terjangkau dan pas untuk Anda dan keluarga
+                                </p>
                                 </div>
                             </div>
                         </div>
