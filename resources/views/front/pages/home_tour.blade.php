@@ -188,7 +188,8 @@
             <div class="section-title text-center mb-5 pb-2 w-50 mx-auto">
                 <h2 class="m-0">Panggilan Terakhir <span>Perjalanan</span></h2>
                 <p class="mb-0">
-                    Ayo cepat pesan paket tour anda sebelum kehabisan. ini merupakan panggilan terakhir untuk anda menikmati tour wisata dari kami
+                    Ayo cepat pesan paket tour anda sebelum kehabisan. ini merupakan panggilan terakhir untuk anda menikmati
+                    tour wisata dari kami
                 </p>
             </div>
 
@@ -197,7 +198,7 @@
                 <div class="tab-content">
                     <div id="schedule1" class="tab-pane fade in active">
                         <div class="flight-full">
-                            @foreach ($tour_schedules as $schedule)
+                            @forelse ($tour_schedules as $schedule)
                                 <div class="item mb-2">
                                     <div class="row d-flex align-items-center justify-content-between">
 
@@ -208,7 +209,7 @@
                                                     <h3 class="mb-0 pink">{{ $schedule->name }}</h3>
                                                     <p class="mb-0 text-uppercase">
                                                         @if ($schedule->departure)
-                                                        {{ \Carbon\Carbon::parse($schedule->departure)->translatedFormat('d F Y') }}
+                                                            {{ \Carbon\Carbon::parse($schedule->departure)->translatedFormat('d F Y') }}
                                                         @endif
                                                     </p>
                                                 </div>
@@ -218,25 +219,43 @@
                                         <div class="col-lg-3 col-md-3 col-sm-12">
                                             <div class="item-inner">
                                                 <div class="content">
-                                                    <p class="mb-0 text-uppercase">Penerbangan: {{ $schedule->airline ?? "-" }} </p>
-                                                    <p class="mb-0 text-uppercase">Hotel: {{ $schedule->hotel ?? "-" }} </p>
+                                                    <p class="mb-0 text-uppercase">Penerbangan:
+                                                        {{ $schedule->airline ?? '-' }} </p>
+                                                    <p class="mb-0 text-uppercase">Hotel: {{ $schedule->hotel ?? '-' }}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
-                                         <div class="col-lg-2 col-md-2 col-sm-12">
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
                                             <div class="item-inner flight-time">
-                                                <h4 class="mb-0">Kuota: {{ $schedule->tourUser->count() }}/{{ $schedule->quota }}</h4>
+                                                <h4 class="mb-0">Kuota:
+                                                    {{ $schedule->tourUser->count() }}/{{ $schedule->quota }}</h4>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-12">
                                             <div class="item-inner flight-btn text-center p-0 bordernone mb-0">
                                                 <p class="navy">@money($schedule->price)</p>
-                                                <a href="#" class="nir-btn-black">Book Now</a>
+                                                <a href="{{ route('tour.show', $schedule->tourPackage->slug) }}"
+                                                    class="nir-btn-black">Pesan sekarang</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="item mb-2">
+                                    <div class="row d-flex align-items-center justify-content-between">
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="item-inner">
+                                                <div class="content">
+                                                    <h4 class="mb-0">Tidak ada jadwal perjalanan</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endforelse
 
                         </div>
                     </div>
