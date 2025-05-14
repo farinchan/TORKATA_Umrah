@@ -160,7 +160,7 @@
                                                                         aria-hidden="true"></i> {{ $tour->days }} Hari</p>
                                                                 <div class="trend-price">
                                                                     <p class="price white mb-0">Mulai Dari <span>Rp.
-                                                                            @money($tour->price_start)</span></p>
+                                                                            @money($tour->getSchedulesLowestPrice())</span></p>
                                                                 </div>
                                                             </div>
                                                         </div>

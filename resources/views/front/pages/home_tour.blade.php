@@ -162,7 +162,7 @@
                                                 {{ $tour->days }} Hari
                                             </p>
                                             <div class="trend-price">
-                                                <p class="price white mb-0">Harga Mulai <span>@money($tour->price_start)</span></p>
+                                                <p class="price white mb-0">Harga Mulai <span>@money($tour->getSchedulesLowestPrice())</span></p>
                                             </div>
                                         </div>
                                     </div>

@@ -304,7 +304,7 @@
                                                 {{ $umrah->days }} Hari
                                             </p>
                                             <div class="trend-price">
-                                                <p class="price white mb-0">Harga Mulai <span>@money($umrah->price_start)</span></p>
+                                                <p class="price white mb-0">Harga Mulai <span>@money($umrah->getSchedulesLowestQuadPrice())</span></p>
                                             </div>
                                         </div>
                                     </div>

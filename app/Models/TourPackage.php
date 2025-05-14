@@ -32,5 +32,9 @@ class TourPackage extends Model
         return $this->hasMany(TourPackageImage::class);
     }
 
+    public function getSchedulesLowestPrice()
+    {
+        return $this->schedules()->min('price');
+    }
 
 }
