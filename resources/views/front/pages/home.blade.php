@@ -423,8 +423,10 @@
         <div class="call-main">
             <div class="container">
                 <div class="action-content text-center w-75 mx-auto">
-                    <h3 class="white mb-0">Find next place to visit</h3>
-                    <h2 class="white call-name">Make Your Holidays More Happening</h2>
+                    <h3 class="white mb-0">Ibadah Umrah</h3>
+                    <h2 class="white call-name">
+                        Buat Ibadah umrah kamu lebih khusyuk dan nyaman
+                    </h2>
                 </div>
                 <div class="video-button text-center">
                     <img src="{{ asset("ext_images/umrah/1.png") }}" alt="">
