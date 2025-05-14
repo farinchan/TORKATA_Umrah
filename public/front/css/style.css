@@ -3214,7 +3214,8 @@ span.location-box {
   display: none; }
 
 .call-to-action.flight-call::before {
-  background-image: url(../../ext_images/umrah/1.png); }
+  background-image: url(../../ext_images/umrah/1.png);
+ }
 
 @media (max-width: 991px) {
   .call-to-action h2.call-name, .call-to-action1 h2.call-name {
