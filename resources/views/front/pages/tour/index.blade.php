@@ -180,7 +180,7 @@
                                                 <hr>
                                                 <div >
                                                     <ol>
-                                                        @forelse ($tour->schedules as $schedule )
+                                                        @forelse ($tour->schedules->where("status", "aktif") as $schedule )
                                                         <li>
                                                             <span>{{ $schedule->name }}</span>
                                                             <ul>

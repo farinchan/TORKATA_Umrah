@@ -171,7 +171,7 @@
 
                         <div class="accrodion-grp faq-accrodion mb-4" id="jadwal" data-grp-name="faq-accrodion">
                             <h4>Jadwal</h4>
-                            @forelse ($umrah->schedules as $schedule)
+                            @forelse ($umrah->schedules->where("status", "aktif") as $schedule)
                                 <div class="accrodion active">
                                     <div class="accrodion-title">
                                         <h5 class="mb-0"><span>{{ $schedule->name }} -

@@ -179,7 +179,7 @@
                                                 <hr>
                                                 <div >
                                                     <ol>
-                                                        @forelse ($umrah->schedules as $schedule )
+                                                        @forelse ($umrah->schedules->where("status", "aktif") as $schedule )
                                                         <li>
                                                             <span>{{ $schedule->name }}</span>
                                                             <ul>
