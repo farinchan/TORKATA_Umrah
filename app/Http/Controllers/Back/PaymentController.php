@@ -37,10 +37,10 @@ class PaymentController extends Controller
                     'name' => $item->umrahJamaah->name,
                     'code' => $item->umrahJamaah->code,
                     'staff' => [
-                        'id' => $item->umrahJamaah->user->id,
-                        'name' => $item->umrahJamaah->user->name,
-                        'email' => $item->umrahJamaah->user->email,
-                        'phone' => $item->umrahJamaah->user->phone,
+                        'id' => $item->umrahJamaah->user->id ?? 0,
+                        'name' => $item->umrahJamaah->user->name ?? "-",
+                        'email' => $item->umrahJamaah->user->email ?? "-",
+                        'phone' => $item->umrahJamaah->user->phone ?? "-"
                     ]
                 ]
             ];
@@ -63,10 +63,10 @@ class PaymentController extends Controller
                     'name' => $item->tourUser->name,
                     'code' => $item->tourUser->code,
                     'staff' => [
-                        'id' => $item->tourUser->user->id,
-                        'name' => $item->tourUser->user->name,
-                        'email' => $item->tourUser->user->email,
-                        'phone' => $item->tourUser->user->phone,
+                        'id' => $item->tourUser->user->id ?? 0,
+                        'name' => $item->tourUser->user->name ?? "-",
+                        'email' => $item->tourUser->user->email ?? "-",
+                        'phone' => $item->tourUser->user->phone ?? "-",
                     ]
                 ]
             ];

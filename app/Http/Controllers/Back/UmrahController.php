@@ -696,6 +696,7 @@ class UmrahController extends Controller
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
+    
     public function UmrahScheduleFinance($id)
     {
         $schedule = UmrahSchedule::with('umrahPackage')->withCount([
