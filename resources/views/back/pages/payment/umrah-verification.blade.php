@@ -28,7 +28,7 @@
                             <div class="separator border-gray-200"></div>
                             <div class="px-7 py-5" data-kt-user-table-filter="form">
                                 <div class="mb-5">
-                                    <label class="form-label fs-6 fw-semibold">Role</label>
+                                    <label class="form-label fs-6 fw-semibold">Status</label>
                                     <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                         data-placeholder="Select option" data-allow-clear="true"
                                         data-kt-user-table-filter="status" data-hide-search="true">
@@ -39,7 +39,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-5">
-                                    <label class="form-label fs-6 fw-semibold">Role</label>
+                                    <label class="form-label fs-6 fw-semibold">Tipe</label>
                                     <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                         data-placeholder="Select option" data-allow-clear="true"
                                         data-kt-user-table-filter="type" data-hide-search="true">
@@ -58,8 +58,8 @@
                             </div>
                         </div>
 
-                        <a href="#" class="btn btn-primary me-3">
-                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Pembayaran</a>
+                        {{-- <a href="#" class="btn btn-primary me-3">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Pembayaran</a> --}}
                         <div class="btn-group">
 
                             {{-- <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#import">
