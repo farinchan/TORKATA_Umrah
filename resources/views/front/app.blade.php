@@ -36,6 +36,104 @@
 
     <link rel="stylesheet" href="{{ asset('front/fonts/line-icons.css') }}" type="text/css">
 
+    <!-- Floating WhatsApp Button Styles -->
+    <style>
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .floating-whatsapp a {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            max-width: 60px;
+            overflow: hidden;
+        }
+
+        .floating-whatsapp a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+            max-width: 200px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .whatsapp-icon {
+            font-size: 24px;
+            margin-right: 0;
+            transition: margin-right 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .floating-whatsapp a:hover .whatsapp-icon {
+            margin-right: 10px;
+        }
+
+        .whatsapp-text {
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .floating-whatsapp a:hover .whatsapp-text {
+            opacity: 1;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.7);
+            }
+            100% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .floating-whatsapp {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .floating-whatsapp a {
+                padding: 10px 12px;
+                max-width: 50px;
+            }
+
+            .whatsapp-icon {
+                font-size: 20px;
+            }
+
+            .floating-whatsapp a:hover {
+                max-width: 160px;
+            }
+
+            .whatsapp-text {
+                font-size: 12px;
+            }
+        }
+
+        /* Ensure button stays above other elements */
+        .floating-whatsapp {
+            z-index: 10000;
+        }
+    </style>
+
     @yield('styles')
 
 </head>
@@ -55,10 +153,22 @@
     @include('front.layouts.footer')
 
     <!-- Back to top start -->
-    <div id="back-to-top">
+    {{-- <div id="back-to-top">
         <a href="#"></a>
-    </div>
+    </div> --}}
     <!-- Back to top ends -->
+
+    <!-- Floating WhatsApp Button -->
+    @if($setting_web && $setting_web->phone)
+        <div class="floating-whatsapp">
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting_web->phone) }}" target="_blank" rel="noopener noreferrer">
+                <div class="whatsapp-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <span class="whatsapp-text">Chat WhatsApp</span>
+            </a>
+        </div>
+    @endif
 
     {{-- <!-- search popup -->
     <div id="search1">
