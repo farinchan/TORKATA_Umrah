@@ -19,7 +19,7 @@
                     <li><a href="{{ $setting_web->instagram ?? '#' }}"><i class="fab fa-instagram white"
                                 aria-hidden="true"></i></a></li>
                     <li><a href="{{ $setting_web->tiktok ?? '#' }}"><i class="fab fa-tiktok white"
-                                aria-hidden="true"></i></a></li>
+                                aria-hidden="true" title="TikTok"></i></a></li>
                     <li><a href="{{ $setting_web->linkedin ?? '#' }}"><i class="fab fa-linkedin white"
                                 aria-hidden="true"></i></a></li>
                     <li><a href="#search1" class="mt_search"><i class="icon-magnifier white"></i></a></li>

@@ -32,9 +32,10 @@
     <link href="{{ asset('front/fonts/flaticon.css') }}" rel="stylesheet" type="text/css">
     <!--Font Awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <link rel="stylesheet" href="{{ asset('front/fonts/line-icons.css') }}" type="text/css">
+
 
     <!-- Floating WhatsApp Button Styles -->
     <style>
@@ -261,6 +262,21 @@
 
         $(window).on('resize', function() {
             toggleMobileLogin();
+        });
+
+        // Fix TikTok icon if it doesn't load
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('.fa-tiktok').each(function() {
+                    if ($(this).css('font-family').indexOf('Font Awesome') === -1) {
+                        $(this).html('🎵'); // Fallback emoji
+                        $(this).css({
+                            'font-family': 'Apple Color Emoji, Segoe UI Emoji, sans-serif',
+                            'font-size': '16px'
+                        });
+                    }
+                });
+            }, 1000);
         });
     </script>
 
