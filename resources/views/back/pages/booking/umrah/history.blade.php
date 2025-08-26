@@ -60,7 +60,7 @@
                             </div>
                         </div>
 
-                        <div class="btn-group">
+                        {{-- <div class="btn-group">
 
                             <a class="btn btn-secondary" href="">
                                 <i class="ki-duotone ki-file-up fs-2">
@@ -69,7 +69,7 @@
                                 </i>
                                 Export
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="d-flex justify-content-end align-items-center d-none" {{-- data-kt-user-table-toolbar="selected" --}}>
                         <div class="fw-bold me-5">
