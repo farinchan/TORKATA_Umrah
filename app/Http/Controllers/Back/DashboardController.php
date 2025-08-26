@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsViewer;
+use App\Models\TourSchedule;
 use App\Models\UmrahSchedule;
 use App\Models\User;
 use App\Models\Visitor;
@@ -35,6 +36,7 @@ class DashboardController extends Controller
                     $query->where('package_type', 'double');
                 }
             ])->where('status', 'aktif')->get(),
+            'list_tour_schedule' => TourSchedule::with(['tourPackage'])->latest()->where('status', 'aktif')->get(),
             'wallet_chart' => Auth::user()->transactions
                 ->where('created_at', '>=', now()->subMonths(11))
                 ->groupBy(function ($transaction) {

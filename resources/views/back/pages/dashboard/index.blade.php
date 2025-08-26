@@ -199,6 +199,75 @@
         </div>
         <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
             <div class="col-xl-12">
+                <div class="card card-flush ">
+                    <div class="card-header py-5">
+                        <h3 class="card-title fw-bold text-gray-800">Paket & Jadwal Tour yang Tersedia</h3>
+
+                    </div>
+                    <div class="card-body pt-0">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_umrah_schedule">
+                            <thead>
+                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+
+                                    <th class="min-w-200px">Jadwal Tour</th>
+                                    <th class="text-center min-w-150px">Harga</th>
+                                    <th class="text-center min-w-150px">Quota</th>
+                                    <th class="text-center min-w-100px">Keberangkatan</th>
+                                    <th class="text-center min-w-100px">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                @foreach ($list_tour_schedule as $tour_schedule)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+
+                                                <div class="">
+                                                    <a href="#"
+                                                        class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
+                                                        data-kt-ecommerce-category-filter="category_name">{{ $tour_schedule->name }}</a>
+                                                    <div class="text-muted fs-7 fw-bold">
+                                                        Paket: {{ $tour_schedule->tourPackage->name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center pe-0">
+                                            @money($tour_schedule->price)
+                                        </td>
+                                        <td class="text-center pe-0
+                                            @if ($tour_schedule->tourUser->count() >= $tour_schedule->quota) text-danger
+                                            @elseif ($tour_schedule->tourUser->count() >= $tour_schedule->quota * 0.8)
+                                                text-warning
+                                            @else
+                                                text-success @endif
+                                            ">
+                                            {{ $tour_schedule->tourUser->count() }}/{{ $tour_schedule->quota }}
+                                        </td>
+                                        <td class="text-center pe-0 ">
+                                            {{ $tour_schedule->departure ? \Carbon\Carbon::parse($tour_schedule->departure)->translatedFormat('d F Y') : '-' }}
+                                        </td>
+                                        <td class="text-center">
+                                            @if ($tour_schedule->status == 'aktif')
+                                                <span class="badge badge-light-success">Aktif</span>
+                                            @else
+                                                <span class="badge badge-light-danger">Berakhir</span>
+                                            @endif
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+            <div class="col-xl-12">
                 <div class="card card-flush h-lg-100">
                     <div class="card-header pt-5">
                         <h3 class="card-title align-items-start flex-column">
