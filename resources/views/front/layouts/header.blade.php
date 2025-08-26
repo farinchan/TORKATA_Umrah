@@ -68,7 +68,13 @@
                             <li><a href="{{ route('agent.index') }}">Agen Kami</a></li>
                             {{-- <li><a href="#">Tentang Kami</a></li> --}}
                             <li><a href="{{ route('contact.index') }}">kontak</a></li>
-                            <li><a href="{{ route('payment.index') }}">Cek Pembayaran</a></li>
+                             @if (request()->getScheme() . '://' . request()->getHost() == env('UMRAH_URL'))
+                                    <li><a href="{{ route('payment.index') }}">Cek Pembayaran</a></li>
+                            @endif
+                            @if (request()->getScheme() . '://' . request()->getHost() === env('TOUR_URL'))
+                                    <li><a href="{{ route('payment.tour') }}">Cek Pembayaran</a></li>
+                            @endif
+
                             <li class="mobile-login" style="display: none;">
                                 @guest
                                     <a href="#" data-toggle="modal" data-target="#login">Login</a>

@@ -16,6 +16,8 @@ Route::domain(env('TOUR_URL'))->group(function () {
         Route::get('/', [App\Http\Controllers\Front\TourController::class, 'index'])->name('index');
         Route::get('/{slug}', [App\Http\Controllers\Front\TourController::class, 'show'])->name('show');
     });
+
+    Route::get('/payment', [App\Http\Controllers\Front\PaymentController::class, 'tour'])->name('payment.index');
 });
 
 Route::domain(env('UMRAH_URL'))->group(function () {
@@ -25,6 +27,7 @@ Route::domain(env('UMRAH_URL'))->group(function () {
         Route::get('/', [App\Http\Controllers\Front\UmrahController::class, 'index'])->name('index');
         Route::get('/{slug}', [App\Http\Controllers\Front\UmrahController::class, 'show'])->name('show');
     });
+    Route::get('/payment', [App\Http\Controllers\Front\PaymentController::class, 'umrah'])->name('payment.tour');
 });
 
 
@@ -59,10 +62,7 @@ Route::prefix('agent')->name('agent.')->group(function () {
     Route::get('/{id}', [App\Http\Controllers\Front\AgentController::class, 'show'])->name('show');
 });
 
-Route::prefix('payment')->name('payment.')->group(function () {
-    Route::get('/', [App\Http\Controllers\Front\PaymentController::class, 'index'])->name('index');
-    Route::post('/{code}', [App\Http\Controllers\Front\PaymentController::class, 'show'])->name('show');
-});
+
 
 Route::prefix('contact')->name('contact.')->group(function () {
     Route::get('/', [App\Http\Controllers\Front\ContactController::class, 'index'])->name('index');
