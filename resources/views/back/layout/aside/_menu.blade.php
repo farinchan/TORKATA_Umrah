@@ -369,7 +369,43 @@
                 </div>
             </div>
 
-            <div data-kt-menu-trigger="click"
+            <div class="menu-item">
+                <a class="menu-link @if (request()->routeIs('back.report.umrah.finance')) active @endif"
+                    href="{{ route('back.report.umrah.finance') }}">
+                    <span class="menu-icon">
+                         <i class="ki-duotone ki-cheque fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                            <span class="path5"></span>
+                            <span class="path6"></span>
+                            <span class="path7"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Keuangan Umrah</span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link @if (request()->routeIs('back.report.tour.finance')) active @endif"
+                    href="{{ route('back.report.tour.finance') }}">
+                    <span class="menu-icon">
+                         <i class="ki-duotone ki-cheque fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                            <span class="path5"></span>
+                            <span class="path6"></span>
+                            <span class="path7"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Keuangan Tour</span>
+                </a>
+            </div>
+
+            {{-- <div data-kt-menu-trigger="click"
                 class="menu-item menu-accordion @if (request()->routeIs('back.report.*')) here show @endif ">
                 <span class="menu-link">
                     <span class="menu-icon">
@@ -405,7 +441,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         @endrole
 
         @role('super-admin')

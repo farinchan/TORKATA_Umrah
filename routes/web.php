@@ -261,5 +261,9 @@ Route::prefix('back')->name('back.')->middleware('auth')->group(function () {
         Route::get('/umrah-finance', [App\Http\Controllers\Back\ReportController::class, 'UmrahFinance'])->name('umrah.finance');
         Route::get('/umrah-finance/datatables', [App\Http\Controllers\Back\ReportController::class, 'UmrahFinanceDatatables'])->name('umrah.finance.datatables');
         Route::get('/umrah-finance/export', [App\Http\Controllers\Back\ReportController::class, 'UmrahFinanceExport'])->name('umrah.finance.export');
+
+        Route::get('/tour-finance', [App\Http\Controllers\Back\ReportController::class, 'tourFinance'])->name('tour.finance');
+        Route::get('/tour-finance/datatables', [App\Http\Controllers\Back\ReportController::class, 'tourFinanceDatatables'])->name('tour.finance.datatables');
+        Route::get('/tour-finance/export', [App\Http\Controllers\Back\ReportController::class, 'tourFinanceExport'])->name('tour.finance.export');
     });
 });
