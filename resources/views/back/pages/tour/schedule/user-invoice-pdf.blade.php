@@ -91,7 +91,7 @@
                     Invoice {{ $user->code }}<br>
                     <small>Tanggal: {{ date('d F Y') }}</small><br>
                     <small style="font-size: 20px;">
-                        @if ($package_price - $payments->sum('amount') - $user->discount <= 0)
+                        @if ($package_price - $payments->sum('amount') - ($user->discount ?? 0) <= 0)
                             <span style="color: green;">Lunas</span>
                         @else
                             <span style="color: red;">Belum Lunas</span>
@@ -123,14 +123,13 @@
     </table>
 
     <h3>
-        Detail Paket Umroh
+        Detail Paket Tour
     </h3>
 
     <table class="items">
         <thead>
             <tr>
                 <th>Nama Paket</th>
-                <th>Tipe Paket</th>
                 <th>Keberangkatan</th>
                 <th>Biaya</th>
             </tr>
@@ -140,7 +139,6 @@
                 <td> <strong>{{ $user->tourSchedule->tourPackage->name }}</strong><br>
                     {{ $user->tourSchedule->name }}
                 </td>
-                <td>{{ $user->package_type }}</td>
                 <td>{{ Carbon\Carbon::parse($user->tourSchedule->departure)->format('d F Y') }}</td>
                 <td>
                     {{ 'Rp. ' . number_format($package_price, 2, ',', '.') }}
@@ -153,7 +151,7 @@
         Rincian Pembayaran
     </h3>
     <p>
-        Berikut adalah rincian pembayaran yang telah dilakukan untuk paket umroh yang dipilih.
+        Berikut adalah rincian pembayaran yang telah dilakukan untuk paket tour yang dipilih.
     </p>
 
     <table class="items">
@@ -184,11 +182,11 @@
             </tr>
             <tr>
                 <td colspan="3" style="border: none; text-align: right;">Diskon:</td>
-                <td style="border: none;"><strong>{{ 'Rp. ' . number_format($user->discount, 2, ',', '.') }}</strong></td>
+                <td style="border: none;"><strong>{{ 'Rp. ' . number_format($user->discount ?? 0, 2, ',', '.') }}</strong></td>
             </tr>
             <tr>
                 <td colspan="3" style="border: none; text-align: right;">Sisa Pembayaran:</td>
-                <td style="border: none;"><strong>{{ 'Rp. ' . number_format($package_price - $payments->sum('amount') - $user->discount, 2, ',', '.') }}</strong></td>
+                <td style="border: none;"><strong>{{ 'Rp. ' . number_format($package_price - $payments->sum('amount') - ($user->discount ?? 0), 2, ',', '.') }}</strong></td>
             </tr>
         </tbody>
     </table>

@@ -538,11 +538,16 @@ class TourController extends Controller
     {
         $schedule = TourSchedule::with('tourPackage')->findOrFail($id);
         $user = TourUser::where('tour_schedule_id', $id)->where('code', $code)->first();
+
+        // Calculate package price from schedule
+        $package_price = $schedule->price;
+
         $data = [
             'schedule' => $schedule,
             'user' => $user,
             'payments' => $user->tourUserPayments->where('status', 'approved'),
-            'setting' => SettingWebsite::first()
+            'setting' => SettingWebsite::first(),
+            'package_price' => $package_price
         ];
 
         $pdf = Pdf::loadView('back.pages.tour.schedule.user-invoice-pdf', $data);
