@@ -126,7 +126,6 @@
                                                     <div style="font-weight: 100; font-size: 14px;">
 
                                                         jadwal: {{ $jamaah->tourSchedule->name }} <br>
-                                                        Tipe paket: {{ $jamaah->package_type }} <br>
                                                     </div>
 
                                                 </th>
